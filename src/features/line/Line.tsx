@@ -1,14 +1,16 @@
 import React, { useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addLine } from '../document/documentSlice';
-import { moveCursorDown, setLength, selectLength, selectCursor, moveCursorUp } from '../session/sessionSlice';
+import {
+  moveCursorDown, setLength, selectLength, selectCursor, moveCursorUp,
+} from '../session/sessionSlice';
 
 interface LineProps {
   readonly index: number;
   readonly content: string;
 }
 
-export function Line(props: LineProps) {
+export default function Line(props: LineProps) {
   const { index, content } = props;
   const length = useSelector(selectLength);
   const cursor = useSelector(selectCursor);
@@ -22,20 +24,20 @@ export function Line(props: LineProps) {
   });
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       dispatch(addLine({
         index,
-        content: ''
+        content: '',
       }));
       dispatch(setLength(length + 1));
       dispatch(moveCursorDown());
 
       e.preventDefault();
-    } else if (e.key === "ArrowUp") {
+    } else if (e.key === 'ArrowUp') {
       dispatch(moveCursorUp());
 
       e.preventDefault();
-    } else if (e.key === "ArrowDown") {
+    } else if (e.key === 'ArrowDown') {
       dispatch(moveCursorDown());
 
       e.preventDefault();
@@ -44,7 +46,7 @@ export function Line(props: LineProps) {
 
   return (
     <li>
-      <div ref={ref} contentEditable="true" onKeyDown={(e) => onKeyDown(e)}>
+      <div role="row" ref={ref} contentEditable="true" tabIndex={index} onKeyDown={(e) => onKeyDown(e)}>
         {content}
       </div>
     </li>

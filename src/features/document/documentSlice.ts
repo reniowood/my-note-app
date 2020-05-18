@@ -1,5 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../../app/store";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface DocumentState {
   readonly lines: string[];
@@ -11,7 +10,7 @@ interface AddLineActionPayload {
 }
 
 const initialState: DocumentState = {
-  lines: ['test']
+  lines: ['test'],
 };
 
 export const documentState = createSlice({
@@ -19,22 +18,22 @@ export const documentState = createSlice({
   initialState,
   reducers: {
     addLine: (state: DocumentState, action: PayloadAction<AddLineActionPayload>) => {
-      const lines = state.lines;
+      const { lines } = state;
       const { index, content } = action.payload;
 
       return {
         lines: [
           ...lines.slice(0, index + 1),
           content,
-          ...lines.slice(index + 1)
-        ]
-      }
-    }
-  }
+          ...lines.slice(index + 1),
+        ],
+      };
+    },
+  },
 });
 
 export const { addLine } = documentState.actions;
 
-export const selectLines = (state: RootState) => state.document.lines;
+export const selectLines = (state: { document: DocumentState }) => state.document.lines;
 
 export default documentState.reducer;

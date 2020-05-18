@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Document } from './features/document/Document';
+import Document from './features/document/Document';
 
 function App() {
   return (

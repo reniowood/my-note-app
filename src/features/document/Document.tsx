@@ -1,12 +1,10 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { selectLines } from "./documentSlice";
-import { Line } from "../line/Line";
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { selectLines } from './documentSlice';
+import Line from '../line/Line';
 
-export function Document() {
+export default function Document() {
   const lines = useSelector(selectLines);
-
-  console.log(lines);
 
   return (
     <ul>
