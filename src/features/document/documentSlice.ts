@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 
-interface DocumentState {
+export interface DocumentState {
   readonly lines: string[];
 }
 
