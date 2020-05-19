@@ -9,6 +9,11 @@ interface AddLineActionPayload {
   readonly content: string;
 }
 
+interface UpdateLineActionPayload {
+  readonly index: number;
+  readonly content: string;
+}
+
 const initialState: DocumentState = {
   lines: ['test'],
 };
@@ -29,10 +34,22 @@ export const documentState = createSlice({
         ],
       };
     },
+    updateLine: (state: DocumentState, action: PayloadAction<UpdateLineActionPayload>) => {
+      const { lines } = state;
+      const { index, content } = action.payload;
+
+      return {
+        lines: [
+          ...lines.slice(0, index),
+          content,
+          ...lines.slice(index + 1),
+        ],
+      };
+    },
   },
 });
 
-export const { addLine } = documentState.actions;
+export const { addLine, updateLine } = documentState.actions;
 
 export const selectLines = (state: { document: DocumentState }) => state.document.lines;
 

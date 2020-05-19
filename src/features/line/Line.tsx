@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addLine } from '../document/documentSlice';
+import { addLine, updateLine } from '../document/documentSlice';
 import {
   moveCursorDown, setLength, selectLength, selectCursor, moveCursorUp,
 } from '../session/sessionSlice';
@@ -8,6 +8,12 @@ import {
 interface LineProps {
   readonly index: number;
   readonly content: string;
+}
+
+function getCursorPosition(): number | undefined {
+  const selection = document.getSelection();
+  const range = selection?.getRangeAt(0);
+  return range?.startOffset;
 }
 
 export default function Line(props: LineProps) {
@@ -25,12 +31,20 @@ export default function Line(props: LineProps) {
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Enter') {
-      dispatch(addLine({
-        index,
-        content: '',
-      }));
-      dispatch(setLength(length + 1));
-      dispatch(moveCursorDown());
+      const cursorPosition = getCursorPosition();
+      if (cursorPosition !== undefined) {
+        const element = e.currentTarget;
+        dispatch(updateLine({
+          index,
+          content: element.innerText?.substring(0, cursorPosition),
+        }));
+        dispatch(addLine({
+          index,
+          content: element.innerText?.substring(cursorPosition),
+        }));
+        dispatch(setLength(length + 1));
+        dispatch(moveCursorDown());
+      }
 
       e.preventDefault();
     } else if (e.key === 'ArrowUp') {
