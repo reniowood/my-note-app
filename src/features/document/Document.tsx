@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { selectLines } from './documentSlice';
+import { selectLines } from './documentSelector';
 import Line from '../line/Line';
 
 export default function Document() {

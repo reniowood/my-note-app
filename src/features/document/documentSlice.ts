@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export interface DocumentState {
+interface DocumentState {
   readonly lines: string[];
 }
 
@@ -18,7 +18,7 @@ const initialState: DocumentState = {
   lines: ['test'],
 };
 
-export const documentState = createSlice({
+const documentSlice = createSlice({
   name: 'document',
   initialState,
   reducers: {
@@ -49,8 +49,6 @@ export const documentState = createSlice({
   },
 });
 
-export const { addLine, updateLine } = documentState.actions;
+export const { addLine, updateLine } = documentSlice.actions;
 
-export const selectLines = (state: { document: DocumentState }) => state.document.lines;
-
-export default documentState.reducer;
+export default documentSlice.reducer;
