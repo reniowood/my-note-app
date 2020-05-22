@@ -1,15 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface DocumentState {
+export interface DocumentState {
   readonly lines: string[];
 }
 
-interface AddLineActionPayload {
+export interface AddLineActionPayload {
   readonly index: number;
   readonly content: string;
 }
 
-interface UpdateLineActionPayload {
+export interface UpdateLineActionPayload {
   readonly index: number;
   readonly content: string;
 }
