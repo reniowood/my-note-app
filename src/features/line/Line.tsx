@@ -2,8 +2,9 @@ import React, { useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addLine, updateLine } from '../document/documentSlice';
 import {
-  moveCursorDown, setLength, selectLength, selectCursor, moveCursorUp,
+  moveCursorDown, setLength, moveCursorUp,
 } from '../session/sessionSlice';
+import { selectLength, selectCursor } from '../session/sessionSelector';
 
 interface LineProps {
   readonly index: number;

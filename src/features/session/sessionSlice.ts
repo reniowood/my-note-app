@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface SessionState {
+export interface SessionState {
   readonly cursor: number;
   readonly length: number;
 }
@@ -27,7 +27,7 @@ export const sessionState = createSlice({
 
       return {
         ...state,
-        cursor: Math.min(length, cursor + 1),
+        cursor: Math.min(length - 1, cursor + 1),
       };
     },
     setLength: (state: SessionState, action: PayloadAction<number>) => ({
@@ -38,8 +38,5 @@ export const sessionState = createSlice({
 });
 
 export const { moveCursorUp, moveCursorDown, setLength } = sessionState.actions;
-
-export const selectCursor = (state: { session: SessionState }) => state.session.cursor;
-export const selectLength = (state: { session: SessionState }) => state.session.length;
 
 export default sessionState.reducer;
