@@ -7,7 +7,7 @@ export interface SessionState {
 
 const initialState: SessionState = {
   cursor: 0,
-  length: 0,
+  length: 1,
 };
 
 export const sessionState = createSlice({
