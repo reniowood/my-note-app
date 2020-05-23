@@ -14,6 +14,11 @@ export interface UpdateLineActionPayload {
   readonly content: string;
 }
 
+export interface MergeLineActionPayload {
+  readonly from: number;
+  readonly to: number;
+}
+
 const initialState: DocumentState = {
   lines: ['test'],
 };
@@ -46,9 +51,37 @@ const documentSlice = createSlice({
         ],
       };
     },
+    mergeLine: (state: DocumentState, action: PayloadAction<MergeLineActionPayload>) => {
+      const { lines } = state;
+      const { from, to } = action.payload;
+
+      if (from < to) {
+        return {
+          lines: [
+            ...lines.slice(0, from),
+            ...lines.slice(from + 1, to),
+            lines[to] + lines[from],
+            ...lines.slice(to + 1),
+          ],
+        };
+      }
+
+      if (from > to) {
+        return {
+          lines: [
+            ...lines.slice(0, to),
+            lines[to] + lines[from],
+            ...lines.slice(to + 1, from),
+            ...lines.slice(from + 1),
+          ],
+        };
+      }
+
+      return state;
+    },
   },
 });
 
-export const { addLine, updateLine } = documentSlice.actions;
+export const { addLine, updateLine, mergeLine } = documentSlice.actions;
 
 export default documentSlice.reducer;

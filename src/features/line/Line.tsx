@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addLine, updateLine } from '../document/documentSlice';
+import { addLine, updateLine, mergeLine } from '../document/documentSlice';
 import {
   moveCursorDown, setLength, moveCursorUp,
 } from '../session/sessionSlice';
@@ -30,15 +30,19 @@ export default function Line(props: LineProps) {
     }
   });
 
+  const updateLineContent = (element: HTMLElement) => {
+    dispatch(updateLine({
+      index,
+      content: element.innerText,
+    }));
+  };
+
   const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Enter') {
       const cursorPosition = getCursorPosition();
       if (cursorPosition !== undefined) {
         const element = e.currentTarget;
-        dispatch(updateLine({
-          index,
-          content: element.innerText?.substring(0, cursorPosition),
-        }));
+        updateLineContent(element);
         dispatch(addLine({
           index,
           content: element.innerText?.substring(cursorPosition),
@@ -49,13 +53,31 @@ export default function Line(props: LineProps) {
 
       e.preventDefault();
     } else if (e.key === 'ArrowUp') {
+      const element = e.currentTarget;
+      updateLineContent(element);
       dispatch(moveCursorUp());
 
       e.preventDefault();
     } else if (e.key === 'ArrowDown') {
+      const element = e.currentTarget;
+      updateLineContent(element);
       dispatch(moveCursorDown());
 
       e.preventDefault();
+    } else if (e.key === 'Backspace') {
+      const cursorPosition = getCursorPosition();
+      if (cursorPosition === 0 && index > 0) {
+        const element = e.currentTarget;
+        updateLineContent(element);
+        dispatch(mergeLine({
+          from: index,
+          to: index - 1,
+        }));
+        dispatch(moveCursorUp());
+        dispatch(setLength(length - 1));
+
+        e.preventDefault();
+      }
     }
   };
 
