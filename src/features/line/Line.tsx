@@ -96,7 +96,7 @@ export default function Line(props: LineProps) {
   };
 
   return (
-    <li role="row" ref={ref} contentEditable="true" tabIndex={index} onKeyDown={(e) => onKeyDown(e)} className={styles.content}>
+    <li role="row" ref={ref} contentEditable="true" tabIndex={index} onKeyDown={(e) => onKeyDown(e)}>
       {content}
     </li>
   );
