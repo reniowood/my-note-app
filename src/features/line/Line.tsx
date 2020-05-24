@@ -16,6 +16,20 @@ function getCursorPosition(): number | undefined {
   return range?.startOffset;
 }
 
+function setCursorPosition(element: HTMLElement, position: number) {
+  const range = document.createRange();
+  if (element.firstChild) {
+    range.setStart(element.firstChild, position);
+    range.collapse(true);
+  }
+
+  const selection = document.getSelection();
+  selection?.removeAllRanges();
+  selection?.addRange(range);
+
+  element.focus();
+}
+
 export default function Line(props: LineProps) {
   const { index, content } = props;
   const cursor = useSelector(selectCursor);
@@ -23,8 +37,10 @@ export default function Line(props: LineProps) {
 
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    if (index === cursor) {
-      ref.current?.focus();
+    if (index === cursor.row) {
+      if (ref.current) {
+        setCursorPosition(ref.current, cursor.column);
+      }
     }
   });
 
@@ -40,12 +56,14 @@ export default function Line(props: LineProps) {
       const cursorPosition = getCursorPosition();
       if (cursorPosition !== undefined) {
         const element = e.currentTarget;
-        updateLineContent(element);
+        dispatch(updateLine({
+          index,
+          content: element.innerText?.substring(0, cursorPosition),
+        }));
         dispatch(addLine({
           index,
           content: element.innerText?.substring(cursorPosition),
         }));
-        dispatch(moveCursorDown());
       }
 
       e.preventDefault();
@@ -70,7 +88,6 @@ export default function Line(props: LineProps) {
           from: index,
           to: index - 1,
         }));
-        dispatch(moveCursorUp());
 
         e.preventDefault();
       }

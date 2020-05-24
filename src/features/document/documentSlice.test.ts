@@ -5,7 +5,10 @@ import reducer, {
 describe('documentSlice', () => {
   const initialState: DocumentState = {
     lines: [],
-    cursor: 0,
+    cursor: {
+      row: 0,
+      column: 0,
+    },
   };
 
   describe('addLine', () => {
@@ -75,12 +78,24 @@ describe('documentSlice', () => {
       // then
       expect(nextState1).toMatchObject({
         lines: ['LINE2LINE1'],
+        cursor: {
+          row: 0,
+          column: 5,
+        },
       });
       expect(nextState2).toMatchObject({
         lines: ['LINE1LINE2'],
+        cursor: {
+          row: 0,
+          column: 5,
+        },
       });
       expect(nextState3).toMatchObject({
         lines: ['LINE1', 'LINE2'],
+        cursor: {
+          row: 0,
+          column: 0,
+        },
       });
     });
   });
@@ -90,7 +105,10 @@ describe('documentSlice', () => {
       // given
       const currentState: DocumentState = {
         lines: ['LINE1', 'LINE2', 'LINE3'],
-        cursor: 1,
+        cursor: {
+          row: 1,
+          column: 0,
+        },
       };
 
       // when
@@ -98,7 +116,9 @@ describe('documentSlice', () => {
 
       // then
       expect(nextState).toMatchObject({
-        cursor: 0,
+        cursor: {
+          row: 0,
+        },
       });
     });
 
@@ -106,7 +126,10 @@ describe('documentSlice', () => {
       // given
       const currentState: DocumentState = {
         lines: ['LINE1', 'LINE2', 'LINE3'],
-        cursor: 0,
+        cursor: {
+          row: 0,
+          column: 0,
+        },
       };
 
       // when
@@ -114,7 +137,9 @@ describe('documentSlice', () => {
 
       // then
       expect(nextState).toMatchObject({
-        cursor: 0,
+        cursor: {
+          row: 0,
+        },
       });
     });
   });
@@ -124,7 +149,10 @@ describe('documentSlice', () => {
       // given
       const currentState: DocumentState = {
         lines: ['LINE1', 'LINE2', 'LINE3'],
-        cursor: 1,
+        cursor: {
+          row: 1,
+          column: 0,
+        },
       };
 
       // when
@@ -132,7 +160,9 @@ describe('documentSlice', () => {
 
       // then
       expect(nextState).toMatchObject({
-        cursor: 2,
+        cursor: {
+          row: 2,
+        },
       });
     });
 
@@ -140,7 +170,10 @@ describe('documentSlice', () => {
       // given
       const currentState: DocumentState = {
         lines: ['LINE1', 'LINE2', 'LINE3'],
-        cursor: 2,
+        cursor: {
+          row: 2,
+          column: 0,
+        },
       };
 
       // when
@@ -148,7 +181,9 @@ describe('documentSlice', () => {
 
       // then
       expect(nextState).toMatchObject({
-        cursor: 2,
+        cursor: {
+          row: 2,
+        },
       });
     });
   });

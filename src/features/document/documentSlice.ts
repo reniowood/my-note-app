@@ -2,7 +2,12 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface DocumentState {
   readonly lines: string[];
-  readonly cursor: number;
+  readonly cursor: Cursor;
+}
+
+interface Cursor {
+  readonly row: number;
+  readonly column: number;
 }
 
 export interface AddLineActionPayload {
@@ -22,7 +27,10 @@ export interface MergeLineActionPayload {
 
 const initialState: DocumentState = {
   lines: ['test'],
-  cursor: 0,
+  cursor: {
+    row: 0,
+    column: 0,
+  },
 };
 
 const documentSlice = createSlice({
@@ -30,16 +38,19 @@ const documentSlice = createSlice({
   initialState,
   reducers: {
     addLine: (state: DocumentState, action: PayloadAction<AddLineActionPayload>) => {
-      const { lines } = state;
+      const { lines, cursor } = state;
       const { index, content } = action.payload;
 
       return {
-        ...state,
         lines: [
           ...lines.slice(0, index + 1),
           content,
           ...lines.slice(index + 1),
         ],
+        cursor: {
+          row: cursor.row + 1,
+          column: 0,
+        },
       };
     },
     updateLine: (state: DocumentState, action: PayloadAction<UpdateLineActionPayload>) => {
@@ -61,25 +72,31 @@ const documentSlice = createSlice({
 
       if (from < to) {
         return {
-          ...state,
           lines: [
             ...lines.slice(0, from),
             ...lines.slice(from + 1, to),
             lines[to] + lines[from],
             ...lines.slice(to + 1),
           ],
+          cursor: {
+            row: to - 1,
+            column: lines[to].length,
+          },
         };
       }
 
       if (from > to) {
         return {
-          ...state,
           lines: [
             ...lines.slice(0, to),
             lines[to] + lines[from],
             ...lines.slice(to + 1, from),
             ...lines.slice(from + 1),
           ],
+          cursor: {
+            row: to,
+            column: lines[to].length,
+          },
         };
       }
 
@@ -90,7 +107,10 @@ const documentSlice = createSlice({
 
       return {
         ...state,
-        cursor: Math.max(0, cursor - 1),
+        cursor: {
+          ...cursor,
+          row: Math.max(0, cursor.row - 1),
+        },
       };
     },
     moveCursorDown: (state: DocumentState) => {
@@ -98,14 +118,17 @@ const documentSlice = createSlice({
 
       return {
         ...state,
-        cursor: Math.min(lines.length - 1, cursor + 1),
+        cursor: {
+          ...cursor,
+          row: Math.min(lines.length - 1, cursor.row + 1),
+        },
       };
     },
   },
 });
 
 export const {
-  addLine, updateLine, mergeLine, moveCursorUp, moveCursorDown
+  addLine, updateLine, mergeLine, moveCursorUp, moveCursorDown,
 } = documentSlice.actions;
 
 export default documentSlice.reducer;
