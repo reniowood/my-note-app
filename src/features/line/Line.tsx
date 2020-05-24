@@ -36,7 +36,7 @@ export default function Line(props: LineProps) {
   const { content } = line;
   const dispatch = useDispatch();
 
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLLIElement>(null);
   useEffect(() => {
     if (index === cursor.row) {
       if (ref.current) {
@@ -52,7 +52,7 @@ export default function Line(props: LineProps) {
     }));
   };
 
-  const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  const onKeyDown = (e: React.KeyboardEvent<HTMLLIElement>) => {
     if (e.key === 'Enter') {
       const cursorPosition = getCursorPosition();
       if (cursorPosition !== undefined) {
@@ -96,10 +96,8 @@ export default function Line(props: LineProps) {
   };
 
   return (
-    <li>
-      <div role="row" ref={ref} contentEditable="true" tabIndex={index} onKeyDown={(e) => onKeyDown(e)}>
-        {content}
-      </div>
+    <li role="row" ref={ref} contentEditable="true" tabIndex={index} onKeyDown={(e) => onKeyDown(e)} className={styles.content}>
+      {content}
     </li>
   );
 }
