@@ -1,10 +1,9 @@
 import React, { useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addLine, updateLine, mergeLine } from '../document/documentSlice';
 import {
-  moveCursorDown, setLength, moveCursorUp,
-} from '../session/sessionSlice';
-import { selectLength, selectCursor } from '../session/sessionSelector';
+  addLine, updateLine, mergeLine, moveCursorDown, moveCursorUp,
+} from '../document/documentSlice';
+import { selectCursor } from '../document/documentSelector';
 
 interface LineProps {
   readonly index: number;
@@ -19,7 +18,6 @@ function getCursorPosition(): number | undefined {
 
 export default function Line(props: LineProps) {
   const { index, content } = props;
-  const length = useSelector(selectLength);
   const cursor = useSelector(selectCursor);
   const dispatch = useDispatch();
 
@@ -47,7 +45,6 @@ export default function Line(props: LineProps) {
           index,
           content: element.innerText?.substring(cursorPosition),
         }));
-        dispatch(setLength(length + 1));
         dispatch(moveCursorDown());
       }
 
@@ -74,7 +71,6 @@ export default function Line(props: LineProps) {
           to: index - 1,
         }));
         dispatch(moveCursorUp());
-        dispatch(setLength(length - 1));
 
         e.preventDefault();
       }

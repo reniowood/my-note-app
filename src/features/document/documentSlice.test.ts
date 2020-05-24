@@ -1,12 +1,18 @@
 import reducer, {
-  DocumentState, addLine, updateLine, mergeLine,
+  DocumentState, addLine, updateLine, mergeLine, moveCursorUp, moveCursorDown,
 } from './documentSlice';
 
 describe('documentSlice', () => {
+  const initialState: DocumentState = {
+    lines: [],
+    cursor: 0,
+  };
+
   describe('addLine', () => {
     it('should add a new line after the line at the given index', () => {
       // given
       const currentState: DocumentState = {
+        ...initialState,
         lines: ['LINE'],
       };
 
@@ -17,7 +23,7 @@ describe('documentSlice', () => {
       }));
 
       // then
-      expect(nextState).toStrictEqual({
+      expect(nextState).toMatchObject({
         lines: ['LINE', 'NEW_LINE'],
       });
     });
@@ -27,6 +33,7 @@ describe('documentSlice', () => {
     it('should update the line at the given index with the given content', () => {
       // given
       const currentState: DocumentState = {
+        ...initialState,
         lines: ['LINE'],
       };
 
@@ -37,7 +44,7 @@ describe('documentSlice', () => {
       }));
 
       // then
-      expect(nextState).toStrictEqual({
+      expect(nextState).toMatchObject({
         lines: ['NEW_LINE'],
       });
     });
@@ -47,6 +54,7 @@ describe('documentSlice', () => {
     it('should remove the line at the index \'from\' and append its content to the line at the index \'to\'', () => {
       // given
       const currentState: DocumentState = {
+        ...initialState,
         lines: ['LINE1', 'LINE2'],
       };
 
@@ -65,14 +73,82 @@ describe('documentSlice', () => {
       }));
 
       // then
-      expect(nextState1).toStrictEqual({
+      expect(nextState1).toMatchObject({
         lines: ['LINE2LINE1'],
       });
-      expect(nextState2).toStrictEqual({
+      expect(nextState2).toMatchObject({
         lines: ['LINE1LINE2'],
       });
-      expect(nextState3).toStrictEqual({
+      expect(nextState3).toMatchObject({
         lines: ['LINE1', 'LINE2'],
+      });
+    });
+  });
+
+  describe('moveCursorUp', () => {
+    it('should move up the cursor', () => {
+      // given
+      const currentState: DocumentState = {
+        lines: ['LINE1', 'LINE2', 'LINE3'],
+        cursor: 1,
+      };
+
+      // when
+      const nextState = reducer(currentState, moveCursorUp());
+
+      // then
+      expect(nextState).toMatchObject({
+        cursor: 0,
+      });
+    });
+
+    it('should not move up the cursor when the cursor is on the top', () => {
+      // given
+      const currentState: DocumentState = {
+        lines: ['LINE1', 'LINE2', 'LINE3'],
+        cursor: 0,
+      };
+
+      // when
+      const nextState = reducer(currentState, moveCursorUp());
+
+      // then
+      expect(nextState).toMatchObject({
+        cursor: 0,
+      });
+    });
+  });
+
+  describe('moveCursorDown', () => {
+    it('should move down the cursor', () => {
+      // given
+      const currentState: DocumentState = {
+        lines: ['LINE1', 'LINE2', 'LINE3'],
+        cursor: 1,
+      };
+
+      // when
+      const nextState = reducer(currentState, moveCursorDown());
+
+      // then
+      expect(nextState).toMatchObject({
+        cursor: 2,
+      });
+    });
+
+    it('should not move down the cursor when the cursor is on the bottom', () => {
+      // given
+      const currentState: DocumentState = {
+        lines: ['LINE1', 'LINE2', 'LINE3'],
+        cursor: 2,
+      };
+
+      // when
+      const nextState = reducer(currentState, moveCursorDown());
+
+      // then
+      expect(nextState).toMatchObject({
+        cursor: 2,
       });
     });
   });

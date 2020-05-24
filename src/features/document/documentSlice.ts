@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface DocumentState {
   readonly lines: string[];
+  readonly cursor: number;
 }
 
 export interface AddLineActionPayload {
@@ -21,6 +22,7 @@ export interface MergeLineActionPayload {
 
 const initialState: DocumentState = {
   lines: ['test'],
+  cursor: 0,
 };
 
 const documentSlice = createSlice({
@@ -32,6 +34,7 @@ const documentSlice = createSlice({
       const { index, content } = action.payload;
 
       return {
+        ...state,
         lines: [
           ...lines.slice(0, index + 1),
           content,
@@ -44,6 +47,7 @@ const documentSlice = createSlice({
       const { index, content } = action.payload;
 
       return {
+        ...state,
         lines: [
           ...lines.slice(0, index),
           content,
@@ -57,6 +61,7 @@ const documentSlice = createSlice({
 
       if (from < to) {
         return {
+          ...state,
           lines: [
             ...lines.slice(0, from),
             ...lines.slice(from + 1, to),
@@ -68,6 +73,7 @@ const documentSlice = createSlice({
 
       if (from > to) {
         return {
+          ...state,
           lines: [
             ...lines.slice(0, to),
             lines[to] + lines[from],
@@ -79,9 +85,27 @@ const documentSlice = createSlice({
 
       return state;
     },
+    moveCursorUp: (state: DocumentState) => {
+      const { cursor } = state;
+
+      return {
+        ...state,
+        cursor: Math.max(0, cursor - 1),
+      };
+    },
+    moveCursorDown: (state: DocumentState) => {
+      const { cursor, lines } = state;
+
+      return {
+        ...state,
+        cursor: Math.min(lines.length - 1, cursor + 1),
+      };
+    },
   },
 });
 
-export const { addLine, updateLine, mergeLine } = documentSlice.actions;
+export const {
+  addLine, updateLine, mergeLine, moveCursorUp, moveCursorDown
+} = documentSlice.actions;
 
 export default documentSlice.reducer;
