@@ -11,7 +11,7 @@ export interface LineState {
   readonly content: string;
 }
 
-interface CursorState {
+export interface CursorState {
   readonly row: number;
   readonly column: number;
 }
