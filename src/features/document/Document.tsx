@@ -9,7 +9,7 @@ export default function Document() {
   return (
     <ul>
       {
-        lines.map((content, index) => <Line index={index} content={content} />)
+        lines.map((line, index) => <Line key={line.id} index={index} line={line} />)
       }
     </ul>
   );

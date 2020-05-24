@@ -1,13 +1,14 @@
 import React, { useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+  LineState,
   addLine, updateLine, mergeLine, moveCursorDown, moveCursorUp,
 } from '../document/documentSlice';
 import { selectCursor } from '../document/documentSelector';
 
 interface LineProps {
   readonly index: number;
-  readonly content: string;
+  readonly line: LineState;
 }
 
 function getCursorPosition(): number | undefined {
@@ -31,7 +32,8 @@ function setCursorPosition(element: HTMLElement, position: number) {
 }
 
 export default function Line(props: LineProps) {
-  const { index, content } = props;
+  const { index, line } = props;
+  const { content } = line;
   const cursor = useSelector(selectCursor);
   const dispatch = useDispatch();
 

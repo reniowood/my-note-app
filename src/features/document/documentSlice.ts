@@ -1,11 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { uuid } from 'uuidv4';
 
 export interface DocumentState {
-  readonly lines: string[];
-  readonly cursor: Cursor;
+  readonly lines: LineState[];
+  readonly cursor: CursorState;
 }
 
-interface Cursor {
+export interface LineState {
+  readonly id: string;
+  readonly content: string;
+}
+
+interface CursorState {
   readonly row: number;
   readonly column: number;
 }
@@ -26,7 +32,10 @@ export interface MergeLineActionPayload {
 }
 
 const initialState: DocumentState = {
-  lines: ['test'],
+  lines: [{
+    id: uuid(),
+    content: '',
+  }],
   cursor: {
     row: 0,
     column: 0,
@@ -44,7 +53,10 @@ const documentSlice = createSlice({
       return {
         lines: [
           ...lines.slice(0, index + 1),
-          content,
+          {
+            id: uuid(),
+            content,
+          },
           ...lines.slice(index + 1),
         ],
         cursor: {
@@ -61,7 +73,10 @@ const documentSlice = createSlice({
         ...state,
         lines: [
           ...lines.slice(0, index),
-          content,
+          {
+            ...lines[index],
+            content,
+          },
           ...lines.slice(index + 1),
         ],
       };
@@ -75,12 +90,15 @@ const documentSlice = createSlice({
           lines: [
             ...lines.slice(0, from),
             ...lines.slice(from + 1, to),
-            lines[to] + lines[from],
+            {
+              ...lines[to],
+              content: lines[to].content + lines[from].content,
+            },
             ...lines.slice(to + 1),
           ],
           cursor: {
             row: to - 1,
-            column: lines[to].length,
+            column: lines[to].content.length,
           },
         };
       }
@@ -89,13 +107,16 @@ const documentSlice = createSlice({
         return {
           lines: [
             ...lines.slice(0, to),
-            lines[to] + lines[from],
+            {
+              ...lines[to],
+              content: lines[to].content + lines[from].content,
+            },
             ...lines.slice(to + 1, from),
             ...lines.slice(from + 1),
           ],
           cursor: {
             row: to,
-            column: lines[to].length,
+            column: lines[to].content.length,
           },
         };
       }

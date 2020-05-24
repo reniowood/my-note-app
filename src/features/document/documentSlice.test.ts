@@ -4,7 +4,10 @@ import reducer, {
 
 describe('documentSlice', () => {
   const initialState: DocumentState = {
-    lines: [],
+    lines: [{
+      id: '0',
+      content: 'LINE',
+    }],
     cursor: {
       row: 0,
       column: 0,
@@ -16,7 +19,6 @@ describe('documentSlice', () => {
       // given
       const currentState: DocumentState = {
         ...initialState,
-        lines: ['LINE'],
       };
 
       // when
@@ -27,7 +29,11 @@ describe('documentSlice', () => {
 
       // then
       expect(nextState).toMatchObject({
-        lines: ['LINE', 'NEW_LINE'],
+        lines: [{
+          content: 'LINE',
+        }, {
+          content: 'NEW_LINE',
+        }],
       });
     });
   });
@@ -37,7 +43,6 @@ describe('documentSlice', () => {
       // given
       const currentState: DocumentState = {
         ...initialState,
-        lines: ['LINE'],
       };
 
       // when
@@ -48,7 +53,9 @@ describe('documentSlice', () => {
 
       // then
       expect(nextState).toMatchObject({
-        lines: ['NEW_LINE'],
+        lines: [{
+          content: 'NEW_LINE',
+        }],
       });
     });
   });
@@ -58,7 +65,13 @@ describe('documentSlice', () => {
       // given
       const currentState: DocumentState = {
         ...initialState,
-        lines: ['LINE1', 'LINE2'],
+        lines: [{
+          id: '1',
+          content: 'LINE1',
+        }, {
+          id: '2',
+          content: 'LINE2',
+        }],
       };
 
       // when
@@ -77,21 +90,29 @@ describe('documentSlice', () => {
 
       // then
       expect(nextState1).toMatchObject({
-        lines: ['LINE2LINE1'],
+        lines: [{
+          content: 'LINE2LINE1',
+        }],
         cursor: {
           row: 0,
           column: 5,
         },
       });
       expect(nextState2).toMatchObject({
-        lines: ['LINE1LINE2'],
+        lines: [{
+          content: 'LINE1LINE2',
+        }],
         cursor: {
           row: 0,
           column: 5,
         },
       });
       expect(nextState3).toMatchObject({
-        lines: ['LINE1', 'LINE2'],
+        lines: [{
+          content: 'LINE1',
+        }, {
+          content: 'LINE2',
+        }],
         cursor: {
           row: 0,
           column: 0,
@@ -104,7 +125,17 @@ describe('documentSlice', () => {
     it('should move up the cursor', () => {
       // given
       const currentState: DocumentState = {
-        lines: ['LINE1', 'LINE2', 'LINE3'],
+        ...initialState,
+        lines: [{
+          id: '1',
+          content: 'LINE1',
+        }, {
+          id: '2',
+          content: 'LINE2',
+        }, {
+          id: '3',
+          content: 'LINE3',
+        }],
         cursor: {
           row: 1,
           column: 0,
@@ -125,7 +156,16 @@ describe('documentSlice', () => {
     it('should not move up the cursor when the cursor is on the top', () => {
       // given
       const currentState: DocumentState = {
-        lines: ['LINE1', 'LINE2', 'LINE3'],
+        lines: [{
+          id: '1',
+          content: 'LINE1',
+        }, {
+          id: '2',
+          content: 'LINE2',
+        }, {
+          id: '3',
+          content: 'LINE3',
+        }],
         cursor: {
           row: 0,
           column: 0,
@@ -148,7 +188,16 @@ describe('documentSlice', () => {
     it('should move down the cursor', () => {
       // given
       const currentState: DocumentState = {
-        lines: ['LINE1', 'LINE2', 'LINE3'],
+        lines: [{
+          id: '1',
+          content: 'LINE1',
+        }, {
+          id: '2',
+          content: 'LINE2',
+        }, {
+          id: '3',
+          content: 'LINE3',
+        }],
         cursor: {
           row: 1,
           column: 0,
@@ -169,7 +218,16 @@ describe('documentSlice', () => {
     it('should not move down the cursor when the cursor is on the bottom', () => {
       // given
       const currentState: DocumentState = {
-        lines: ['LINE1', 'LINE2', 'LINE3'],
+        lines: [{
+          id: '1',
+          content: 'LINE1',
+        }, {
+          id: '2',
+          content: 'LINE2',
+        }, {
+          id: '3',
+          content: 'LINE3',
+        }],
         cursor: {
           row: 2,
           column: 0,
