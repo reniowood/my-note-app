@@ -6,8 +6,13 @@ export interface DocumentState {
   readonly cursor: CursorState;
 }
 
-export interface LineState {
+export type LineState = TextLineState;
+
+export interface BaseLineState {
   readonly id: string;
+}
+
+export interface TextLineState extends BaseLineState {
   readonly content: string;
 }
 

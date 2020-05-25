@@ -1,14 +1,14 @@
 import React, { useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import {
-  LineState, CursorState,
+  CursorState,
   addLine, updateLine, mergeLine, moveCursorDown, moveCursorUp,
 } from '../document/documentSlice';
 
-interface LineProps {
+interface TextProps {
   readonly index: number;
   readonly cursor: CursorState;
-  readonly line: LineState;
+  readonly content: string;
 }
 
 function getCursorPosition(): number | undefined {
@@ -31,12 +31,11 @@ function setCursorPosition(element: HTMLElement, position: number) {
   element.focus();
 }
 
-export default function Line(props: LineProps) {
-  const { index, cursor, line } = props;
-  const { content } = line;
+export default function Text(props: TextProps) {
+  const { index, cursor, content } = props;
   const dispatch = useDispatch();
 
-  const ref = useRef<HTMLLIElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (index === cursor.row) {
       if (ref.current) {
@@ -52,7 +51,7 @@ export default function Line(props: LineProps) {
     }));
   };
 
-  const onKeyDown = (e: React.KeyboardEvent<HTMLLIElement>) => {
+  const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Enter') {
       const cursorPosition = getCursorPosition();
       if (cursorPosition !== undefined) {
@@ -96,8 +95,8 @@ export default function Line(props: LineProps) {
   };
 
   return (
-    <li role="row" ref={ref} contentEditable="true" tabIndex={index} onKeyDown={(e) => onKeyDown(e)}>
+    <div role="row" ref={ref} contentEditable="true" tabIndex={index} onKeyDown={(e) => onKeyDown(e)}>
       {content}
-    </li>
+    </div>
   );
 }
