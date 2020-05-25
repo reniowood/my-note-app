@@ -1,19 +1,19 @@
 import React from 'react';
-import { CursorState, TextBlockState } from '../document/documentSlice';
+import { TextBlockState } from '../document/documentSlice';
 import Text from '../text/Text';
+import Block from './Block';
 
 interface TextBlockProps {
   readonly index: number;
-  readonly cursor: CursorState;
   readonly block: TextBlockState;
 }
 
 export default function TextBlock(props: TextBlockProps) {
-  const { index, cursor, block } = props;
+  const { index, block } = props;
 
   return (
-    <li>
-      <Text index={index} cursor={cursor} content={block.content} />
-    </li>
+    <Block index={index}>
+      <Text index={index} content={block.content} />
+    </Block>
   );
 }

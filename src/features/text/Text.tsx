@@ -1,13 +1,12 @@
 import React, { useRef, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
-  CursorState,
   addBlock, updateBlock, mergeBlock, moveCursorDown, moveCursorUp,
 } from '../document/documentSlice';
+import { selectCursor } from '../document/documentSelector';
 
 interface TextProps {
   readonly index: number;
-  readonly cursor: CursorState;
   readonly content: string;
 }
 
@@ -32,7 +31,8 @@ function setCursorPosition(element: HTMLElement, position: number) {
 }
 
 export default function Text(props: TextProps) {
-  const { index, cursor, content } = props;
+  const { index, content } = props;
+  const cursor = useSelector(selectCursor);
   const dispatch = useDispatch();
 
   const ref = useRef<HTMLDivElement>(null);

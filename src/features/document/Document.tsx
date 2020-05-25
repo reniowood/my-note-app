@@ -1,12 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { selectBlocks, selectCursor } from './documentSelector';
+import { selectBlocks } from './documentSelector';
 import TextBlock from '../block/TextBlock';
 import { TextBlockState } from './documentSlice';
 
 export default function Document() {
   const blocks = useSelector(selectBlocks);
-  const cursor = useSelector(selectCursor);
 
   return (
     <ul>
@@ -17,7 +16,6 @@ export default function Document() {
               <TextBlock
                 key={block.id}
                 index={index}
-                cursor={cursor}
                 block={block}
               />
             );
@@ -27,7 +25,6 @@ export default function Document() {
             <TextBlock
               key={block.id}
               index={index}
-              cursor={cursor}
               block={block}
             />
           );
