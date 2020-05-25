@@ -4,6 +4,7 @@ import {
   addBlock, updateBlock, mergeBlock, moveCursorDown, moveCursorUp,
 } from '../document/documentSlice';
 import { selectCursor } from '../document/documentSelector';
+import styles from './Text.module.css';
 
 interface TextProps {
   readonly index: number;
@@ -95,7 +96,7 @@ export default function Text(props: TextProps) {
   };
 
   return (
-    <div role="row" ref={ref} contentEditable="true" tabIndex={index} onKeyDown={(e) => onKeyDown(e)}>
+    <div role="row" ref={ref} contentEditable="true" className={styles.text} tabIndex={index} onKeyDown={(e) => onKeyDown(e)}>
       {content}
     </div>
   );
