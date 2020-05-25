@@ -1,10 +1,10 @@
 import reducer, {
-  DocumentState, addLine, updateLine, mergeLine, moveCursorUp, moveCursorDown,
+  DocumentState, addBlock, updateBlock, mergeBlock, moveCursorUp, moveCursorDown,
 } from './documentSlice';
 
 describe('documentSlice', () => {
   const initialState: DocumentState = {
-    lines: [{
+    blocks: [{
       id: '0',
       content: 'LINE',
     }],
@@ -14,22 +14,22 @@ describe('documentSlice', () => {
     },
   };
 
-  describe('addLine', () => {
-    it('should add a new line after the line at the given index', () => {
+  describe('addBlock', () => {
+    it('should add a new block after the block at the given index', () => {
       // given
       const currentState: DocumentState = {
         ...initialState,
       };
 
       // when
-      const nextState = reducer(currentState, addLine({
+      const nextState = reducer(currentState, addBlock({
         index: 0,
         content: 'NEW_LINE',
       }));
 
       // then
       expect(nextState).toMatchObject({
-        lines: [{
+        blocks: [{
           content: 'LINE',
         }, {
           content: 'NEW_LINE',
@@ -38,34 +38,34 @@ describe('documentSlice', () => {
     });
   });
 
-  describe('updateLine', () => {
-    it('should update the line at the given index with the given content', () => {
+  describe('updateBlock', () => {
+    it('should update the block at the given index with the given content', () => {
       // given
       const currentState: DocumentState = {
         ...initialState,
       };
 
       // when
-      const nextState = reducer(currentState, updateLine({
+      const nextState = reducer(currentState, updateBlock({
         index: 0,
         content: 'NEW_LINE',
       }));
 
       // then
       expect(nextState).toMatchObject({
-        lines: [{
+        blocks: [{
           content: 'NEW_LINE',
         }],
       });
     });
   });
 
-  describe('mergeLine', () => {
-    it('should remove the line at the index \'from\' and append its content to the line at the index \'to\'', () => {
+  describe('mergeBlock', () => {
+    it('should remove the block at the index \'from\' and append its content to the block at the index \'to\'', () => {
       // given
       const currentState: DocumentState = {
         ...initialState,
-        lines: [{
+        blocks: [{
           id: '1',
           content: 'LINE1',
         }, {
@@ -75,22 +75,22 @@ describe('documentSlice', () => {
       };
 
       // when
-      const nextState1 = reducer(currentState, mergeLine({
+      const nextState1 = reducer(currentState, mergeBlock({
         from: 0,
         to: 1,
       }));
-      const nextState2 = reducer(currentState, mergeLine({
+      const nextState2 = reducer(currentState, mergeBlock({
         from: 1,
         to: 0,
       }));
-      const nextState3 = reducer(currentState, mergeLine({
+      const nextState3 = reducer(currentState, mergeBlock({
         from: 1,
         to: 1,
       }));
 
       // then
       expect(nextState1).toMatchObject({
-        lines: [{
+        blocks: [{
           content: 'LINE2LINE1',
         }],
         cursor: {
@@ -99,7 +99,7 @@ describe('documentSlice', () => {
         },
       });
       expect(nextState2).toMatchObject({
-        lines: [{
+        blocks: [{
           content: 'LINE1LINE2',
         }],
         cursor: {
@@ -108,7 +108,7 @@ describe('documentSlice', () => {
         },
       });
       expect(nextState3).toMatchObject({
-        lines: [{
+        blocks: [{
           content: 'LINE1',
         }, {
           content: 'LINE2',
@@ -126,7 +126,7 @@ describe('documentSlice', () => {
       // given
       const currentState: DocumentState = {
         ...initialState,
-        lines: [{
+        blocks: [{
           id: '1',
           content: 'LINE1',
         }, {
@@ -156,7 +156,7 @@ describe('documentSlice', () => {
     it('should not move up the cursor when the cursor is on the top', () => {
       // given
       const currentState: DocumentState = {
-        lines: [{
+        blocks: [{
           id: '1',
           content: 'LINE1',
         }, {
@@ -188,7 +188,7 @@ describe('documentSlice', () => {
     it('should move down the cursor', () => {
       // given
       const currentState: DocumentState = {
-        lines: [{
+        blocks: [{
           id: '1',
           content: 'LINE1',
         }, {
@@ -218,7 +218,7 @@ describe('documentSlice', () => {
     it('should not move down the cursor when the cursor is on the bottom', () => {
       // given
       const currentState: DocumentState = {
-        lines: [{
+        blocks: [{
           id: '1',
           content: 'LINE1',
         }, {

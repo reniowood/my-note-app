@@ -2,17 +2,17 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { uuid } from 'uuidv4';
 
 export interface DocumentState {
-  readonly lines: LineState[];
+  readonly blocks: BlockState[];
   readonly cursor: CursorState;
 }
 
-export type LineState = TextLineState;
+export type BlockState = TextBlockState;
 
-export interface BaseLineState {
+export interface BaseBlockState {
   readonly id: string;
 }
 
-export interface TextLineState extends BaseLineState {
+export interface TextBlockState extends BaseBlockState {
   readonly content: string;
 }
 
@@ -21,23 +21,23 @@ export interface CursorState {
   readonly column: number;
 }
 
-export interface AddLineActionPayload {
+export interface AddBlockActionPayload {
   readonly index: number;
   readonly content: string;
 }
 
-export interface UpdateLineActionPayload {
+export interface UpdateBlockActionPayload {
   readonly index: number;
   readonly content: string;
 }
 
-export interface MergeLineActionPayload {
+export interface MergeBlockActionPayload {
   readonly from: number;
   readonly to: number;
 }
 
 const initialState: DocumentState = {
-  lines: [{
+  blocks: [{
     id: uuid(),
     content: '',
   }],
@@ -51,18 +51,18 @@ const documentSlice = createSlice({
   name: 'document',
   initialState,
   reducers: {
-    addLine: (state: DocumentState, action: PayloadAction<AddLineActionPayload>) => {
-      const { lines, cursor } = state;
+    addBlock: (state: DocumentState, action: PayloadAction<AddBlockActionPayload>) => {
+      const { blocks, cursor } = state;
       const { index, content } = action.payload;
 
       return {
-        lines: [
-          ...lines.slice(0, index + 1),
+        blocks: [
+          ...blocks.slice(0, index + 1),
           {
             id: uuid(),
             content,
           },
-          ...lines.slice(index + 1),
+          ...blocks.slice(index + 1),
         ],
         cursor: {
           row: cursor.row + 1,
@@ -70,58 +70,58 @@ const documentSlice = createSlice({
         },
       };
     },
-    updateLine: (state: DocumentState, action: PayloadAction<UpdateLineActionPayload>) => {
-      const { lines } = state;
+    updateBlock: (state: DocumentState, action: PayloadAction<UpdateBlockActionPayload>) => {
+      const { blocks } = state;
       const { index, content } = action.payload;
 
       return {
         ...state,
-        lines: [
-          ...lines.slice(0, index),
+        blocks: [
+          ...blocks.slice(0, index),
           {
-            ...lines[index],
+            ...blocks[index],
             content,
           },
-          ...lines.slice(index + 1),
+          ...blocks.slice(index + 1),
         ],
       };
     },
-    mergeLine: (state: DocumentState, action: PayloadAction<MergeLineActionPayload>) => {
-      const { lines } = state;
+    mergeBlock: (state: DocumentState, action: PayloadAction<MergeBlockActionPayload>) => {
+      const { blocks } = state;
       const { from, to } = action.payload;
 
       if (from < to) {
         return {
-          lines: [
-            ...lines.slice(0, from),
-            ...lines.slice(from + 1, to),
+          blocks: [
+            ...blocks.slice(0, from),
+            ...blocks.slice(from + 1, to),
             {
-              ...lines[to],
-              content: lines[to].content + lines[from].content,
+              ...blocks[to],
+              content: blocks[to].content + blocks[from].content,
             },
-            ...lines.slice(to + 1),
+            ...blocks.slice(to + 1),
           ],
           cursor: {
             row: to - 1,
-            column: lines[to].content.length,
+            column: blocks[to].content.length,
           },
         };
       }
 
       if (from > to) {
         return {
-          lines: [
-            ...lines.slice(0, to),
+          blocks: [
+            ...blocks.slice(0, to),
             {
-              ...lines[to],
-              content: lines[to].content + lines[from].content,
+              ...blocks[to],
+              content: blocks[to].content + blocks[from].content,
             },
-            ...lines.slice(to + 1, from),
-            ...lines.slice(from + 1),
+            ...blocks.slice(to + 1, from),
+            ...blocks.slice(from + 1),
           ],
           cursor: {
             row: to,
-            column: lines[to].content.length,
+            column: blocks[to].content.length,
           },
         };
       }
@@ -140,13 +140,13 @@ const documentSlice = createSlice({
       };
     },
     moveCursorDown: (state: DocumentState) => {
-      const { cursor, lines } = state;
+      const { cursor, blocks } = state;
 
       return {
         ...state,
         cursor: {
           ...cursor,
-          row: Math.min(lines.length - 1, cursor.row + 1),
+          row: Math.min(blocks.length - 1, cursor.row + 1),
         },
       };
     },
@@ -154,7 +154,7 @@ const documentSlice = createSlice({
 });
 
 export const {
-  addLine, updateLine, mergeLine, moveCursorUp, moveCursorDown,
+  addBlock, updateBlock, mergeBlock, moveCursorUp, moveCursorDown,
 } = documentSlice.actions;
 
 export default documentSlice.reducer;
