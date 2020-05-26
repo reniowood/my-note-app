@@ -5,10 +5,11 @@ import styles from './BlockHandler.module.css';
 
 interface BlockHandlerProps {
   readonly index: number;
+  readonly enabled: boolean;
 }
 
 export default function BlockHandler(props: BlockHandlerProps) {
-  const { index } = props;
+  const { index, enabled } = props;
   const dispatch = useDispatch();
 
   const onClick = () => {
@@ -19,7 +20,10 @@ export default function BlockHandler(props: BlockHandlerProps) {
   };
 
   return (
-    <div>
+    <div style={{
+      visibility: enabled ? 'visible' : 'hidden',
+    }}
+    >
       <span
         role="button"
         tabIndex={-1}
