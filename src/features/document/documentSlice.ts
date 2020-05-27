@@ -150,11 +150,27 @@ const documentSlice = createSlice({
         },
       };
     },
+    setCursorRow: (state: DocumentState, action: PayloadAction<number>) => {
+      const { cursor, blocks } = state;
+      const row = action.payload;
+
+      if (row < 0 || row >= blocks.length) {
+        return state;
+      }
+
+      return {
+        ...state,
+        cursor: {
+          ...cursor,
+          row,
+        },
+      };
+    },
   },
 });
 
 export const {
-  addBlock, updateBlock, mergeBlock, moveCursorUp, moveCursorDown,
+  addBlock, updateBlock, mergeBlock, moveCursorUp, moveCursorDown, setCursorRow,
 } = documentSlice.actions;
 
 export default documentSlice.reducer;

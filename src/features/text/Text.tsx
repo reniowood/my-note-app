@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  addBlock, updateBlock, mergeBlock, moveCursorDown, moveCursorUp,
+  addBlock, updateBlock, mergeBlock, moveCursorDown, moveCursorUp, setCursorRow,
 } from '../document/documentSlice';
 import { selectCursor } from '../document/documentSelector';
 import styles from './Text.module.css';
@@ -46,6 +46,7 @@ export default function Text(props: TextProps) {
   });
 
   const updateBlockContent = (element: HTMLElement) => {
+    dispatch(setCursorRow(index));
     dispatch(updateBlock({
       index,
       content: element.innerText,
@@ -57,6 +58,7 @@ export default function Text(props: TextProps) {
       const cursorPosition = getCursorPosition();
       if (cursorPosition !== undefined) {
         const element = e.currentTarget;
+        dispatch(setCursorRow(index));
         dispatch(updateBlock({
           index,
           content: element.innerText?.substring(0, cursorPosition),

@@ -1,5 +1,5 @@
 import reducer, {
-  DocumentState, addBlock, updateBlock, mergeBlock, moveCursorUp, moveCursorDown,
+  DocumentState, addBlock, updateBlock, mergeBlock, moveCursorUp, moveCursorDown, setCursorRow,
 } from './documentSlice';
 
 describe('documentSlice', () => {
@@ -239,6 +239,73 @@ describe('documentSlice', () => {
 
       // then
       expect(nextState).toMatchObject({
+        cursor: {
+          row: 2,
+        },
+      });
+    });
+  });
+
+  describe('setCursorRow', () => {
+    it('should set the row of the cursor to the given row', () => {
+      // given
+      const currentState: DocumentState = {
+        blocks: [{
+          id: '1',
+          content: 'LINE1',
+        }, {
+          id: '2',
+          content: 'LINE2',
+        }, {
+          id: '3',
+          content: 'LINE3',
+        }],
+        cursor: {
+          row: 2,
+          column: 0,
+        },
+      };
+
+      // when
+      const nextState = reducer(currentState, setCursorRow(0));
+
+      // then
+      expect(nextState).toMatchObject({
+        cursor: {
+          row: 0,
+        },
+      });
+    });
+    it('should not update the row of the cursor when the given row is invalid', () => {
+      // given
+      const currentState: DocumentState = {
+        blocks: [{
+          id: '1',
+          content: 'LINE1',
+        }, {
+          id: '2',
+          content: 'LINE2',
+        }, {
+          id: '3',
+          content: 'LINE3',
+        }],
+        cursor: {
+          row: 2,
+          column: 0,
+        },
+      };
+
+      // when
+      const nextState1 = reducer(currentState, setCursorRow(-1));
+      const nextState2 = reducer(currentState, setCursorRow(4));
+
+      // then
+      expect(nextState1).toMatchObject({
+        cursor: {
+          row: 2,
+        },
+      });
+      expect(nextState2).toMatchObject({
         cursor: {
           row: 2,
         },
