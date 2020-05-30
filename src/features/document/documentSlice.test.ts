@@ -1,39 +1,124 @@
+import { uuid } from 'uuidv4';
+import { mocked } from 'ts-jest/utils';
 import reducer, {
-  DocumentState, addBlock, updateBlock, mergeBlock, moveCursorUp, moveCursorDown, setCursorRow,
+  DocumentState, addBlockNextTo, updateBlock, moveCursorUp, moveCursorDown, setCursorRow,
 } from './documentSlice';
+
+jest.mock('uuidv4');
 
 describe('documentSlice', () => {
   const initialState: DocumentState = {
-    blocks: [{
-      id: '0',
-      content: 'LINE',
-    }],
+    blocks: {
+      byId: {
+        0: {
+          id: '0',
+          content: 'LINE',
+          parent: null,
+          children: [],
+        },
+      },
+      all: ['0'],
+    },
     cursor: {
       row: 0,
       column: 0,
     },
   };
 
-  describe('addBlock', () => {
-    it('should add a new block after the block at the given index', () => {
+  describe('addBlockNextTo', () => {
+    it('should add a new block after the given block', () => {
       // given
       const currentState: DocumentState = {
         ...initialState,
       };
+      mocked(uuid).mockReturnValue('1');
 
       // when
-      const nextState = reducer(currentState, addBlock({
-        index: 0,
+      const nextState = reducer(currentState, addBlockNextTo({
+        id: '0',
         content: 'NEW_LINE',
       }));
 
       // then
       expect(nextState).toMatchObject({
-        blocks: [{
-          content: 'LINE',
-        }, {
-          content: 'NEW_LINE',
-        }],
+        blocks: {
+          byId: {
+            0: {
+              id: '0',
+              content: 'LINE',
+              parent: null,
+              children: [],
+            },
+            1: {
+              id: '1',
+              content: 'NEW_LINE',
+              parent: null,
+              children: [],
+            },
+          },
+          all: ['0', '1'],
+        },
+      });
+    });
+
+    it('should add a new block after the given block, which is a child of another block', () => {
+      // given
+      const currentState: DocumentState = {
+        blocks: {
+          byId: {
+            0: {
+              id: '0',
+              content: 'LINE',
+              parent: null,
+              children: [],
+            },
+            1: {
+              id: '1',
+              content: 'LINE2',
+              parent: '0',
+              children: [],
+            },
+          },
+          all: ['0', '1'],
+        },
+        cursor: {
+          row: 0,
+          column: 0,
+        },
+      };
+      mocked(uuid).mockReturnValue('2');
+
+      // when
+      const nextState = reducer(currentState, addBlockNextTo({
+        id: '1',
+        content: 'NEW_LINE',
+      }));
+
+      // then
+      expect(nextState).toMatchObject({
+        blocks: {
+          byId: {
+            0: {
+              id: '0',
+              content: 'LINE',
+              parent: null,
+              children: [],
+            },
+            1: {
+              id: '1',
+              content: 'LINE2',
+              parent: '0',
+              children: [],
+            },
+            2: {
+              id: '2',
+              content: 'NEW_LINE',
+              parent: '0',
+              children: [],
+            },
+          },
+          all: ['0', '1', '2'],
+        },
       });
     });
   });
@@ -47,75 +132,21 @@ describe('documentSlice', () => {
 
       // when
       const nextState = reducer(currentState, updateBlock({
-        index: 0,
+        id: '0',
         content: 'NEW_LINE',
       }));
 
       // then
       expect(nextState).toMatchObject({
-        blocks: [{
-          content: 'NEW_LINE',
-        }],
-      });
-    });
-  });
-
-  describe('mergeBlock', () => {
-    it('should remove the block at the index \'from\' and append its content to the block at the index \'to\'', () => {
-      // given
-      const currentState: DocumentState = {
-        ...initialState,
-        blocks: [{
-          id: '1',
-          content: 'LINE1',
-        }, {
-          id: '2',
-          content: 'LINE2',
-        }],
-      };
-
-      // when
-      const nextState1 = reducer(currentState, mergeBlock({
-        from: 0,
-        to: 1,
-      }));
-      const nextState2 = reducer(currentState, mergeBlock({
-        from: 1,
-        to: 0,
-      }));
-      const nextState3 = reducer(currentState, mergeBlock({
-        from: 1,
-        to: 1,
-      }));
-
-      // then
-      expect(nextState1).toMatchObject({
-        blocks: [{
-          content: 'LINE2LINE1',
-        }],
-        cursor: {
-          row: 0,
-          column: 5,
-        },
-      });
-      expect(nextState2).toMatchObject({
-        blocks: [{
-          content: 'LINE1LINE2',
-        }],
-        cursor: {
-          row: 0,
-          column: 5,
-        },
-      });
-      expect(nextState3).toMatchObject({
-        blocks: [{
-          content: 'LINE1',
-        }, {
-          content: 'LINE2',
-        }],
-        cursor: {
-          row: 0,
-          column: 0,
+        blocks: {
+          byId: {
+            0: {
+              id: '0',
+              content: 'NEW_LINE',
+              parent: null,
+              children: [],
+            },
+          },
         },
       });
     });
@@ -125,17 +156,29 @@ describe('documentSlice', () => {
     it('should move up the cursor', () => {
       // given
       const currentState: DocumentState = {
-        ...initialState,
-        blocks: [{
-          id: '1',
-          content: 'LINE1',
-        }, {
-          id: '2',
-          content: 'LINE2',
-        }, {
-          id: '3',
-          content: 'LINE3',
-        }],
+        blocks: {
+          byId: {
+            0: {
+              id: '0',
+              parent: null,
+              content: 'LINE1',
+              children: [],
+            },
+            1: {
+              id: '1',
+              parent: null,
+              content: 'LINE2',
+              children: [],
+            },
+            2: {
+              id: '2',
+              parent: null,
+              content: 'LINE3',
+              children: [],
+            },
+          },
+          all: ['0', '1', '2'],
+        },
         cursor: {
           row: 1,
           column: 0,
@@ -156,16 +199,29 @@ describe('documentSlice', () => {
     it('should not move up the cursor when the cursor is on the top', () => {
       // given
       const currentState: DocumentState = {
-        blocks: [{
-          id: '1',
-          content: 'LINE1',
-        }, {
-          id: '2',
-          content: 'LINE2',
-        }, {
-          id: '3',
-          content: 'LINE3',
-        }],
+        blocks: {
+          byId: {
+            0: {
+              id: '0',
+              parent: null,
+              content: 'LINE1',
+              children: [],
+            },
+            1: {
+              id: '1',
+              parent: null,
+              content: 'LINE2',
+              children: [],
+            },
+            2: {
+              id: '2',
+              parent: null,
+              content: 'LINE3',
+              children: [],
+            },
+          },
+          all: ['0', '1', '2'],
+        },
         cursor: {
           row: 0,
           column: 0,
@@ -188,16 +244,29 @@ describe('documentSlice', () => {
     it('should move down the cursor', () => {
       // given
       const currentState: DocumentState = {
-        blocks: [{
-          id: '1',
-          content: 'LINE1',
-        }, {
-          id: '2',
-          content: 'LINE2',
-        }, {
-          id: '3',
-          content: 'LINE3',
-        }],
+        blocks: {
+          byId: {
+            0: {
+              id: '0',
+              parent: null,
+              content: 'LINE1',
+              children: [],
+            },
+            1: {
+              id: '1',
+              parent: null,
+              content: 'LINE2',
+              children: [],
+            },
+            2: {
+              id: '2',
+              parent: null,
+              content: 'LINE3',
+              children: [],
+            },
+          },
+          all: ['0', '1', '2'],
+        },
         cursor: {
           row: 1,
           column: 0,
@@ -218,16 +287,29 @@ describe('documentSlice', () => {
     it('should not move down the cursor when the cursor is on the bottom', () => {
       // given
       const currentState: DocumentState = {
-        blocks: [{
-          id: '1',
-          content: 'LINE1',
-        }, {
-          id: '2',
-          content: 'LINE2',
-        }, {
-          id: '3',
-          content: 'LINE3',
-        }],
+        blocks: {
+          byId: {
+            0: {
+              id: '0',
+              parent: null,
+              content: 'LINE1',
+              children: [],
+            },
+            1: {
+              id: '1',
+              parent: null,
+              content: 'LINE2',
+              children: [],
+            },
+            2: {
+              id: '2',
+              parent: null,
+              content: 'LINE3',
+              children: [],
+            },
+          },
+          all: ['0', '1', '2'],
+        },
         cursor: {
           row: 2,
           column: 0,
@@ -250,16 +332,29 @@ describe('documentSlice', () => {
     it('should set the row of the cursor to the given row', () => {
       // given
       const currentState: DocumentState = {
-        blocks: [{
-          id: '1',
-          content: 'LINE1',
-        }, {
-          id: '2',
-          content: 'LINE2',
-        }, {
-          id: '3',
-          content: 'LINE3',
-        }],
+        blocks: {
+          byId: {
+            0: {
+              id: '0',
+              parent: null,
+              content: 'LINE1',
+              children: [],
+            },
+            1: {
+              id: '1',
+              parent: null,
+              content: 'LINE2',
+              children: [],
+            },
+            2: {
+              id: '2',
+              parent: null,
+              content: 'LINE3',
+              children: [],
+            },
+          },
+          all: ['0', '1', '2'],
+        },
         cursor: {
           row: 2,
           column: 0,
@@ -279,16 +374,29 @@ describe('documentSlice', () => {
     it('should not update the row of the cursor when the given row is invalid', () => {
       // given
       const currentState: DocumentState = {
-        blocks: [{
-          id: '1',
-          content: 'LINE1',
-        }, {
-          id: '2',
-          content: 'LINE2',
-        }, {
-          id: '3',
-          content: 'LINE3',
-        }],
+        blocks: {
+          byId: {
+            0: {
+              id: '0',
+              parent: null,
+              content: 'LINE1',
+              children: [],
+            },
+            1: {
+              id: '1',
+              parent: null,
+              content: 'LINE2',
+              children: [],
+            },
+            2: {
+              id: '2',
+              parent: null,
+              content: 'LINE3',
+              children: [],
+            },
+          },
+          all: ['0', '1', '2'],
+        },
         cursor: {
           row: 2,
           column: 0,

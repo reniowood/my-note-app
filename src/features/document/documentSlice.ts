@@ -1,15 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { uuid } from 'uuidv4';
 
+type BlockId = string;
+
 export interface DocumentState {
-  readonly blocks: BlockState[];
+  readonly blocks: { byId: { [id: string]: BlockState }, all: BlockId[] };
   readonly cursor: CursorState;
 }
 
 export type BlockState = TextBlockState;
 
 export interface BaseBlockState {
-  readonly id: string;
+  readonly id: BlockId;
+  readonly parent: BlockId | null;
+  readonly children: BlockId[];
 }
 
 export interface TextBlockState extends BaseBlockState {
@@ -21,112 +25,96 @@ export interface CursorState {
   readonly column: number;
 }
 
-export interface AddBlockActionPayload {
-  readonly index: number;
+export interface AddBlockNextToActionPayload {
+  readonly id: BlockId;
   readonly content: string;
 }
 
 export interface UpdateBlockActionPayload {
-  readonly index: number;
+  readonly id: string;
   readonly content: string;
 }
 
-export interface MergeBlockActionPayload {
-  readonly from: number;
-  readonly to: number;
-}
-
-const initialState: DocumentState = {
-  blocks: [{
+function createInitialState() {
+  const initialBlock: BlockState = {
     id: uuid(),
+    parent: null,
+    children: [],
     content: '',
-  }],
-  cursor: {
-    row: 0,
-    column: 0,
-  },
-};
+  };
+
+  return {
+    blocks: {
+      byId: {
+        [initialBlock.id]: initialBlock,
+      },
+      all: [initialBlock.id],
+    },
+    cursor: {
+      row: 0,
+      column: 0,
+    },
+  };
+}
 
 const documentSlice = createSlice({
   name: 'document',
-  initialState,
+  initialState: createInitialState(),
   reducers: {
-    addBlock: (state: DocumentState, action: PayloadAction<AddBlockActionPayload>) => {
-      const { blocks, cursor } = state;
-      const { index, content } = action.payload;
+    addBlockNextTo: (state: DocumentState, action: PayloadAction<AddBlockNextToActionPayload>) => {
+      const { blocks } = state;
+      const { id, content } = action.payload;
+
+      const newId = uuid();
+      const index = blocks.all.findIndex((blockId) => blockId === id);
+      const parentId = blocks.byId[id].parent;
+      const updatedParent = (parentId && {
+        [parentId]: {
+          ...blocks.byId[parentId],
+          children: [
+            ...blocks.byId[parentId].children,
+            newId,
+          ],
+        },
+      }) || {};
 
       return {
-        blocks: [
-          ...blocks.slice(0, index + 1),
-          {
-            id: uuid(),
-            content,
-          },
-          ...blocks.slice(index + 1),
-        ],
-        cursor: {
-          row: cursor.row + 1,
-          column: 0,
+        ...state,
+        blocks: {
+          byId: Object.assign(updatedParent, {
+            ...blocks.byId,
+            [newId]: {
+              id: newId,
+              parent: parentId,
+              children: [],
+              content,
+            },
+          }),
+          all: [
+            ...blocks.all.slice(0, index + 1),
+            newId,
+            ...blocks.all.slice(index + 1),
+          ],
         },
       };
     },
     updateBlock: (state: DocumentState, action: PayloadAction<UpdateBlockActionPayload>) => {
       const { blocks } = state;
-      const { index, content } = action.payload;
+      const { id, content } = action.payload;
 
       return {
         ...state,
-        blocks: [
-          ...blocks.slice(0, index),
-          {
-            ...blocks[index],
-            content,
+        blocks: {
+          ...blocks,
+          byId: {
+            ...blocks.byId,
+            [id]: {
+              ...blocks.byId[id],
+              content,
+            },
           },
-          ...blocks.slice(index + 1),
-        ],
+        },
       };
-    },
-    mergeBlock: (state: DocumentState, action: PayloadAction<MergeBlockActionPayload>) => {
-      const { blocks } = state;
-      const { from, to } = action.payload;
-
-      if (from < to) {
-        return {
-          blocks: [
-            ...blocks.slice(0, from),
-            ...blocks.slice(from + 1, to),
-            {
-              ...blocks[to],
-              content: blocks[to].content + blocks[from].content,
-            },
-            ...blocks.slice(to + 1),
-          ],
-          cursor: {
-            row: to - 1,
-            column: blocks[to].content.length,
-          },
-        };
-      }
-
-      if (from > to) {
-        return {
-          blocks: [
-            ...blocks.slice(0, to),
-            {
-              ...blocks[to],
-              content: blocks[to].content + blocks[from].content,
-            },
-            ...blocks.slice(to + 1, from),
-            ...blocks.slice(from + 1),
-          ],
-          cursor: {
-            row: to,
-            column: blocks[to].content.length,
-          },
-        };
-      }
-
-      return state;
     },
     moveCursorUp: (state: DocumentState) => {
       const { cursor } = state;
@@ -141,20 +129,22 @@ const documentSlice = createSlice({
     },
     moveCursorDown: (state: DocumentState) => {
       const { cursor, blocks } = state;
+      const numBlocks = blocks.all.length;
 
       return {
         ...state,
         cursor: {
           ...cursor,
-          row: Math.min(blocks.length - 1, cursor.row + 1),
+          row: Math.min(numBlocks - 1, cursor.row + 1),
         },
       };
     },
     setCursorRow: (state: DocumentState, action: PayloadAction<number>) => {
       const { cursor, blocks } = state;
       const row = action.payload;
+      const numBlocks = blocks.all.length;
 
-      if (row < 0 || row >= blocks.length) {
+      if (row < 0 || row >= numBlocks) {
         return state;
       }
 
@@ -170,7 +160,7 @@ const documentSlice = createSlice({
 });
 
 export const {
-  addBlock, updateBlock, mergeBlock, moveCursorUp, moveCursorDown, setCursorRow,
+  addBlockNextTo, updateBlock, moveCursorUp, moveCursorDown, setCursorRow,
 } = documentSlice.actions;
 
 export default documentSlice.reducer;

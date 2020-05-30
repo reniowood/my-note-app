@@ -1,20 +1,20 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { addBlock } from '../document/documentSlice';
+import { addBlockNextTo } from '../document/documentSlice';
 import styles from './BlockHandler.module.css';
 
 interface BlockHandlerProps {
-  readonly index: number;
+  readonly id: string;
   readonly enabled: boolean;
 }
 
 export default function BlockHandler(props: BlockHandlerProps) {
-  const { index, enabled } = props;
+  const { id, enabled } = props;
   const dispatch = useDispatch();
 
   const onClick = () => {
-    dispatch(addBlock({
-      index,
+    dispatch(addBlockNextTo({
+      id,
       content: '',
     }));
   };

@@ -10,11 +10,13 @@ export default function Document() {
   return (
     <ul>
       {
-        blocks.map((block, index) => {
+        blocks.all.map((id, index) => {
+          const block = blocks.byId[id];
           if ((block as TextBlockState).content !== undefined) {
             return (
               <TextBlock
                 key={block.id}
+                id={id}
                 index={index}
                 block={block}
               />
@@ -24,6 +26,7 @@ export default function Document() {
           return (
             <TextBlock
               key={block.id}
+              id={id}
               index={index}
               block={block}
             />

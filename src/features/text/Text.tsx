@@ -1,12 +1,13 @@
 import React, { useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  addBlock, updateBlock, mergeBlock, moveCursorDown, moveCursorUp, setCursorRow,
+  addBlockNextTo, updateBlock, moveCursorDown, moveCursorUp, setCursorRow,
 } from '../document/documentSlice';
 import { selectCursor } from '../document/documentSelector';
 import styles from './Text.module.css';
 
 interface TextProps {
+  readonly id: string;
   readonly index: number;
   readonly content: string;
 }
@@ -32,7 +33,7 @@ function setCursorPosition(element: HTMLElement, position: number) {
 }
 
 export default function Text(props: TextProps) {
-  const { index, content } = props;
+  const { id, index, content } = props;
   const cursor = useSelector(selectCursor);
   const dispatch = useDispatch();
 
@@ -48,7 +49,7 @@ export default function Text(props: TextProps) {
   const updateBlockContent = (element: HTMLElement) => {
     dispatch(setCursorRow(index));
     dispatch(updateBlock({
-      index,
+      id,
       content: element.innerText,
     }));
   };
@@ -58,15 +59,15 @@ export default function Text(props: TextProps) {
       const cursorPosition = getCursorPosition();
       if (cursorPosition !== undefined) {
         const element = e.currentTarget;
-        dispatch(setCursorRow(index));
         dispatch(updateBlock({
-          index,
+          id,
           content: element.innerText?.substring(0, cursorPosition),
         }));
-        dispatch(addBlock({
-          index,
+        dispatch(addBlockNextTo({
+          id,
           content: element.innerText?.substring(cursorPosition),
         }));
+        dispatch(setCursorRow(index + 1));
       }
 
       e.preventDefault();
@@ -82,18 +83,6 @@ export default function Text(props: TextProps) {
       dispatch(moveCursorDown());
 
       e.preventDefault();
-    } else if (e.key === 'Backspace') {
-      const cursorPosition = getCursorPosition();
-      if (cursorPosition === 0 && index > 0) {
-        const element = e.currentTarget;
-        updateBlockContent(element);
-        dispatch(mergeBlock({
-          from: index,
-          to: index - 1,
-        }));
-
-        e.preventDefault();
-      }
     }
   };
 

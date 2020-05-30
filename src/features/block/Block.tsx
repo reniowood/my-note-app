@@ -3,11 +3,11 @@ import BlockHandler from './BlockHandler';
 import styles from './Block.module.css';
 
 interface BlockProps {
-  readonly index: number;
+  readonly id: string;
 }
 
 export default function Block(props: React.PropsWithChildren<BlockProps>) {
-  const { index, children } = props;
+  const { id, children } = props;
 
   const [showHandler, setShowHandler] = useState(false);
 
@@ -17,7 +17,7 @@ export default function Block(props: React.PropsWithChildren<BlockProps>) {
       onMouseEnter={() => setShowHandler(true)}
       onMouseLeave={() => setShowHandler(false)}
     >
-      <BlockHandler index={index} enabled={showHandler} />
+      <BlockHandler id={id} enabled={showHandler} />
       { children }
     </div>
   );
