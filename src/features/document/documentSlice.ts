@@ -68,28 +68,32 @@ const documentSlice = createSlice({
       const newId = uuid();
       const index = blocks.all.findIndex((blockId) => blockId === id);
       const parentId = blocks.byId[id].parent;
-      const updatedParent = (parentId && {
-        [parentId]: {
-          ...blocks.byId[parentId],
-          children: [
-            ...blocks.byId[parentId].children,
-            newId,
-          ],
-        },
-      }) || {};
+      let parent = {};
+      if (parentId !== null) {
+        parent = {
+          [parentId]: {
+            ...blocks.byId[parentId],
+            children: [
+              ...blocks.byId[parentId].children,
+              newId,
+            ],
+          },
+        };
+      }
 
       return {
         ...state,
         blocks: {
-          byId: Object.assign(updatedParent, {
+          byId: {
             ...blocks.byId,
+            ...parent,
             [newId]: {
               id: newId,
               parent: parentId,
               children: [],
               content,
             },
-          }),
+          },
           all: [
             ...blocks.all.slice(0, index + 1),
             newId,
@@ -156,11 +160,150 @@ const documentSlice = createSlice({
         },
       };
     },
+    indent: (state: DocumentState, action: PayloadAction<string>) => {
+      const { blocks } = state;
+      const id = action.payload;
+
+      const block = blocks.byId[id];
+      if (block.parent === null) {
+        if (blocks.all[0] === id) {
+          return state;
+        }
+
+        const blocksWithoutParent = blocks.all
+          .filter((blockId) => blocks.byId[blockId].parent === null);
+        const previousSiblingId = blocksWithoutParent[blocksWithoutParent.indexOf(id) - 1];
+
+        return {
+          ...state,
+          blocks: {
+            ...blocks,
+            byId: {
+              ...blocks.byId,
+              [id]: {
+                ...block,
+                parent: previousSiblingId,
+              },
+              [previousSiblingId]: {
+                ...blocks.byId[previousSiblingId],
+                children: [
+                  ...blocks.byId[previousSiblingId].children,
+                  id,
+                ],
+              },
+            },
+          },
+        };
+      }
+
+      const parent = blocks.byId[block.parent];
+      const index = parent.children.indexOf(id);
+      if (index === 0) {
+        return state;
+      }
+
+      const previousSiblingId = parent.children[index - 1];
+
+      return {
+        ...state,
+        blocks: {
+          ...blocks,
+          byId: {
+            ...blocks.byId,
+            [id]: {
+              ...block,
+              parent: previousSiblingId,
+            },
+            [parent.id]: {
+              ...parent,
+              children: [
+                ...parent.children.slice(0, index),
+                ...parent.children.slice(index + 1),
+              ],
+            },
+            [previousSiblingId]: {
+              ...blocks.byId[previousSiblingId],
+              children: [
+                ...blocks.byId[previousSiblingId].children,
+                id,
+              ],
+            },
+          },
+        },
+      };
+    },
+    outdent: (state: DocumentState, action: PayloadAction<string>) => {
+      const { blocks } = state;
+      const id = action.payload;
+
+      const block = blocks.byId[id];
+      if (block.parent === null) {
+        return state;
+      }
+
+      const parent = blocks.byId[block.parent];
+      const index = parent.children.indexOf(id);
+      if (parent.parent === null) {
+        return {
+          ...state,
+          blocks: {
+            ...blocks,
+            byId: {
+              ...blocks.byId,
+              [id]: {
+                ...block,
+                parent: null,
+              },
+              [parent.id]: {
+                ...parent,
+                children: [
+                  ...parent.children.slice(0, index),
+                  ...parent.children.slice(index + 1),
+                ],
+              },
+            },
+          },
+        };
+      }
+
+      const grandParent = blocks.byId[parent.parent];
+      const parentIndex = grandParent.children.indexOf(parent.id);
+
+      return {
+        ...state,
+        blocks: {
+          ...blocks,
+          byId: {
+            ...blocks.byId,
+            [id]: {
+              ...block,
+              parent: grandParent.id,
+            },
+            [parent.id]: {
+              ...parent,
+              children: [
+                ...parent.children.slice(0, index),
+                ...parent.children.slice(index + 1),
+              ],
+            },
+            [grandParent.id]: {
+              ...grandParent,
+              children: [
+                ...grandParent.children.slice(0, parentIndex),
+                parent.id,
+                id,
+                ...grandParent.children.slice(parentIndex + 1),
+              ],
+            },
+          },
+        },
+      };
+    },
   },
 });
 
 export const {
-  addBlockNextTo, updateBlock, moveCursorUp, moveCursorDown, setCursorRow,
+  addBlockNextTo, updateBlock, moveCursorUp, moveCursorDown, setCursorRow, indent, outdent,
 } = documentSlice.actions;
 
 export default documentSlice.reducer;

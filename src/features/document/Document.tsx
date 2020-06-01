@@ -1,37 +1,21 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { selectBlocks } from './documentSelector';
-import TextBlock from '../block/TextBlock';
-import { TextBlockState } from './documentSlice';
+import Component from '../component/Component';
 
 export default function Document() {
   const blocks = useSelector(selectBlocks);
+  const rootBlocks = blocks.all.filter((blockId) => blocks.byId[blockId].parent === null);
 
   return (
     <ul>
       {
-        blocks.all.map((id, index) => {
-          const block = blocks.byId[id];
-          if ((block as TextBlockState).content !== undefined) {
-            return (
-              <TextBlock
-                key={block.id}
-                id={id}
-                index={index}
-                block={block}
-              />
-            );
-          }
-
-          return (
-            <TextBlock
-              key={block.id}
-              id={id}
-              index={index}
-              block={block}
-            />
-          );
-        })
+        rootBlocks.map((id) => (
+          <Component
+            index={blocks.all.indexOf(id)}
+            block={blocks.byId[id]}
+          />
+        ))
       }
     </ul>
   );

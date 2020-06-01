@@ -1,7 +1,7 @@
 import { uuid } from 'uuidv4';
 import { mocked } from 'ts-jest/utils';
 import reducer, {
-  DocumentState, addBlockNextTo, updateBlock, moveCursorUp, moveCursorDown, setCursorRow,
+  DocumentState, addBlockNextTo, updateBlock, moveCursorUp, moveCursorDown, setCursorRow, indent, outdent,
 } from './documentSlice';
 
 jest.mock('uuidv4');
@@ -70,7 +70,7 @@ describe('documentSlice', () => {
               id: '0',
               content: 'LINE',
               parent: null,
-              children: [],
+              children: ['1'],
             },
             1: {
               id: '1',
@@ -102,7 +102,7 @@ describe('documentSlice', () => {
               id: '0',
               content: 'LINE',
               parent: null,
-              children: [],
+              children: ['1', '2'],
             },
             1: {
               id: '1',
@@ -371,6 +371,7 @@ describe('documentSlice', () => {
         },
       });
     });
+
     it('should not update the row of the cursor when the given row is invalid', () => {
       // given
       const currentState: DocumentState = {
