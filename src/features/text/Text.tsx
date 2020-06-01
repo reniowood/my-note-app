@@ -39,8 +39,9 @@ export default function Text(props: TextProps) {
 
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    if (index === cursor.row) {
-      if (ref.current) {
+    if (ref.current) {
+      ref.current.innerHTML = content;
+      if (index === cursor.row) {
         setCursorPosition(ref.current, cursor.column);
       }
     }
@@ -59,6 +60,7 @@ export default function Text(props: TextProps) {
       const cursorPosition = getCursorPosition();
       if (cursorPosition !== undefined) {
         const element = e.currentTarget;
+        updateBlockContent(element);
         dispatch(updateBlock({
           id,
           content: element.innerText?.substring(0, cursorPosition),
