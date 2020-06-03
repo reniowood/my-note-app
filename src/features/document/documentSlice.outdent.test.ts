@@ -316,4 +316,71 @@ describe('outdent', () => {
       },
     });
   });
+
+  it('should outdent the given block when it is on the second level', () => {
+    // given
+    const currentState: DocumentState = {
+      blocks: {
+        byId: {
+          0: {
+            id: '0',
+            parent: null,
+            content: 'LINE1',
+            children: ['1', '2'],
+          },
+          1: {
+            id: '1',
+            parent: '0',
+            content: 'LINE2',
+            children: [],
+          },
+          2: {
+            id: '2',
+            parent: '0',
+            content: 'LINE3',
+            children: [],
+          },
+        },
+        all: ['0', '1', '2'],
+      },
+      cursor: {
+        row: 1,
+        column: 0,
+      },
+    };
+
+    // when
+    const nextState = reducer(currentState, outdent('1'));
+
+    // then
+    expect(nextState).toMatchObject({
+      blocks: {
+        byId: {
+          0: {
+            id: '0',
+            parent: null,
+            content: 'LINE1',
+            children: ['2'],
+          },
+          1: {
+            id: '1',
+            parent: null,
+            content: 'LINE2',
+            children: [],
+          },
+          2: {
+            id: '2',
+            parent: '0',
+            content: 'LINE3',
+            children: [],
+          },
+        },
+        all: ['0', '2', '1'],
+      },
+      cursor: {
+        row: 2,
+        column: 0,
+      },
+    });
+  });
 });
