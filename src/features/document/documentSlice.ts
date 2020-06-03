@@ -311,6 +311,10 @@ const documentSlice = createSlice({
             ...blocks.all.slice(lastSiblingIndexInAll + 1),
           ],
         },
+        cursor: {
+          ...state.cursor,
+          row: lastSiblingIndexInAll,
+        },
       };
     },
   },

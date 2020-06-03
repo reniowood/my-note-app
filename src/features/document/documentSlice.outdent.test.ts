@@ -259,7 +259,7 @@ describe('outdent', () => {
         all: ['0', '1', '2', '3', '4', '5'],
       },
       cursor: {
-        row: 2,
+        row: 3,
         column: 0,
       },
     };
@@ -309,6 +309,10 @@ describe('outdent', () => {
           },
         },
         all: ['0', '1', '2', '4', '3', '5'],
+      },
+      cursor: {
+        row: 4,
+        column: 0,
       },
     });
   });
