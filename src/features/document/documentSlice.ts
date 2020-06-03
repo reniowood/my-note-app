@@ -269,6 +269,9 @@ const documentSlice = createSlice({
       const grandParent = blocks.byId[parent.parent];
       const parentIndex = grandParent.children.indexOf(parent.id);
 
+      const indexInAll = blocks.all.indexOf(id);
+      const lastSiblingIndexInAll = blocks.all.indexOf(parent.children[parent.children.length - 1]);
+
       return {
         ...state,
         blocks: {
@@ -296,6 +299,12 @@ const documentSlice = createSlice({
               ],
             },
           },
+          all: [
+            ...blocks.all.slice(0, indexInAll),
+            ...blocks.all.slice(indexInAll + 1, lastSiblingIndexInAll + 1),
+            id,
+            ...blocks.all.slice(lastSiblingIndexInAll + 1),
+          ],
         },
       };
     },
