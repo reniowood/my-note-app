@@ -121,6 +121,79 @@ describe('documentSlice', () => {
         },
       });
     });
+
+    it('should add a new block after the given block when there is a sibling next to it', () => {
+      // given
+      const currentState: DocumentState = {
+        blocks: {
+          byId: {
+            0: {
+              id: '0',
+              content: 'LINE',
+              parent: null,
+              children: ['1', '2'],
+            },
+            1: {
+              id: '1',
+              content: 'LINE2',
+              parent: '0',
+              children: [],
+            },
+            2: {
+              id: '2',
+              content: 'LINE3',
+              parent: '0',
+              children: [],
+            },
+          },
+          all: ['0', '1', '2'],
+        },
+        cursor: {
+          row: 0,
+          column: 0,
+        },
+      };
+      mocked(uuid).mockReturnValue('3');
+
+      // when
+      const nextState = reducer(currentState, addBlockNextTo({
+        id: '1',
+        content: 'NEW_LINE',
+      }));
+
+      // then
+      expect(nextState).toMatchObject({
+        blocks: {
+          byId: {
+            0: {
+              id: '0',
+              content: 'LINE',
+              parent: null,
+              children: ['1', '3', '2'],
+            },
+            1: {
+              id: '1',
+              content: 'LINE2',
+              parent: '0',
+              children: [],
+            },
+            2: {
+              id: '2',
+              content: 'LINE3',
+              parent: '0',
+              children: [],
+            },
+            3: {
+              id: '3',
+              content: 'NEW_LINE',
+              parent: '0',
+              children: [],
+            },
+          },
+          all: ['0', '1', '3', '2'],
+        },
+      });
+    });
   });
 
   describe('updateBlock', () => {

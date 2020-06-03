@@ -66,27 +66,32 @@ const documentSlice = createSlice({
       const { id, content } = action.payload;
 
       const newId = uuid();
-      const index = blocks.all.findIndex((blockId) => blockId === id);
       const parentId = blocks.byId[id].parent;
-      let parent = {};
+      let newParent = {};
       if (parentId !== null) {
-        parent = {
+        const parent = blocks.byId[parentId];
+        const index = parent.children.indexOf(id);
+
+        newParent = {
           [parentId]: {
-            ...blocks.byId[parentId],
+            ...parent,
             children: [
-              ...blocks.byId[parentId].children,
+              ...parent.children.slice(0, index + 1),
               newId,
+              ...parent.children.slice(index + 1),
             ],
           },
         };
       }
+
+      const indexInAll = blocks.all.indexOf(id);
 
       return {
         ...state,
         blocks: {
           byId: {
             ...blocks.byId,
-            ...parent,
+            ...newParent,
             [newId]: {
               id: newId,
               parent: parentId,
@@ -95,9 +100,9 @@ const documentSlice = createSlice({
             },
           },
           all: [
-            ...blocks.all.slice(0, index + 1),
+            ...blocks.all.slice(0, indexInAll + 1),
             newId,
-            ...blocks.all.slice(index + 1),
+            ...blocks.all.slice(indexInAll + 1),
           ],
         },
       };
