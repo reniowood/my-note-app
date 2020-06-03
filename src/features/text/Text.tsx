@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  addBlockNextTo, updateBlock, moveCursorDown, moveCursorUp, setCursorRow, indent,
+  addBlockNextTo, updateBlock, moveCursorDown, moveCursorUp, setCursorRow, indent, outdent,
 } from '../document/documentSlice';
 import { selectCursor } from '../document/documentSelector';
 import styles from './Text.module.css';
@@ -83,6 +83,12 @@ export default function Text(props: TextProps) {
       const element = e.currentTarget;
       updateBlockContent(element);
       dispatch(moveCursorDown());
+
+      e.preventDefault();
+    } else if (e.shiftKey && e.key === 'Tab') {
+      const element = e.currentTarget;
+      updateBlockContent(element);
+      dispatch(outdent(id));
 
       e.preventDefault();
     } else if (e.key === 'Tab') {
