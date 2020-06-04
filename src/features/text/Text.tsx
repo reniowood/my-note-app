@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  addBlockNextTo, updateBlock, moveCursorDown, moveCursorUp, setCursorRow, indent, outdent,
+  addBlockNextTo, updateBlock, moveCursorDown, moveCursorUp, setCursorRow, indent, outdent, setCursorColumn,
 } from '../document/documentSlice';
 import { selectCursor } from '../document/documentSelector';
 import styles from './Text.module.css';
@@ -47,12 +47,13 @@ export default function Text(props: TextProps) {
     }
   });
 
-  const updateBlockContent = (element: HTMLElement) => {
-    dispatch(setCursorRow(index));
+  const updateBlockContent = (element: HTMLElement, column: number) => {
     dispatch(updateBlock({
       id,
       content: element.innerText,
     }));
+    dispatch(setCursorRow(index));
+    dispatch(setCursorColumn(column));
   };
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -60,7 +61,7 @@ export default function Text(props: TextProps) {
       const cursorPosition = getCursorPosition();
       if (cursorPosition !== undefined) {
         const element = e.currentTarget;
-        updateBlockContent(element);
+        updateBlockContent(element, cursorPosition);
         dispatch(updateBlock({
           id,
           content: element.innerText?.substring(0, cursorPosition),
@@ -75,25 +76,37 @@ export default function Text(props: TextProps) {
       e.preventDefault();
     } else if (e.key === 'ArrowUp') {
       const element = e.currentTarget;
-      updateBlockContent(element);
+      const cursorPosition = getCursorPosition();
+      if (cursorPosition !== undefined) {
+        updateBlockContent(element, cursorPosition);
+      }
       dispatch(moveCursorUp());
 
       e.preventDefault();
     } else if (e.key === 'ArrowDown') {
       const element = e.currentTarget;
-      updateBlockContent(element);
+      const cursorPosition = getCursorPosition();
+      if (cursorPosition !== undefined) {
+        updateBlockContent(element, cursorPosition);
+      }
       dispatch(moveCursorDown());
 
       e.preventDefault();
     } else if (e.shiftKey && e.key === 'Tab') {
       const element = e.currentTarget;
-      updateBlockContent(element);
+      const cursorPosition = getCursorPosition();
+      if (cursorPosition !== undefined) {
+        updateBlockContent(element, cursorPosition);
+      }
       dispatch(outdent(id));
 
       e.preventDefault();
     } else if (e.key === 'Tab') {
       const element = e.currentTarget;
-      updateBlockContent(element);
+      const cursorPosition = getCursorPosition();
+      if (cursorPosition !== undefined) {
+        updateBlockContent(element, cursorPosition);
+      }
       dispatch(indent(id));
 
       e.preventDefault();

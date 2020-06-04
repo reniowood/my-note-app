@@ -1,7 +1,13 @@
 import { uuid } from 'uuidv4';
 import { mocked } from 'ts-jest/utils';
 import reducer, {
-  DocumentState, addBlockNextTo, updateBlock, moveCursorUp, moveCursorDown, setCursorRow, indent, outdent,
+  DocumentState,
+  addBlockNextTo,
+  updateBlock,
+  moveCursorUp,
+  moveCursorDown,
+  setCursorRow,
+  setCursorColumn,
 } from './documentSlice';
 
 jest.mock('uuidv4');
@@ -311,6 +317,50 @@ describe('documentSlice', () => {
         },
       });
     });
+
+    it('should set the column to the last position when the length of the previous block is smaller than the column', () => {
+      // given
+      const currentState: DocumentState = {
+        blocks: {
+          byId: {
+            0: {
+              id: '0',
+              parent: null,
+              content: 'LINE',
+              children: [],
+            },
+            1: {
+              id: '1',
+              parent: null,
+              content: 'LINE2',
+              children: [],
+            },
+            2: {
+              id: '2',
+              parent: null,
+              content: 'LINE3',
+              children: [],
+            },
+          },
+          all: ['0', '1', '2'],
+        },
+        cursor: {
+          row: 1,
+          column: 5,
+        },
+      };
+
+      // when
+      const nextState = reducer(currentState, moveCursorUp());
+
+      // then
+      expect(nextState).toMatchObject({
+        cursor: {
+          row: 0,
+          column: 4,
+        },
+      });
+    });
   });
 
   describe('moveCursorDown', () => {
@@ -396,6 +446,50 @@ describe('documentSlice', () => {
       expect(nextState).toMatchObject({
         cursor: {
           row: 2,
+        },
+      });
+    });
+
+    it('should set the column to the last position when the length of the next block is smaller than the column', () => {
+      // given
+      const currentState: DocumentState = {
+        blocks: {
+          byId: {
+            0: {
+              id: '0',
+              parent: null,
+              content: 'LINE',
+              children: [],
+            },
+            1: {
+              id: '1',
+              parent: null,
+              content: '',
+              children: [],
+            },
+            2: {
+              id: '2',
+              parent: null,
+              content: 'LINE3',
+              children: [],
+            },
+          },
+          all: ['0', '1', '2'],
+        },
+        cursor: {
+          row: 0,
+          column: 4,
+        },
+      };
+
+      // when
+      const nextState = reducer(currentState, moveCursorDown());
+
+      // then
+      expect(nextState).toMatchObject({
+        cursor: {
+          row: 1,
+          column: 0,
         },
       });
     });
@@ -490,6 +584,100 @@ describe('documentSlice', () => {
       expect(nextState2).toMatchObject({
         cursor: {
           row: 2,
+        },
+      });
+    });
+  });
+
+  describe('setCursorColumn', () => {
+    it('should set the column of the cursor to the given column', () => {
+      // given
+      const currentState: DocumentState = {
+        blocks: {
+          byId: {
+            0: {
+              id: '0',
+              parent: null,
+              content: 'LINE1',
+              children: [],
+            },
+            1: {
+              id: '1',
+              parent: null,
+              content: 'LINE2',
+              children: [],
+            },
+            2: {
+              id: '2',
+              parent: null,
+              content: 'LINE3',
+              children: [],
+            },
+          },
+          all: ['0', '1', '2'],
+        },
+        cursor: {
+          row: 2,
+          column: 0,
+        },
+      };
+
+      // when
+      const nextState = reducer(currentState, setCursorColumn(2));
+
+      // then
+      expect(nextState).toMatchObject({
+        cursor: {
+          column: 2,
+        },
+      });
+    });
+
+    it('should not update the column of the cursor when the given column is invalid', () => {
+      // given
+      const currentState: DocumentState = {
+        blocks: {
+          byId: {
+            0: {
+              id: '0',
+              parent: null,
+              content: 'LINE1',
+              children: [],
+            },
+            1: {
+              id: '1',
+              parent: null,
+              content: 'LINE2',
+              children: [],
+            },
+            2: {
+              id: '2',
+              parent: null,
+              content: 'LINE3',
+              children: [],
+            },
+          },
+          all: ['0', '1', '2'],
+        },
+        cursor: {
+          row: 2,
+          column: 0,
+        },
+      };
+
+      // when
+      const nextState1 = reducer(currentState, setCursorColumn(-1));
+      const nextState2 = reducer(currentState, setCursorColumn(6));
+
+      // then
+      expect(nextState1).toMatchObject({
+        cursor: {
+          column: 0,
+        },
+      });
+      expect(nextState2).toMatchObject({
+        cursor: {
+          column: 0,
         },
       });
     });

@@ -126,25 +126,37 @@ const documentSlice = createSlice({
       };
     },
     moveCursorUp: (state: DocumentState) => {
-      const { cursor } = state;
+      const { cursor, blocks } = state;
+      if (cursor.row === 0) {
+        return state;
+      }
+
+      const prevBlockId = blocks.all[cursor.row - 1];
+      const prevBlock = blocks.byId[prevBlockId];
 
       return {
         ...state,
         cursor: {
-          ...cursor,
-          row: Math.max(0, cursor.row - 1),
+          row: cursor.row - 1,
+          column: Math.min(cursor.column, prevBlock.content.length),
         },
       };
     },
     moveCursorDown: (state: DocumentState) => {
       const { cursor, blocks } = state;
       const numBlocks = blocks.all.length;
+      if (cursor.row === numBlocks - 1) {
+        return state;
+      }
+
+      const nextBlockId = blocks.all[cursor.row + 1];
+      const nextBlock = blocks.byId[nextBlockId];
 
       return {
         ...state,
         cursor: {
-          ...cursor,
-          row: Math.min(numBlocks - 1, cursor.row + 1),
+          row: cursor.row + 1,
+          column: Math.min(cursor.column, nextBlock.content.length),
         },
       };
     },
@@ -162,6 +174,24 @@ const documentSlice = createSlice({
         cursor: {
           ...cursor,
           row,
+        },
+      };
+    },
+    setCursorColumn: (state: DocumentState, action: PayloadAction<number>) => {
+      const { cursor, blocks } = state;
+      const column = action.payload;
+      const id = blocks.all[cursor.row];
+      const block = blocks.byId[id];
+
+      if (column < 0 || column > block.content.length) {
+        return state;
+      }
+
+      return {
+        ...state,
+        cursor: {
+          ...cursor,
+          column,
         },
       };
     },
@@ -332,7 +362,14 @@ const documentSlice = createSlice({
 });
 
 export const {
-  addBlockNextTo, updateBlock, moveCursorUp, moveCursorDown, setCursorRow, indent, outdent,
+  addBlockNextTo,
+  updateBlock,
+  moveCursorUp,
+  moveCursorDown,
+  setCursorRow,
+  setCursorColumn,
+  indent,
+  outdent,
 } = documentSlice.actions;
 
 export default documentSlice.reducer;
