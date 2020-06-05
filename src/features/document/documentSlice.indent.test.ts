@@ -127,6 +127,45 @@ describe('indent', () => {
     });
   });
 
+  it('should not indent the given block when it is the first root block', () => {
+    // given
+    const currentState: DocumentState = {
+      blocks: {
+        byId: {
+          0: {
+            id: '0',
+            parent: null,
+            content: 'LINE1',
+            children: [],
+          },
+        },
+        all: ['0'],
+      },
+      cursor: {
+        row: 0,
+        column: 0,
+      },
+    };
+
+    // when
+    const nextState = reducer(currentState, indent('0'));
+
+    // then
+    expect(nextState).toMatchObject({
+      blocks: {
+        byId: {
+          0: {
+            id: '0',
+            parent: null,
+            content: 'LINE1',
+            children: [],
+          },
+        },
+        all: ['0'],
+      },
+    });
+  });
+
   it('should indent the given block when it has children', () => {
     // given
     const currentState: DocumentState = {
