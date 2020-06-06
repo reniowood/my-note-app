@@ -1,14 +1,23 @@
 import React, { useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  addBlockNextTo, updateBlock, moveCursorDown, moveCursorUp, setCursorRow, indent, outdent, setCursorColumn,
+  addBlockNextTo,
+  updateBlock,
+  moveCursorDown,
+  moveCursorUp,
+  setCursorRow,
+  indent,
+  outdent,
+  setCursorColumn,
+  mergeWithPreviousBlock,
 } from '../document/documentSlice';
-import { selectCursor } from '../document/documentSelector';
+import { selectCursor, selectPreviousBlock } from '../document/documentSelector';
 import styles from './Text.module.css';
 
 interface TextProps {
   readonly id: string;
   readonly index: number;
+  readonly parentId: string | null;
   readonly content: string;
 }
 
@@ -33,8 +42,14 @@ function setCursorPosition(element: HTMLElement, position: number) {
 }
 
 export default function Text(props: TextProps) {
-  const { id, index, content } = props;
+  const {
+    id,
+    index,
+    parentId,
+    content,
+  } = props;
   const cursor = useSelector(selectCursor);
+  const previousBlock = useSelector(selectPreviousBlock(index));
   const dispatch = useDispatch();
 
   const ref = useRef<HTMLDivElement>(null);
@@ -110,6 +125,22 @@ export default function Text(props: TextProps) {
       dispatch(indent(id));
 
       e.preventDefault();
+    } else if (e.key === 'Backspace') {
+      const element = e.currentTarget;
+      const cursorPosition = getCursorPosition();
+      if (cursorPosition === 0) {
+        updateBlockContent(element, cursorPosition);
+
+        console.log(`${previousBlock?.id}, ${parentId}`);
+
+        if (previousBlock !== null && previousBlock.parent === parentId) {
+          dispatch(mergeWithPreviousBlock(id));
+        } else {
+          dispatch(outdent(id));
+        }
+
+        e.preventDefault();
+      }
     }
   };
 
