@@ -1,4 +1,5 @@
-import reducer, { DocumentState, outdent } from './documentSlice';
+import outdentReducer from './outdent';
+import { DocumentState } from '../documentState';
 
 describe('outdent', () => {
   it('should outdent the given block', () => {
@@ -34,7 +35,7 @@ describe('outdent', () => {
     };
 
     // when
-    const nextState = reducer(currentState, outdent('1'));
+    const nextState = outdentReducer(currentState, { id: '1' });
 
     // then
     expect(nextState).toMatchObject({
@@ -97,7 +98,7 @@ describe('outdent', () => {
     };
 
     // when
-    const nextState = reducer(currentState, outdent('1'));
+    const nextState = outdentReducer(currentState, { id: '1' });
 
     // then
     expect(nextState).toMatchObject({
@@ -172,7 +173,7 @@ describe('outdent', () => {
     };
 
     // when
-    const nextState = reducer(currentState, outdent('3'));
+    const nextState = outdentReducer(currentState, { id: '3' });
 
     // then
     expect(nextState).toMatchObject({
@@ -265,7 +266,7 @@ describe('outdent', () => {
     };
 
     // when
-    const nextState = reducer(currentState, outdent('3'));
+    const nextState = outdentReducer(currentState, { id: '3' });
 
     // then
     expect(nextState).toMatchObject({
@@ -350,7 +351,7 @@ describe('outdent', () => {
     };
 
     // when
-    const nextState = reducer(currentState, outdent('1'));
+    const nextState = outdentReducer(currentState, { id: '1' });
 
     // then
     expect(nextState).toMatchObject({

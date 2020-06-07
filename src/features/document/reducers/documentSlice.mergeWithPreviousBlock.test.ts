@@ -1,4 +1,5 @@
-import reducer, { DocumentState, mergeWithPreviousBlock } from './documentSlice';
+import { DocumentState } from '../documentState';
+import mergeWithPreviousBlockReducer from './mergeWithPreviousBlock';
 
 describe('mrege', () => {
   it('should merge the given block with its previous block', () => {
@@ -52,7 +53,7 @@ describe('mrege', () => {
     };
 
     // when
-    const nextState = reducer(currentState, mergeWithPreviousBlock('2'));
+    const nextState = mergeWithPreviousBlockReducer(currentState, { id: '2' });
 
     // then
     expect(nextState).toMatchObject({
@@ -131,7 +132,7 @@ describe('mrege', () => {
     };
 
     // when
-    const nextState = reducer(currentState, mergeWithPreviousBlock('0'));
+    const nextState = mergeWithPreviousBlockReducer(currentState, { id: '0' });
 
     // then
     expect(nextState).toMatchObject(currentState);
@@ -170,7 +171,7 @@ describe('mrege', () => {
     };
 
     // when
-    const nextState = reducer(currentState, mergeWithPreviousBlock('3'));
+    const nextState = mergeWithPreviousBlockReducer(currentState, { id: '3' });
 
     // then
     expect(nextState).toMatchObject(currentState);

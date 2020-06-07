@@ -1,4 +1,6 @@
-import reducer, { DocumentState, indent } from './documentSlice';
+import { DocumentState } from '../documentState';
+import indentReducer from './indent';
+
 
 describe('indent', () => {
   it('should indent the given block', () => {
@@ -34,7 +36,7 @@ describe('indent', () => {
     };
 
     // when
-    const nextState = reducer(currentState, indent('1'));
+    const nextState = indentReducer(currentState, { id: '1' });
 
     // then
     expect(nextState).toMatchObject({
@@ -97,7 +99,7 @@ describe('indent', () => {
     };
 
     // when
-    const nextState = reducer(currentState, indent('1'));
+    const nextState = indentReducer(currentState, { id: '1' });
 
     // then
     expect(nextState).toMatchObject({
@@ -148,7 +150,7 @@ describe('indent', () => {
     };
 
     // when
-    const nextState = reducer(currentState, indent('0'));
+    const nextState = indentReducer(currentState, { id: '0' });
 
     // then
     expect(nextState).toMatchObject({
@@ -211,7 +213,7 @@ describe('indent', () => {
     };
 
     // when
-    const nextState = reducer(currentState, indent('3'));
+    const nextState = indentReducer(currentState, { id: '3' });
 
     // then
     expect(nextState).toMatchObject({
