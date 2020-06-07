@@ -86,6 +86,7 @@ export default function Text(props: TextProps) {
           content: element.innerText?.substring(cursorPosition),
         }));
         dispatch(setCursorRow(index + 1));
+        dispatch(setCursorColumn(0));
       }
 
       e.preventDefault();
@@ -130,8 +131,6 @@ export default function Text(props: TextProps) {
       const cursorPosition = getCursorPosition();
       if (cursorPosition === 0) {
         updateBlockContent(element, cursorPosition);
-
-        console.log(`${previousBlock?.id}, ${parentId}`);
 
         if (previousBlock !== null && previousBlock.parent === parentId) {
           dispatch(mergeWithPreviousBlock(id));
