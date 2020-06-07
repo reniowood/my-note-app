@@ -1,15 +1,16 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { addBlockNextTo } from '../document/documentSlice';
+import { addBlockNextTo, setCursorRow, setCursorColumn } from '../document/documentSlice';
 import styles from './BlockHandler.module.css';
 
 interface BlockHandlerProps {
   readonly id: string;
+  readonly index: number;
   readonly enabled: boolean;
 }
 
 export default function BlockHandler(props: BlockHandlerProps) {
-  const { id, enabled } = props;
+  const { id, index, enabled } = props;
   const dispatch = useDispatch();
 
   const onClick = () => {
@@ -17,6 +18,8 @@ export default function BlockHandler(props: BlockHandlerProps) {
       id,
       content: '',
     }));
+    dispatch(setCursorRow(index + 1));
+    dispatch(setCursorColumn(0));
   };
 
   return (
@@ -29,7 +32,7 @@ export default function BlockHandler(props: BlockHandlerProps) {
         tabIndex={-1}
         className={`${styles.addButton} material-icons`}
         onClick={() => onClick()}
-        onKeyDown={() => {}}
+        onKeyDown={() => { }}
       >
         add
       </span>
