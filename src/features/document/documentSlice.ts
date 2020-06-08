@@ -23,8 +23,8 @@ const documentSlice = createSlice({
   reducers: {
     addBlockNextTo: convert(addBlockNextToReducer),
     updateBlock: convert(updateBlockReducer),
-    moveCursorUp: convert(moveCursorUpReducer),
-    moveCursorDown: convert(moveCursorDownReducer),
+    moveCursorUp: moveCursorUpReducer,
+    moveCursorDown: moveCursorDownReducer,
     setCursorRow: convert(setCursorRowReducer),
     setCursorColumn: convert(setCursorColumnReducer),
     indent: convert(indentReducer),

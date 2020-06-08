@@ -1,7 +1,7 @@
 import React from 'react';
-import { TextBlockState } from '../document/documentSlice';
 import Text from '../text/Text';
 import Block from './Block';
+import { TextBlockState } from '../document/documentState';
 
 interface TextBlockProps {
   readonly index: number;

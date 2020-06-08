@@ -67,8 +67,12 @@ export default function Text(props: TextProps) {
       id,
       content: element.innerText,
     }));
-    dispatch(setCursorRow(index));
-    dispatch(setCursorColumn(column));
+    dispatch(setCursorRow({
+      row: index,
+    }));
+    dispatch(setCursorColumn({
+      column,
+    }));
   };
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -85,8 +89,12 @@ export default function Text(props: TextProps) {
           id,
           content: element.innerText?.substring(cursorPosition),
         }));
-        dispatch(setCursorRow(index + 1));
-        dispatch(setCursorColumn(0));
+        dispatch(setCursorRow({
+          row: index + 1,
+        }));
+        dispatch(setCursorColumn({
+          column: 0,
+        }));
       }
 
       e.preventDefault();
@@ -114,7 +122,9 @@ export default function Text(props: TextProps) {
       if (cursorPosition !== undefined) {
         updateBlockContent(element, cursorPosition);
       }
-      dispatch(outdent(id));
+      dispatch(outdent({
+        id,
+      }));
 
       e.preventDefault();
     } else if (e.key === 'Tab') {
@@ -123,7 +133,9 @@ export default function Text(props: TextProps) {
       if (cursorPosition !== undefined) {
         updateBlockContent(element, cursorPosition);
       }
-      dispatch(indent(id));
+      dispatch(indent({
+        id,
+      }));
 
       e.preventDefault();
     } else if (e.key === 'Backspace') {
@@ -133,9 +145,13 @@ export default function Text(props: TextProps) {
         updateBlockContent(element, cursorPosition);
 
         if (previousBlock !== null && previousBlock.parent === parentId) {
-          dispatch(mergeWithPreviousBlock(id));
+          dispatch(mergeWithPreviousBlock({
+            id,
+          }));
         } else {
-          dispatch(outdent(id));
+          dispatch(outdent({
+            id,
+          }));
         }
 
         e.preventDefault();

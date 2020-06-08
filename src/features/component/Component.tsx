@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { BlockState, TextBlockState } from '../document/documentSlice';
+import { BlockState, TextBlockState } from '../document/documentState';
 import TextBlock from '../block/TextBlock';
 import { selectBlocks } from '../document/documentSelector';
 

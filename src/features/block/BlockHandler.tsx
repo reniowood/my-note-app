@@ -18,8 +18,12 @@ export default function BlockHandler(props: BlockHandlerProps) {
       id,
       content: '',
     }));
-    dispatch(setCursorRow(index + 1));
-    dispatch(setCursorColumn(0));
+    dispatch(setCursorRow({
+      row: index + 1,
+    }));
+    dispatch(setCursorColumn({
+      column: 0,
+    }));
   };
 
   return (
