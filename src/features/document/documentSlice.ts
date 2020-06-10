@@ -9,6 +9,8 @@ import setCursorColumnReducer from './reducers/setCursorColumn';
 import indentReducer from './reducers/indent';
 import outdentReducer from './reducers/outdent';
 import mergeWithPreviousBlockReducer from './reducers/mergeWithPreviousBlock';
+import checkCheckboxBlockReducer from './reducers/checkCheckboxBlock';
+import uncheckCheckboxBlockReducer from './reducers/uncheckCheckboxBlock';
 
 type Reducer<T> = (state: DocumentState, payload: T) => DocumentState;
 type ReducerWithAction<T> = (state: DocumentState, action: PayloadAction<T>) => DocumentState;
@@ -30,6 +32,8 @@ const documentSlice = createSlice({
     indent: convert(indentReducer),
     outdent: convert(outdentReducer),
     mergeWithPreviousBlock: convert(mergeWithPreviousBlockReducer),
+    checkCheckboxBlock: convert(checkCheckboxBlockReducer),
+    uncheckCheckboxBlock: convert(uncheckCheckboxBlockReducer),
   },
 });
 
@@ -43,6 +47,8 @@ export const {
   indent,
   outdent,
   mergeWithPreviousBlock,
+  checkCheckboxBlock,
+  uncheckCheckboxBlock,
 } = documentSlice.actions;
 
 export default documentSlice.reducer;

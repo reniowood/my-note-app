@@ -7,7 +7,7 @@ export interface DocumentState {
   readonly cursor: CursorState;
 }
 
-export type BlockState = TextBlockState;
+export type BlockState = TextBlockState | CheckboxBlockState;
 
 export interface BaseBlockState {
   readonly id: BlockId;
@@ -17,6 +17,10 @@ export interface BaseBlockState {
 
 export interface TextBlockState extends BaseBlockState {
   readonly content: string;
+}
+
+export interface CheckboxBlockState extends TextBlockState {
+  readonly isChecked: boolean;
 }
 
 export interface CursorState {
