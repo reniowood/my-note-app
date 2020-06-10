@@ -1,13 +1,13 @@
 import { DocumentState, isCheckboxBlock } from '../documentState';
 
-export interface CheckCheckboxBlockPayload {
+export interface ConvertBlockToTextBlockPayload {
   readonly id: string;
 }
 
-export default function uncheckCheckboxBlockReducer(
+export default function convertBlockToTextBlockReducer(
   state: DocumentState,
-  payload: CheckCheckboxBlockPayload,
-) {
+  payload: ConvertBlockToTextBlockPayload,
+): DocumentState {
   const { blocks } = state;
   const { id } = payload;
 
@@ -17,16 +17,15 @@ export default function uncheckCheckboxBlockReducer(
     return state;
   }
 
+  const { isChecked: _, ...textBlock } = block;
+
   return {
     ...state,
     blocks: {
       ...blocks,
       byId: {
         ...blocks.byId,
-        [id]: {
-          ...block,
-          isChecked: false,
-        },
+        [id]: textBlock,
       },
     },
   };

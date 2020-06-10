@@ -23,6 +23,10 @@ export interface CheckboxBlockState extends TextBlockState {
   readonly isChecked: boolean;
 }
 
+export function isCheckboxBlock(block: BlockState): block is CheckboxBlockState {
+  return (block as CheckboxBlockState).isChecked !== undefined;
+}
+
 export interface CursorState {
   readonly row: number;
   readonly column: number;

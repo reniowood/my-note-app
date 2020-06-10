@@ -1,11 +1,7 @@
-import { DocumentState, CheckboxBlockState, BlockState } from '../documentState';
+import { DocumentState, isCheckboxBlock } from '../documentState';
 
 export interface CheckCheckboxBlockPayload {
   readonly id: string;
-}
-
-function isCheckboxBlock(block: BlockState): block is CheckboxBlockState {
-  return (block as CheckboxBlockState).isChecked !== undefined;
 }
 
 export default function checkCheckboxBlockReducer(

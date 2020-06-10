@@ -11,6 +11,8 @@ import outdentReducer from './reducers/outdent';
 import mergeWithPreviousBlockReducer from './reducers/mergeWithPreviousBlock';
 import checkCheckboxBlockReducer from './reducers/checkCheckboxBlock';
 import uncheckCheckboxBlockReducer from './reducers/uncheckCheckboxBlock';
+import convertBlockToCheckboxBlockReducer from './reducers/convertBlockToCheckboxBlock';
+import convertBlockToTextBlockReducer from './reducers/convertBlockToTextBlock';
 
 type Reducer<T> = (state: DocumentState, payload: T) => DocumentState;
 type ReducerWithAction<T> = (state: DocumentState, action: PayloadAction<T>) => DocumentState;
@@ -34,6 +36,8 @@ const documentSlice = createSlice({
     mergeWithPreviousBlock: convert(mergeWithPreviousBlockReducer),
     checkCheckboxBlock: convert(checkCheckboxBlockReducer),
     uncheckCheckboxBlock: convert(uncheckCheckboxBlockReducer),
+    convertBlockToCheckboxBlock: convert(convertBlockToCheckboxBlockReducer),
+    convertBlockToTextBlock: convert(convertBlockToTextBlockReducer),
   },
 });
 
@@ -49,6 +53,8 @@ export const {
   mergeWithPreviousBlock,
   checkCheckboxBlock,
   uncheckCheckboxBlock,
+  convertBlockToCheckboxBlock,
+  convertBlockToTextBlock,
 } = documentSlice.actions;
 
 export default documentSlice.reducer;
