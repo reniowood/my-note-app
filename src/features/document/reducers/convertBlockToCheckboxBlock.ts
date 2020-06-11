@@ -1,4 +1,4 @@
-import { DocumentState, isCheckboxBlock } from '../documentState';
+import { DocumentState } from '../documentState';
 
 export interface ConvertBlockToCheckboxBlockPayload {
   readonly id: string;
@@ -13,7 +13,7 @@ export default function convertBlockToCheckboxBlockReducer(
 
   const block = blocks.byId[id];
 
-  if (isCheckboxBlock(block)) {
+  if (block.type === 'checkbox') {
     return state;
   }
 
@@ -25,6 +25,7 @@ export default function convertBlockToCheckboxBlockReducer(
         ...blocks.byId,
         [id]: {
           ...block,
+          type: 'checkbox',
           isChecked: false,
         },
       },

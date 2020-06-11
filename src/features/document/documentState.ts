@@ -10,21 +10,21 @@ export interface DocumentState {
 export type BlockState = TextBlockState | CheckboxBlockState;
 
 export interface BaseBlockState {
+  readonly type: string;
   readonly id: BlockId;
   readonly parent: BlockId | null;
   readonly children: BlockId[];
 }
 
 export interface TextBlockState extends BaseBlockState {
+  readonly type: 'text';
   readonly content: string;
 }
 
-export interface CheckboxBlockState extends TextBlockState {
+export interface CheckboxBlockState extends BaseBlockState {
+  readonly type: 'checkbox';
+  readonly content: string;
   readonly isChecked: boolean;
-}
-
-export function isCheckboxBlock(block: BlockState): block is CheckboxBlockState {
-  return (block as CheckboxBlockState).isChecked !== undefined;
 }
 
 export interface CursorState {
@@ -32,9 +32,10 @@ export interface CursorState {
   readonly column: number;
 }
 
-function createInitialState() {
+function createInitialState(): DocumentState {
   const initialBlock: BlockState = {
     id: uuid(),
+    type: 'text',
     parent: null,
     children: [],
     content: '',
@@ -54,4 +55,4 @@ function createInitialState() {
   };
 }
 
-export const initialState = createInitialState();
+export const initialState: DocumentState = createInitialState();

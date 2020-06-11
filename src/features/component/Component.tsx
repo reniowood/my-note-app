@@ -1,8 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { BlockState, TextBlockState } from '../document/documentState';
+import { BlockState } from '../document/documentState';
 import TextBlock from '../block/TextBlock';
 import { selectBlocks } from '../document/documentSelector';
+import CheckboxBlock from '../block/CheckboxBlock';
 
 interface ComponentProps {
   readonly index: number;
@@ -10,9 +11,9 @@ interface ComponentProps {
 }
 
 function getBlock(index: number, block: BlockState) {
-  if ((block as TextBlockState).content !== undefined) {
+  if (block.type === 'checkbox') {
     return (
-      <TextBlock
+      <CheckboxBlock
         key={block.id}
         index={index}
         block={block}
