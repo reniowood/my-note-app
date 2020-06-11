@@ -9,6 +9,7 @@ describe('convertBlockToCheckboxBlock', () => {
         byId: {
           0: {
             id: '0',
+            type: 'text',
             parent: null,
             content: 'LINE',
             children: [],
@@ -48,6 +49,7 @@ describe('convertBlockToCheckboxBlock', () => {
         byId: {
           0: {
             id: '0',
+            type: 'checkbox',
             parent: null,
             content: 'LINE',
             children: [],
