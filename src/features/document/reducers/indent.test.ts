@@ -10,18 +10,21 @@ describe('indent', () => {
         byId: {
           0: {
             id: '0',
+            type: 'text',
             parent: null,
             content: 'LINE1',
             children: [],
           },
           1: {
             id: '1',
+            type: 'text',
             parent: null,
             content: 'LINE2',
             children: [],
           },
           2: {
             id: '2',
+            type: 'text',
             parent: null,
             content: 'LINE3',
             children: [],
@@ -44,18 +47,21 @@ describe('indent', () => {
         byId: {
           0: {
             id: '0',
+            type: 'text',
             parent: null,
             content: 'LINE1',
             children: ['1'],
           },
           1: {
             id: '1',
+            type: 'text',
             parent: '0',
             content: 'LINE2',
             children: [],
           },
           2: {
             id: '2',
+            type: 'text',
             parent: null,
             content: 'LINE3',
             children: [],
@@ -73,18 +79,21 @@ describe('indent', () => {
         byId: {
           0: {
             id: '0',
+            type: 'text',
             parent: null,
             content: 'LINE1',
             children: ['1'],
           },
           1: {
             id: '1',
+            type: 'text',
             parent: '0',
             content: 'LINE2',
             children: [],
           },
           2: {
             id: '2',
+            type: 'text',
             parent: null,
             content: 'LINE3',
             children: [],
@@ -107,18 +116,21 @@ describe('indent', () => {
         byId: {
           0: {
             id: '0',
+            type: 'text',
             parent: null,
             content: 'LINE1',
             children: ['1'],
           },
           1: {
             id: '1',
+            type: 'text',
             parent: '0',
             content: 'LINE2',
             children: [],
           },
           2: {
             id: '2',
+            type: 'text',
             parent: null,
             content: 'LINE3',
             children: [],
@@ -136,6 +148,7 @@ describe('indent', () => {
         byId: {
           0: {
             id: '0',
+            type: 'text',
             parent: null,
             content: 'LINE1',
             children: [],
@@ -158,6 +171,7 @@ describe('indent', () => {
         byId: {
           0: {
             id: '0',
+            type: 'text',
             parent: null,
             content: 'LINE1',
             children: [],
@@ -175,30 +189,35 @@ describe('indent', () => {
         byId: {
           0: {
             id: '0',
+            type: 'text',
             parent: null,
             content: 'LINE1',
             children: ['1', '3'],
           },
           1: {
             id: '1',
+            type: 'text',
             parent: '0',
             content: 'LINE2',
             children: ['2'],
           },
           2: {
             id: '2',
+            type: 'text',
             parent: '1',
             content: 'LINE3',
             children: [],
           },
           3: {
             id: '2',
+            type: 'text',
             parent: '0',
             content: 'LINE3',
             children: ['4'],
           },
           4: {
             id: '2',
+            type: 'text',
             parent: '3',
             content: 'LINE3',
             children: [],

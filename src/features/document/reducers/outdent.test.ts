@@ -9,18 +9,21 @@ describe('outdent', () => {
         byId: {
           0: {
             id: '0',
+            type: 'text',
             parent: null,
             content: 'LINE1',
             children: ['1'],
           },
           1: {
             id: '1',
+            type: 'text',
             parent: '0',
             content: 'LINE2',
             children: [],
           },
           2: {
             id: '2',
+            type: 'text',
             parent: null,
             content: 'LINE3',
             children: [],
@@ -43,18 +46,21 @@ describe('outdent', () => {
         byId: {
           0: {
             id: '0',
+            type: 'text',
             parent: null,
             content: 'LINE1',
             children: [],
           },
           1: {
             id: '1',
+            type: 'text',
             parent: null,
             content: 'LINE2',
             children: [],
           },
           2: {
             id: '2',
+            type: 'text',
             parent: null,
             content: 'LINE3',
             children: [],
@@ -72,18 +78,21 @@ describe('outdent', () => {
         byId: {
           0: {
             id: '0',
+            type: 'text',
             parent: null,
             content: 'LINE1',
             children: [],
           },
           1: {
             id: '1',
+            type: 'text',
             parent: null,
             content: 'LINE2',
             children: [],
           },
           2: {
             id: '2',
+            type: 'text',
             parent: null,
             content: 'LINE3',
             children: [],
@@ -106,18 +115,21 @@ describe('outdent', () => {
         byId: {
           0: {
             id: '0',
+            type: 'text',
             parent: null,
             content: 'LINE1',
             children: [],
           },
           1: {
             id: '1',
+            type: 'text',
             parent: null,
             content: 'LINE2',
             children: [],
           },
           2: {
             id: '2',
+            type: 'text',
             parent: null,
             content: 'LINE3',
             children: [],
@@ -135,30 +147,35 @@ describe('outdent', () => {
         byId: {
           0: {
             id: '0',
+            type: 'text',
             parent: null,
             content: 'LINE1',
             children: ['1', '3'],
           },
           1: {
             id: '1',
+            type: 'text',
             parent: '0',
             content: 'LINE2',
             children: ['2'],
           },
           2: {
             id: '2',
+            type: 'text',
             parent: '1',
             content: 'LINE3',
             children: [],
           },
           3: {
             id: '3',
+            type: 'text',
             parent: '0',
             content: 'LINE3',
             children: ['4'],
           },
           4: {
             id: '4',
+            type: 'text',
             parent: '3',
             content: 'LINE3',
             children: [],
@@ -181,30 +198,35 @@ describe('outdent', () => {
         byId: {
           0: {
             id: '0',
+            type: 'text',
             parent: null,
             content: 'LINE1',
             children: ['1'],
           },
           1: {
             id: '1',
+            type: 'text',
             parent: '0',
             content: 'LINE2',
             children: ['2'],
           },
           2: {
             id: '2',
+            type: 'text',
             parent: '1',
             content: 'LINE3',
             children: [],
           },
           3: {
             id: '3',
+            type: 'text',
             parent: null,
             content: 'LINE3',
             children: ['4'],
           },
           4: {
             id: '4',
+            type: 'text',
             parent: '3',
             content: 'LINE3',
             children: [],
@@ -222,36 +244,42 @@ describe('outdent', () => {
         byId: {
           0: {
             id: '0',
+            type: 'text',
             parent: null,
             content: 'LINE1',
             children: ['1', '5'],
           },
           1: {
             id: '1',
+            type: 'text',
             parent: '0',
             content: 'LINE2',
             children: ['2', '3', '4'],
           },
           2: {
             id: '2',
+            type: 'text',
             parent: '1',
             content: 'LINE3',
             children: [],
           },
           3: {
             id: '3',
+            type: 'text',
             parent: '1',
             content: 'LINE3',
             children: [],
           },
           4: {
             id: '4',
+            type: 'text',
             parent: '1',
             content: 'LINE3',
             children: [],
           },
           5: {
             id: '5',
+            type: 'text',
             parent: '0',
             content: 'LINE4',
             children: [],
@@ -274,36 +302,42 @@ describe('outdent', () => {
         byId: {
           0: {
             id: '0',
+            type: 'text',
             parent: null,
             content: 'LINE1',
             children: ['1', '3', '5'],
           },
           1: {
             id: '1',
+            type: 'text',
             parent: '0',
             content: 'LINE2',
             children: ['2', '4'],
           },
           2: {
             id: '2',
+            type: 'text',
             parent: '1',
             content: 'LINE3',
             children: [],
           },
           3: {
             id: '3',
+            type: 'text',
             parent: '0',
             content: 'LINE3',
             children: [],
           },
           4: {
             id: '4',
+            type: 'text',
             parent: '1',
             content: 'LINE3',
             children: [],
           },
           5: {
             id: '5',
+            type: 'text',
             parent: '0',
             content: 'LINE4',
             children: [],
@@ -325,18 +359,21 @@ describe('outdent', () => {
         byId: {
           0: {
             id: '0',
+            type: 'text',
             parent: null,
             content: 'LINE1',
             children: ['1', '2'],
           },
           1: {
             id: '1',
+            type: 'text',
             parent: '0',
             content: 'LINE2',
             children: [],
           },
           2: {
             id: '2',
+            type: 'text',
             parent: '0',
             content: 'LINE3',
             children: [],
@@ -359,18 +396,21 @@ describe('outdent', () => {
         byId: {
           0: {
             id: '0',
+            type: 'text',
             parent: null,
             content: 'LINE1',
             children: ['2'],
           },
           1: {
             id: '1',
+            type: 'text',
             parent: null,
             content: 'LINE2',
             children: [],
           },
           2: {
             id: '2',
+            type: 'text',
             parent: '0',
             content: 'LINE3',
             children: [],

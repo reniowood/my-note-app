@@ -13,6 +13,7 @@ describe('addBlockNextTo', () => {
         byId: {
           0: {
             id: '0',
+            type: 'text',
             content: 'LINE',
             parent: null,
             children: [],
@@ -39,12 +40,14 @@ describe('addBlockNextTo', () => {
         byId: {
           0: {
             id: '0',
+            type: 'text',
             content: 'LINE',
             parent: null,
             children: [],
           },
           1: {
             id: '1',
+            type: 'text',
             content: 'NEW_LINE',
             parent: null,
             children: [],
@@ -62,12 +65,14 @@ describe('addBlockNextTo', () => {
         byId: {
           0: {
             id: '0',
+            type: 'text',
             content: 'LINE',
             parent: null,
             children: ['1'],
           },
           1: {
             id: '1',
+            type: 'text',
             content: 'LINE2',
             parent: '0',
             children: [],
@@ -100,12 +105,14 @@ describe('addBlockNextTo', () => {
           },
           1: {
             id: '1',
+            type: 'text',
             content: 'LINE2',
             parent: '0',
             children: [],
           },
           2: {
             id: '2',
+            type: 'text',
             content: 'NEW_LINE',
             parent: '0',
             children: [],
@@ -123,18 +130,21 @@ describe('addBlockNextTo', () => {
         byId: {
           0: {
             id: '0',
+            type: 'text',
             content: 'LINE',
             parent: null,
             children: ['1', '2'],
           },
           1: {
             id: '1',
+            type: 'text',
             content: 'LINE2',
             parent: '0',
             children: [],
           },
           2: {
             id: '2',
+            type: 'text',
             content: 'LINE3',
             parent: '0',
             children: [],
@@ -161,24 +171,28 @@ describe('addBlockNextTo', () => {
         byId: {
           0: {
             id: '0',
+            type: 'text',
             content: 'LINE',
             parent: null,
             children: ['1', '3', '2'],
           },
           1: {
             id: '1',
+            type: 'text',
             content: 'LINE2',
             parent: '0',
             children: [],
           },
           2: {
             id: '2',
+            type: 'text',
             content: 'LINE3',
             parent: '0',
             children: [],
           },
           3: {
             id: '3',
+            type: 'text',
             content: 'NEW_LINE',
             parent: '0',
             children: [],

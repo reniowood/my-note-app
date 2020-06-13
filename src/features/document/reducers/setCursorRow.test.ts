@@ -9,18 +9,21 @@ describe('setCursorRow', () => {
         byId: {
           0: {
             id: '0',
+            type: 'text',
             parent: null,
             content: 'LINE1',
             children: [],
           },
           1: {
             id: '1',
+            type: 'text',
             parent: null,
             content: 'LINE2',
             children: [],
           },
           2: {
             id: '2',
+            type: 'text',
             parent: null,
             content: 'LINE3',
             children: [],
@@ -52,18 +55,21 @@ describe('setCursorRow', () => {
         byId: {
           0: {
             id: '0',
+            type: 'text',
             parent: null,
             content: 'LINE1',
             children: [],
           },
           1: {
             id: '1',
+            type: 'text',
             parent: null,
             content: 'LINE2',
             children: [],
           },
           2: {
             id: '2',
+            type: 'text',
             parent: null,
             content: 'LINE3',
             children: [],

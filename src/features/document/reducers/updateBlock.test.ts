@@ -9,6 +9,7 @@ describe('updateBlock', () => {
         byId: {
           0: {
             id: '0',
+            type: 'text',
             content: 'LINE',
             parent: null,
             children: [],
@@ -34,6 +35,7 @@ describe('updateBlock', () => {
         byId: {
           0: {
             id: '0',
+            type: 'text',
             content: 'NEW_LINE',
             parent: null,
             children: [],

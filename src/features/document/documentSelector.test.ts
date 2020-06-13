@@ -9,12 +9,14 @@ describe('selectPreviousBlock', () => {
         byId: {
           1: {
             id: '1',
+            type: 'text',
             parent: null,
             content: '1',
             children: [],
           },
           2: {
             id: '2',
+            type: 'text',
             parent: null,
             content: '2',
             children: [],
@@ -34,6 +36,7 @@ describe('selectPreviousBlock', () => {
     // then
     expect(selector(state)).toStrictEqual({
       id: '1',
+      type: 'text',
       parent: null,
       content: '1',
       children: [],
@@ -47,12 +50,14 @@ describe('selectPreviousBlock', () => {
         byId: {
           1: {
             id: '1',
+            type: 'text',
             parent: null,
             content: '1',
             children: [],
           },
           2: {
             id: '2',
+            type: 'text',
             parent: null,
             content: '2',
             children: [],
