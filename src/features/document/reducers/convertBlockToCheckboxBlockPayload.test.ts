@@ -1,5 +1,5 @@
 import convertBlockToCheckboxBlockReducer from './convertBlockToCheckboxBlock';
-import { DocumentState } from '../documentState';
+import { DocumentState } from '../stores/documentState';
 
 describe('convertBlockToCheckboxBlock', () => {
   it('should convert a given block into a checkbox block', () => {

@@ -1,4 +1,4 @@
-import { DocumentState } from '../documentState';
+import { DocumentState } from '../stores/documentState';
 
 export default function moveCursorUpReducer(state: DocumentState) {
   const { cursor, blocks } = state;

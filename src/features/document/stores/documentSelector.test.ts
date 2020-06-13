@@ -1,5 +1,5 @@
 import { selectPreviousBlock } from './documentSelector';
-import { RootState } from '../../app/store';
+import { RootState } from '../../../app/store';
 
 describe('selectPreviousBlock', () => {
   it('should return a function select the previous block of the block at the given index', () => {

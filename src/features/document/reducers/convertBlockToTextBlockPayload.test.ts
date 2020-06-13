@@ -1,5 +1,5 @@
 import convertBlockToTextBlockReducer from './convertBlockToTextBlock';
-import { DocumentState } from '../documentState';
+import { DocumentState } from '../stores/documentState';
 
 describe('convertBlockToTextBlockReducer', () => {
   it('should convert a given block into a text block', () => {

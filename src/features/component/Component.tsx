@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { BlockState } from '../document/documentState';
+import { BlockState } from '../document/stores/documentState';
 import TextBlock from '../block/TextBlock';
-import { selectBlocks } from '../document/documentSelector';
+import { selectBlocks } from '../document/stores/documentSelector';
 import CheckboxBlock from '../block/CheckboxBlock';
 
 interface ComponentProps {

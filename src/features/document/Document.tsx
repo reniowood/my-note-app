@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { selectBlocks } from './documentSelector';
+import { selectBlocks } from './stores/documentSelector';
 import Component from '../component/Component';
 
 export default function Document() {

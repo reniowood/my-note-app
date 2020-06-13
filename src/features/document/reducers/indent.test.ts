@@ -1,4 +1,4 @@
-import { DocumentState } from '../documentState';
+import { DocumentState } from '../stores/documentState';
 import indentReducer from './indent';
 
 

@@ -1,4 +1,4 @@
-import { DocumentState, BlockId } from '../documentState';
+import { DocumentState, BlockId } from '../stores/documentState';
 
 export interface MergeWithPreviousBlockPayload {
   readonly id: BlockId;

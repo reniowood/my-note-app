@@ -1,5 +1,5 @@
 import outdentReducer from './outdent';
-import { DocumentState } from '../documentState';
+import { DocumentState } from '../stores/documentState';
 
 describe('outdent', () => {
   it('should outdent the given block', () => {

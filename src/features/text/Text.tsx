@@ -10,8 +10,8 @@ import {
   outdent,
   setCursorColumn,
   mergeWithPreviousBlock,
-} from '../document/documentSlice';
-import { selectCursor, selectPreviousBlock } from '../document/documentSelector';
+} from '../document/stores/documentSlice';
+import { selectCursor, selectPreviousBlock } from '../document/stores/documentSelector';
 import styles from './Text.module.css';
 
 interface TextProps {

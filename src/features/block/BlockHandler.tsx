@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { addBlockNextTo, setCursorRow, setCursorColumn } from '../document/documentSlice';
+import { addBlockNextTo, setCursorRow, setCursorColumn } from '../document/stores/documentSlice';
 import styles from './BlockHandler.module.css';
 
 interface BlockHandlerProps {

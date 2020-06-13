@@ -1,5 +1,5 @@
 import setCursorColumnReducer from './setCursorColumn';
-import { DocumentState } from '../documentState';
+import { DocumentState } from '../stores/documentState';
 
 describe('setCursorColumn', () => {
   it('should set the column of the cursor to the given column', () => {

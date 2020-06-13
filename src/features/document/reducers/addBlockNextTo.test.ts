@@ -1,6 +1,6 @@
 import { uuid } from 'uuidv4';
 import { mocked } from 'ts-jest/utils';
-import { DocumentState } from '../documentState';
+import { DocumentState } from '../stores/documentState';
 import addBlockNextToReducer from './addBlockNextTo';
 
 jest.mock('uuidv4');
