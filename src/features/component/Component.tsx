@@ -43,6 +43,7 @@ export default function Component(props: ComponentProps) {
             .children
             .map((id) => (
               <Component
+                key={id}
                 index={blocks.all.indexOf(id)}
                 block={blocks.byId[id]}
               />

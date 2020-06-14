@@ -12,6 +12,7 @@ export default function Document() {
       {
         rootBlocks.map((id) => (
           <Component
+            key={id}
             index={blocks.all.indexOf(id)}
             block={blocks.byId[id]}
           />
