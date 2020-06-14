@@ -1,5 +1,5 @@
 import { uuid } from 'uuidv4';
-import { BlockId, DocumentState, TextBlockState } from '../stores/documentState';
+import { BlockId, DocumentState, BlockState } from '../stores/documentState';
 
 export interface AddBlockNextToPayload {
   readonly id: BlockId;
@@ -33,13 +33,26 @@ export default function addBlockNextToReducer(
   }
 
   const indexInAll = blocks.all.indexOf(id);
-  const newBlock: TextBlockState = {
-    id: newId,
-    type: 'text',
-    parent: parentId,
-    children: [],
-    content,
-  };
+  const block = blocks.byId[id];
+  let newBlock: BlockState;
+  if (block.type === 'text') {
+    newBlock = {
+      id: newId,
+      type: 'text',
+      parent: parentId,
+      children: [],
+      content,
+    };
+  } else {
+    newBlock = {
+      id: newId,
+      type: 'checkbox',
+      parent: parentId,
+      children: [],
+      isChecked: false,
+      content,
+    };
+  }
 
   return {
     ...state,

@@ -58,6 +58,61 @@ describe('addBlockNextTo', () => {
     });
   });
 
+  it('should add a new block whose type is the same as the type of the given block', () => {
+    // given
+    const currentState: DocumentState = {
+      blocks: {
+        byId: {
+          0: {
+            id: '0',
+            type: 'checkbox',
+            isChecked: true,
+            content: 'LINE',
+            parent: null,
+            children: [],
+          },
+        },
+        all: ['0'],
+      },
+      cursor: {
+        row: 0,
+        column: 0,
+      },
+    };
+    mocked(uuid).mockReturnValue('1');
+
+    // when
+    const nextState = addBlockNextToReducer(currentState, {
+      id: '0',
+      content: 'NEW_LINE',
+    });
+
+    // then
+    expect(nextState).toMatchObject({
+      blocks: {
+        byId: {
+          0: {
+            id: '0',
+            type: 'checkbox',
+            isChecked: true,
+            content: 'LINE',
+            parent: null,
+            children: [],
+          },
+          1: {
+            id: '1',
+            type: 'checkbox',
+            isChecked: false,
+            content: 'NEW_LINE',
+            parent: null,
+            children: [],
+          },
+        },
+        all: ['0', '1'],
+      },
+    });
+  });
+
   it('should add a new block after the given block, which is a child of another block', () => {
     // given
     const currentState: DocumentState = {
