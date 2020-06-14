@@ -159,8 +159,35 @@ export default function Text(props: TextProps) {
     }
   };
 
+  const onFocus = () => {
+    dispatch(setCursorRow({
+      row: index,
+    }));
+  };
+
+  const onBlur = (e: React.FocusEvent<HTMLDivElement>) => {
+    const element = e.currentTarget;
+    const cursorPosition = getCursorPosition();
+    if (cursorPosition !== undefined) {
+      dispatch(updateBlock({
+        id,
+        content: element.innerText,
+      }));
+    }
+  };
+
   return (
-    <div role="row" ref={ref} contentEditable="true" className={styles.text} tabIndex={index} onKeyDown={(e) => onKeyDown(e)}>
+    <div
+      role="row"
+      ref={ref}
+      contentEditable="true"
+      suppressContentEditableWarning
+      className={styles.text}
+      tabIndex={index}
+      onKeyDown={(e) => onKeyDown(e)}
+      onFocus={(_) => onFocus()}
+      onBlur={(e) => onBlur(e)}
+    >
       {content}
     </div>
   );

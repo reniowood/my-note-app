@@ -9,3 +9,8 @@ export const selectPreviousBlock = (index: number) => (state: RootState) => {
 
   return null;
 };
+export const selectFocusedBlock = (state: RootState) => {
+  const { row } = state.cursor;
+  const id = state.blocks.all[row];
+  return state.blocks.byId[id];
+};

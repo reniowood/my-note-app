@@ -1,4 +1,4 @@
-import { selectPreviousBlock } from './documentSelector';
+import { selectPreviousBlock, selectFocusedBlock } from './documentSelector';
 import { RootState } from '../../../app/store';
 
 describe('selectPreviousBlock', () => {
@@ -78,5 +78,48 @@ describe('selectPreviousBlock', () => {
     // then
     expect(selector1(state)).toBeNull();
     expect(selector2(state)).toBeNull();
+  });
+});
+
+describe('selectFocusedBlock', () => {
+  it('should select the focused block', () => {
+    // given
+    const state: RootState = {
+      blocks: {
+        byId: {
+          1: {
+            id: '1',
+            type: 'text',
+            parent: null,
+            content: '1',
+            children: [],
+          },
+          2: {
+            id: '2',
+            type: 'text',
+            parent: null,
+            content: '2',
+            children: [],
+          },
+        },
+        all: ['1', '2'],
+      },
+      cursor: {
+        row: 1,
+        column: 0,
+      },
+    };
+
+    // when
+    const block = selectFocusedBlock(state);
+
+    // then
+    expect(block).toStrictEqual({
+      id: '2',
+      type: 'text',
+      parent: null,
+      content: '2',
+      children: [],
+    });
   });
 });
