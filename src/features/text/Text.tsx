@@ -9,15 +9,14 @@ import {
   indent,
   outdent,
   setCursorColumn,
-  mergeWithPreviousBlock,
+  mergeOrOutdent,
 } from '../document/stores/documentSlice';
-import { selectCursor, selectPreviousBlock } from '../document/stores/documentSelector';
+import { selectCursor } from '../document/stores/documentSelector';
 import styles from './Text.module.css';
 
 interface TextProps {
   readonly id: string;
   readonly index: number;
-  readonly parentId: string | null;
   readonly content: string;
 }
 
@@ -41,15 +40,16 @@ function setCursorPosition(element: HTMLElement, position: number) {
   element.focus();
 }
 
-export default function Text(props: TextProps) {
+const Text = (props: TextProps) => {
   const {
     id,
     index,
-    parentId,
     content,
   } = props;
-  const cursor = useSelector(selectCursor);
-  const previousBlock = useSelector(selectPreviousBlock(index));
+  const cursor = useSelector(
+    selectCursor,
+    (prevCursor, nextCursor) => nextCursor.row !== prevCursor.row,
+  );
   const dispatch = useDispatch();
 
   const ref = useRef<HTMLDivElement>(null);
@@ -144,15 +144,9 @@ export default function Text(props: TextProps) {
       if (cursorPosition === 0) {
         updateBlockContent(element, cursorPosition);
 
-        if (previousBlock !== null && previousBlock.parent === parentId) {
-          dispatch(mergeWithPreviousBlock({
-            id,
-          }));
-        } else {
-          dispatch(outdent({
-            id,
-          }));
-        }
+        dispatch(mergeOrOutdent({
+          id,
+        }));
 
         e.preventDefault();
       }
@@ -191,4 +185,6 @@ export default function Text(props: TextProps) {
       {content}
     </div>
   );
-}
+};
+
+export default React.memo(Text);

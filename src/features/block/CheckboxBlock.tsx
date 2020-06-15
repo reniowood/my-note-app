@@ -28,7 +28,7 @@ export default function CheckboxBlock(props: CheckboxBlockProps) {
   return (
     <Block id={block.id} index={index}>
       <input type="checkbox" checked={block.isChecked} onChange={(e) => handleOnChange(e)} />
-      <Text id={block.id} index={index} parentId={block.parent} content={block.content} />
+      <Text id={block.id} index={index} content={block.content} />
     </Block>
   );
 }

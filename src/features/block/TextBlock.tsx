@@ -13,7 +13,7 @@ export default function TextBlock(props: TextBlockProps) {
 
   return (
     <Block id={block.id} index={index}>
-      <Text id={block.id} index={index} parentId={block.parent} content={block.content} />
+      <Text id={block.id} index={index} content={block.content} />
     </Block>
   );
 }
