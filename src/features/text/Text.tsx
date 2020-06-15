@@ -48,7 +48,7 @@ const Text = (props: TextProps) => {
   } = props;
   const cursor = useSelector(
     selectCursor,
-    (prevCursor, nextCursor) => nextCursor.row !== prevCursor.row,
+    (prevCursor, nextCursor) => nextCursor.row === prevCursor.row,
   );
   const dispatch = useDispatch();
 
@@ -76,10 +76,10 @@ const Text = (props: TextProps) => {
   };
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    const element = e.currentTarget;
     if (e.key === 'Enter') {
       const cursorPosition = getCursorPosition();
       if (cursorPosition !== undefined) {
-        const element = e.currentTarget;
         updateBlockContent(element, cursorPosition);
         dispatch(updateBlock({
           id,
@@ -99,7 +99,6 @@ const Text = (props: TextProps) => {
 
       e.preventDefault();
     } else if (e.key === 'ArrowUp') {
-      const element = e.currentTarget;
       const cursorPosition = getCursorPosition();
       if (cursorPosition !== undefined) {
         updateBlockContent(element, cursorPosition);
@@ -108,7 +107,6 @@ const Text = (props: TextProps) => {
 
       e.preventDefault();
     } else if (e.key === 'ArrowDown') {
-      const element = e.currentTarget;
       const cursorPosition = getCursorPosition();
       if (cursorPosition !== undefined) {
         updateBlockContent(element, cursorPosition);
@@ -117,7 +115,6 @@ const Text = (props: TextProps) => {
 
       e.preventDefault();
     } else if (e.shiftKey && e.key === 'Tab') {
-      const element = e.currentTarget;
       const cursorPosition = getCursorPosition();
       if (cursorPosition !== undefined) {
         updateBlockContent(element, cursorPosition);
@@ -128,7 +125,6 @@ const Text = (props: TextProps) => {
 
       e.preventDefault();
     } else if (e.key === 'Tab') {
-      const element = e.currentTarget;
       const cursorPosition = getCursorPosition();
       if (cursorPosition !== undefined) {
         updateBlockContent(element, cursorPosition);
@@ -139,7 +135,6 @@ const Text = (props: TextProps) => {
 
       e.preventDefault();
     } else if (e.key === 'Backspace') {
-      const element = e.currentTarget;
       const cursorPosition = getCursorPosition();
       if (cursorPosition === 0) {
         updateBlockContent(element, cursorPosition);
