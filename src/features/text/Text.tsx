@@ -185,4 +185,8 @@ const Text = (props: TextProps) => {
   );
 };
 
-export default React.memo(Text);
+function arePropsEqual(prevProps: TextProps, nextProps: TextProps) {
+  return prevProps.content === nextProps.content;
+}
+
+export default React.memo(Text, arePropsEqual);
