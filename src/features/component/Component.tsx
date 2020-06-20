@@ -5,6 +5,7 @@ import TextBlock from '../block/TextBlock';
 import { selectBlocks } from '../document/stores/documentSelector';
 import CheckboxBlock from '../block/CheckboxBlock';
 import styles from './Component.module.css';
+import UnorderedListBlock from '../block/UnorderedListBlock';
 
 interface ComponentProps {
   readonly index: number;
@@ -15,6 +16,16 @@ function getBlock(index: number, block: BlockState) {
   if (block.type === 'checkbox') {
     return (
       <CheckboxBlock
+        key={block.id}
+        index={index}
+        block={block}
+      />
+    );
+  }
+
+  if (block.type === 'unorderedList') {
+    return (
+      <UnorderedListBlock
         key={block.id}
         index={index}
         block={block}

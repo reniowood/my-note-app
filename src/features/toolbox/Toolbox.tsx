@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectFocusedBlock } from '../document/stores/documentSelector';
-import { convertBlockToCheckboxBlock, convertBlockToTextBlock } from '../document/stores/documentSlice';
+import { convertBlockToCheckboxBlock, convertBlockToTextBlock, convertBlockToUnorderedListBlock } from '../document/stores/documentSlice';
 
 export default function Toolbox() {
   const block = useSelector(selectFocusedBlock);
@@ -16,6 +16,10 @@ export default function Toolbox() {
       }));
     } else if (target.value === 'checkbox') {
       dispatch(convertBlockToCheckboxBlock({
+        id: block.id,
+      }));
+    } else if (target.value === 'unorderedList') {
+      dispatch(convertBlockToUnorderedListBlock({
         id: block.id,
       }));
     }
@@ -33,6 +37,17 @@ export default function Toolbox() {
           checked={block.type === 'text'}
         />
         Text
+      </label>
+      <label htmlFor="block-type-unordered-list">
+        <input
+          type="radio"
+          id="block-type-unordered-list"
+          name="block-type"
+          value="unorderedList"
+          onChange={(e) => onChange(e)}
+          checked={block.type === 'unorderedList'}
+        />
+        UnorderedList
       </label>
       <label htmlFor="block-type-checkbox">
         <input

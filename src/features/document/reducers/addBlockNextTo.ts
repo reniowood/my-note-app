@@ -35,21 +35,29 @@ export default function addBlockNextToReducer(
   const indexInAll = blocks.all.indexOf(id);
   const block = blocks.byId[id];
   let newBlock: BlockState;
-  if (block.type === 'text') {
+  if (block.type === 'unorderedList') {
     newBlock = {
       id: newId,
-      type: 'text',
+      type: 'unorderedList',
       parent: parentId,
       children: [],
       content,
     };
-  } else {
+  } else if (block.type === 'checkbox') {
     newBlock = {
       id: newId,
       type: 'checkbox',
       parent: parentId,
       children: [],
       isChecked: false,
+      content,
+    };
+  } else {
+    newBlock = {
+      id: newId,
+      type: 'text',
+      parent: parentId,
+      children: [],
       content,
     };
   }

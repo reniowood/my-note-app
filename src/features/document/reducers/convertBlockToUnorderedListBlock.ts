@@ -1,19 +1,19 @@
 import { DocumentState } from '../stores/documentState';
 
-export interface ConvertBlockToTextBlockPayload {
+export interface ConvertBlockToUnorderedListBlockPayload {
   readonly id: string;
 }
 
-export default function convertBlockToTextBlockReducer(
+export default function convertBlockToUnorderedListBlockReducer(
   state: DocumentState,
-  payload: ConvertBlockToTextBlockPayload,
+  payload: ConvertBlockToUnorderedListBlockPayload,
 ): DocumentState {
   const { blocks } = state;
   const { id } = payload;
 
   const block = blocks.byId[id];
 
-  if (block.type === 'text') {
+  if (block.type === 'unorderedList') {
     return state;
   }
 
@@ -28,7 +28,7 @@ export default function convertBlockToTextBlockReducer(
           parent: block.parent,
           children: block.children,
           content: block.content,
-          type: 'text',
+          type: 'unorderedList',
         },
       },
     },

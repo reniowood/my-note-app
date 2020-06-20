@@ -14,6 +14,7 @@ import uncheckCheckboxBlockReducer from '../reducers/uncheckCheckboxBlock';
 import convertBlockToCheckboxBlockReducer from '../reducers/convertBlockToCheckboxBlock';
 import convertBlockToTextBlockReducer from '../reducers/convertBlockToTextBlock';
 import mergeOrOutdentReducer from '../reducers/mergeOrOutdent';
+import convertBlockToUnorderedListBlockReducer from '../reducers/convertBlockToUnorderedListBlock';
 
 type Reducer<T> = (state: DocumentState, payload: T) => DocumentState;
 type ReducerWithAction<T> = (state: DocumentState, action: PayloadAction<T>) => DocumentState;
@@ -40,6 +41,7 @@ const documentSlice = createSlice({
     uncheckCheckboxBlock: convert(uncheckCheckboxBlockReducer),
     convertBlockToCheckboxBlock: convert(convertBlockToCheckboxBlockReducer),
     convertBlockToTextBlock: convert(convertBlockToTextBlockReducer),
+    convertBlockToUnorderedListBlock: convert(convertBlockToUnorderedListBlockReducer),
   },
 });
 
@@ -58,6 +60,7 @@ export const {
   uncheckCheckboxBlock,
   convertBlockToCheckboxBlock,
   convertBlockToTextBlock,
+  convertBlockToUnorderedListBlock,
 } = documentSlice.actions;
 
 export default documentSlice.reducer;
