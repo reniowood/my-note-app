@@ -174,7 +174,7 @@ const Text = (props: TextProps) => {
       className={styles.text}
       tabIndex={index}
       onKeyDown={(e) => onKeyDown(e)}
-      onFocus={(_) => onFocus()}
+      onFocus={() => onFocus()}
       onBlur={(e) => onBlur(e)}
     >
       {content}

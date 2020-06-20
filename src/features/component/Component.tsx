@@ -4,6 +4,7 @@ import { BlockState } from '../document/stores/documentState';
 import TextBlock from '../block/TextBlock';
 import { selectBlocks } from '../document/stores/documentSelector';
 import CheckboxBlock from '../block/CheckboxBlock';
+import styles from './Component.module.css';
 
 interface ComponentProps {
   readonly index: number;
@@ -37,7 +38,7 @@ export default function Component(props: ComponentProps) {
   return (
     <li>
       {getBlock(index, block)}
-      <ul>
+      <ul className={`${styles.componentChildren}`}>
         {
           block
             .children
