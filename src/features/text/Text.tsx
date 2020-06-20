@@ -9,15 +9,21 @@ import {
   indent,
   outdent,
   setCursorColumn,
-  mergeOrOutdent,
 } from '../document/stores/documentSlice';
 import { selectCursor } from '../document/stores/documentSelector';
 import styles from './Text.module.css';
+
+type OnKeyDownHandler = (
+  e: React.KeyboardEvent<HTMLDivElement>,
+  element: HTMLDivElement,
+  cursorPosition: number | undefined,
+) => void;
 
 interface TextProps {
   readonly id: string;
   readonly index: number;
   readonly content: string;
+  readonly onBackspaceKeyDown: OnKeyDownHandler;
 }
 
 function getCursorPosition(): number | undefined {
@@ -45,6 +51,7 @@ const Text = (props: TextProps) => {
     id,
     index,
     content,
+    onBackspaceKeyDown,
   } = props;
   const cursor = useSelector(
     selectCursor,
@@ -138,11 +145,7 @@ const Text = (props: TextProps) => {
       const cursorPosition = getCursorPosition();
       if (cursorPosition === 0) {
         updateBlockContent(element, cursorPosition);
-
-        dispatch(mergeOrOutdent({
-          id,
-        }));
-
+        onBackspaceKeyDown(e, element, cursorPosition);
         e.preventDefault();
       }
     }
