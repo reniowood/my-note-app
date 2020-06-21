@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectFocusedBlock } from '../document/stores/documentSelector';
 import { convertBlockToCheckboxBlock, convertBlockToTextBlock, convertBlockToUnorderedListBlock } from '../document/stores/documentSlice';
+import styles from './Toolbox.module.css';
 
 export default function Toolbox() {
   const block = useSelector(selectFocusedBlock);
@@ -26,7 +27,7 @@ export default function Toolbox() {
   };
 
   return (
-    <div>
+    <div className={styles.toolbox}>
       <label htmlFor="block-type-text">
         <input
           type="radio"
