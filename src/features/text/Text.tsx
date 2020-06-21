@@ -186,7 +186,9 @@ const Text = (props: TextProps) => {
 };
 
 function arePropsEqual(prevProps: TextProps, nextProps: TextProps) {
-  return prevProps.content === nextProps.content;
+  return prevProps.id === nextProps.id
+    && prevProps.index === nextProps.index
+    && prevProps.content === nextProps.content;
 }
 
 export default React.memo(Text, arePropsEqual);
