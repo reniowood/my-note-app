@@ -47,9 +47,9 @@ export default function Component(props: ComponentProps) {
   const blocks = useSelector(selectBlocks);
 
   return (
-    <li>
+    <div className={styles.component}>
       {getBlock(index, block)}
-      <ul className={`${styles.componentChildren}`}>
+      <div className={styles.componentChildren}>
         {
           block
             .children
@@ -61,7 +61,7 @@ export default function Component(props: ComponentProps) {
               />
             ))
         }
-      </ul>
-    </li>
+      </div>
+    </div>
   );
 }
