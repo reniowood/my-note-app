@@ -53,10 +53,7 @@ const Text = (props: TextProps) => {
     content,
     onBackspaceKeyDown,
   } = props;
-  const cursor = useSelector(
-    selectCursor,
-    (prevCursor, nextCursor) => nextCursor.row === prevCursor.row,
-  );
+  const cursor = useSelector(selectCursor);
   const dispatch = useDispatch();
 
   const ref = useRef<HTMLDivElement>(null);
@@ -152,20 +149,26 @@ const Text = (props: TextProps) => {
   };
 
   const onFocus = () => {
-    dispatch(setCursorRow({
-      row: index,
-    }));
+    if (cursor.row !== index) {
+      dispatch(setCursorRow({
+        row: index,
+      }));
+
+      const cursorPosition = getCursorPosition();
+      if (cursorPosition !== undefined) {
+        dispatch(setCursorColumn({
+          column: cursorPosition,
+        }));
+      }
+    }
   };
 
   const onBlur = (e: React.FocusEvent<HTMLDivElement>) => {
     const element = e.currentTarget;
-    const cursorPosition = getCursorPosition();
-    if (cursorPosition !== undefined) {
-      dispatch(updateBlock({
-        id,
-        content: element.innerText,
-      }));
-    }
+    dispatch(updateBlock({
+      id,
+      content: element.innerText,
+    }));
   };
 
   return (

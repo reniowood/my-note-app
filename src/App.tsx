@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './App.module.css';
-import Document from './features/document/Document';
 import Toolbox from './features/toolbox/Toolbox';
+import DocumentFrame from './features/documentframe/DocumentFrame';
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
       </div>
       <div className={styles.body}>
         <Toolbox />
-        <Document />
+        <DocumentFrame />
       </div>
     </div>
   );

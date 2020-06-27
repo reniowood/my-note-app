@@ -15,6 +15,7 @@ import convertBlockToCheckboxBlockReducer from '../reducers/convertBlockToCheckb
 import convertBlockToTextBlockReducer from '../reducers/convertBlockToTextBlock';
 import mergeOrOutdentReducer from '../reducers/mergeOrOutdent';
 import convertBlockToUnorderedListBlockReducer from '../reducers/convertBlockToUnorderedListBlock';
+import setCursorLastRowReducer from '../reducers/setCursorLastRow';
 
 type Reducer<T> = (state: DocumentState, payload: T) => DocumentState;
 type ReducerWithAction<T> = (state: DocumentState, action: PayloadAction<T>) => DocumentState;
@@ -33,6 +34,7 @@ const documentSlice = createSlice({
     moveCursorDown: moveCursorDownReducer,
     setCursorRow: convert(setCursorRowReducer),
     setCursorColumn: convert(setCursorColumnReducer),
+    setCursorLastRow: setCursorLastRowReducer,
     indent: convert(indentReducer),
     outdent: convert(outdentReducer),
     mergeWithPreviousBlock: convert(mergeWithPreviousBlockReducer),
@@ -52,6 +54,7 @@ export const {
   moveCursorDown,
   setCursorRow,
   setCursorColumn,
+  setCursorLastRow,
   indent,
   outdent,
   mergeWithPreviousBlock,
