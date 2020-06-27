@@ -257,4 +257,70 @@ describe('addBlockNextTo', () => {
       },
     });
   });
+
+  it('should add a new block after the given block as its first child when the next block is its first child', () => {
+    // given
+    const currentState: DocumentState = {
+      blocks: {
+        byId: {
+          0: {
+            id: '0',
+            type: 'text',
+            content: 'LINE',
+            parent: null,
+            children: ['1'],
+          },
+          1: {
+            id: '1',
+            type: 'text',
+            content: 'LINE2',
+            parent: '0',
+            children: [],
+          },
+        },
+        all: ['0', '1'],
+      },
+      cursor: {
+        row: 0,
+        column: 0,
+      },
+    };
+    mocked(uuid).mockReturnValue('2');
+
+    // when
+    const nextState = addBlockNextToReducer(currentState, {
+      id: '0',
+      content: 'NEW_LINE',
+    });
+
+    // then
+    expect(nextState).toMatchObject({
+      blocks: {
+        byId: {
+          0: {
+            id: '0',
+            type: 'text',
+            content: 'LINE',
+            parent: null,
+            children: ['2', '1'],
+          },
+          1: {
+            id: '1',
+            type: 'text',
+            content: 'LINE2',
+            parent: '0',
+            children: [],
+          },
+          2: {
+            id: '2',
+            type: 'text',
+            content: 'NEW_LINE',
+            parent: '0',
+            children: [],
+          },
+        },
+        all: ['0', '2', '1'],
+      },
+    });
+  });
 });

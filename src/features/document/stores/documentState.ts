@@ -1,9 +1,11 @@
 import { uuid } from 'uuidv4';
 
 export type BlockId = string;
+export type BlockById = { [id: string]: BlockState };
+export type BlocksState = { byId: BlockById, all: BlockId[] };
 
 export interface DocumentState {
-  readonly blocks: { byId: { [id: string]: BlockState }, all: BlockId[] };
+  readonly blocks: BlocksState;
   readonly cursor: CursorState;
 }
 
