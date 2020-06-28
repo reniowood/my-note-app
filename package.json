@@ -19,12 +19,11 @@
     "uuidv4": "^6.0.9"
   },
   "scripts": {
-    "build": "npm run lint:fix && npm run test:coverage && webpack",
+    "build": "npm run lint:fix && npm run test && webpack",
     "watch": "webpack --watch",
     "start": "webpack-dev-server --open",
-    "test": "jest",
-    "test:watch": "npm test -- --watch",
-    "test:coverage": "npm test -- --coverage",
+    "test": "jest --coverage",
+    "test:watch": "npm run test -- --watch",
     "lint": "eslint --ext .ts,.tsx ./",
     "lint:fix": "eslint --fix --ext .ts,.tsx ./"
   },
@@ -41,9 +40,13 @@
     ]
   },
   "devDependencies": {
+    "@types/enzyme": "^3.10.5",
+    "@types/enzyme-adapter-react-16": "^1.0.6",
     "@typescript-eslint/eslint-plugin": "^2.24.0",
     "@typescript-eslint/parser": "^2.34.0",
     "css-loader": "^3.5.3",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-typescript": "^7.2.1",
     "eslint-config-react-app": "^5.2.1",
