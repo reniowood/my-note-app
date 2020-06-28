@@ -12,6 +12,7 @@ import {
 } from '../document/stores/documentSlice';
 import { selectCursor } from '../document/stores/documentSelector';
 import styles from './Text.module.css';
+import { setCursorPosition, getCursorPosition } from './TextService';
 
 type OnKeyDownHandler = (
   e: React.KeyboardEvent<HTMLDivElement>,
@@ -24,26 +25,6 @@ interface TextProps {
   readonly index: number;
   readonly content: string;
   readonly onBackspaceKeyDown: OnKeyDownHandler;
-}
-
-function getCursorPosition(): number | undefined {
-  const selection = document.getSelection();
-  const range = selection?.getRangeAt(0);
-  return range?.startOffset;
-}
-
-function setCursorPosition(element: HTMLElement, position: number) {
-  const range = document.createRange();
-  if (element.firstChild) {
-    range.setStart(element.firstChild, position);
-    range.collapse(true);
-  }
-
-  const selection = document.getSelection();
-  selection?.removeAllRanges();
-  selection?.addRange(range);
-
-  element.focus();
 }
 
 const Text = (props: TextProps) => {
@@ -179,9 +160,9 @@ const Text = (props: TextProps) => {
       suppressContentEditableWarning
       className={styles.text}
       tabIndex={index}
-      onKeyDown={(e) => onKeyDown(e)}
-      onFocus={() => onFocus()}
-      onBlur={(e) => onBlur(e)}
+      onKeyDown={onKeyDown}
+      onFocus={onFocus}
+      onBlur={onBlur}
     >
       {content}
     </div>
