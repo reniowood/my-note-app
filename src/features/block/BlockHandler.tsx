@@ -13,7 +13,7 @@ export default function BlockHandler(props: BlockHandlerProps) {
   const { id, index, enabled } = props;
   const dispatch = useDispatch();
 
-  const onClick = () => {
+  const addNewBlock = () => {
     dispatch(addBlockNextTo({
       id,
       content: '',
@@ -26,6 +26,14 @@ export default function BlockHandler(props: BlockHandlerProps) {
     }));
   };
 
+  const onClick = () => {
+    addNewBlock();
+  };
+
+  const onKeyDown = () => {
+    addNewBlock();
+  };
+
   return (
     <div style={{
       visibility: enabled ? 'visible' : 'hidden',
@@ -35,8 +43,8 @@ export default function BlockHandler(props: BlockHandlerProps) {
         role="button"
         tabIndex={-1}
         className={`${styles.addButton} material-icons`}
-        onClick={() => onClick()}
-        onKeyDown={() => { }}
+        onClick={onClick}
+        onKeyDown={onKeyDown}
       >
         add
       </span>
