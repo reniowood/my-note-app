@@ -9,7 +9,7 @@ export default function Document() {
   const rootBlocks = blocks.all.filter((blockId) => blocks.byId[blockId].parent === null);
 
   return (
-    <div className={`${styles.document}`}>
+    <div className={styles.document}>
       {
         rootBlocks.map((id) => (
           <Component
