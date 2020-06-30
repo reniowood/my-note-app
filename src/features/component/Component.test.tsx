@@ -2,10 +2,17 @@ import React from 'react';
 import * as ReactRedux from 'react-redux';
 import { shallow } from 'enzyme';
 import Component from './Component';
-import { TextBlockState, CheckboxBlockState, UnorderedListBlockState, BlocksState } from '../document/stores/documentState';
+import {
+  TextBlockState,
+  CheckboxBlockState,
+  UnorderedListBlockState,
+  BlocksState,
+  OrderedListBlockState,
+} from '../document/stores/documentState';
 import TextBlock from '../block/TextBlock';
 import CheckboxBlock from '../block/CheckboxBlock';
 import UnorderedListBlock from '../block/UnorderedListBlock';
+import OrderedListBlock from '../block/OrderedListBlock';
 
 describe('<Component />', () => {
   beforeEach(() => {
@@ -68,6 +75,25 @@ describe('<Component />', () => {
 
     expect(wrapper.find(UnorderedListBlock)).toHaveLength(1);
     expect(wrapper.find(UnorderedListBlock).prop('block')).toBe(block);
+  });
+
+  it('should render a given ordered list block', () => {
+    const block: OrderedListBlockState = {
+      id: '0',
+      type: 'orderedList',
+      parent: null,
+      children: [],
+      content: 'CONTENT',
+    };
+    const wrapper = shallow(
+      <Component
+        index={0}
+        block={block}
+      />,
+    );
+
+    expect(wrapper.find(OrderedListBlock)).toHaveLength(1);
+    expect(wrapper.find(OrderedListBlock).prop('block')).toBe(block);
   });
 
   it('should render children blocks of a given block', () => {

@@ -14,6 +14,10 @@ export default function Toolbox() {
         materialIconName="format_list_bulleted"
       />
       <ToolboxBlockTypeButton
+        blockType="orderedList"
+        materialIconName="format_list_numbered"
+      />
+      <ToolboxBlockTypeButton
         blockType="checkbox"
         materialIconName="check_box"
       />

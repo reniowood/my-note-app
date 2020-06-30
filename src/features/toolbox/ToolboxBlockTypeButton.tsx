@@ -1,21 +1,13 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectFocusedBlock } from '../document/stores/documentSelector';
-import { convertBlockToTextBlock, convertBlockToCheckboxBlock, convertBlockToUnorderedListBlock } from '../document/stores/documentSlice';
 import styles from './ToolboxBlockTypeButton.module.css';
+import { BlockType } from '../document/stores/documentState';
+import { getConverter } from '../document/stores/documentSlice';
 
 interface ToolboxBlockTypeButtonProps {
-  readonly blockType: 'text' | 'unorderedList' | 'checkbox';
+  readonly blockType: BlockType;
   readonly materialIconName: string;
-}
-
-function getConverter(type: string) {
-  switch (type) {
-    case 'text': return convertBlockToTextBlock;
-    case 'checkbox': return convertBlockToCheckboxBlock;
-    case 'unorderedList': return convertBlockToUnorderedListBlock;
-    default: return null;
-  }
 }
 
 export default function ToolboxBlockTypeButton(props: ToolboxBlockTypeButtonProps) {
@@ -23,16 +15,14 @@ export default function ToolboxBlockTypeButton(props: ToolboxBlockTypeButtonProp
   const block = useSelector(selectFocusedBlock);
   const dispatch = useDispatch();
 
-  const onClick = (value: 'text' | 'unorderedList' | 'checkbox') => () => {
+  const onClick = (value: BlockType) => () => {
     const converter = getConverter(value);
-    if (converter) {
-      dispatch(converter({
-        id: block.id,
-      }));
-    }
+    dispatch(converter({
+      id: block.id,
+    }));
   };
 
-  const isSelected = (value: 'text' | 'unorderedList' | 'checkbox') => {
+  const isSelected = (value: BlockType) => {
     if (value === block.type) {
       return styles.selectedButton;
     }

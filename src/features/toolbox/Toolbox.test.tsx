@@ -20,6 +20,14 @@ describe('<Toolbox />', () => {
     expect(wrapper.find(ToolboxBlockTypeButton).find({ blockType: 'unorderedList' })).toHaveLength(1);
   });
 
+  it('should render <ToolboxBlockTypeButton /> for "orderedList" block type inside', () => {
+    const wrapper = shallow(
+      <Toolbox />,
+    );
+
+    expect(wrapper.find(ToolboxBlockTypeButton).find({ blockType: 'orderedList' })).toHaveLength(1);
+  });
+
   it('should render <ToolboxBlockTypeButton /> for "checkbox" block type inside', () => {
     const wrapper = shallow(
       <Toolbox />,

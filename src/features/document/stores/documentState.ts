@@ -9,10 +9,13 @@ export interface DocumentState {
   readonly cursor: CursorState;
 }
 
+export type BlockType = BlockState['type'];
+
 export type BlockState =
   TextBlockState |
   CheckboxBlockState |
-  UnorderedListBlockState;
+  UnorderedListBlockState |
+  OrderedListBlockState;
 
 export interface BaseBlockState {
   readonly type: string;
@@ -34,6 +37,11 @@ export interface CheckboxBlockState extends BaseBlockState {
 
 export interface UnorderedListBlockState extends BaseBlockState {
   readonly type: 'unorderedList';
+  readonly content: string;
+}
+
+export interface OrderedListBlockState extends BaseBlockState {
+  readonly type: 'orderedList';
   readonly content: string;
 }
 

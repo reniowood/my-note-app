@@ -108,6 +108,14 @@ function createNewBlock(
       children: [],
       content,
     };
+  } else if (block.type === 'orderedList') {
+    newBlock = {
+      id: newId,
+      type: 'orderedList',
+      parent: parentId,
+      children: [],
+      content,
+    };
   } else if (block.type === 'checkbox') {
     newBlock = {
       id: newId,
