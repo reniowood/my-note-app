@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './App.module.css';
-import Toolbox from './features/toolbox/Toolbox';
-import DocumentFrame from './features/documentframe/DocumentFrame';
+import Toolbox from './toolbox/Toolbox';
+import DocumentFrame from './documentframe/DocumentFrame';
 
 function App() {
   return (

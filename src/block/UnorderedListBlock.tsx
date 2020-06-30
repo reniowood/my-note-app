@@ -2,9 +2,9 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import Text from '../text/Text';
 import Block from './Block';
-import { UnorderedListBlockState } from '../document/stores/documentState';
+import { UnorderedListBlockState } from '../stores/documentState';
 import styles from './UnorderedListBlock.module.css';
-import { convertBlockToTextBlock } from '../document/stores/documentSlice';
+import { convertBlockToTextBlock } from '../stores/documentSlice';
 
 interface UnorderedListBlockProps {
   readonly index: number;

@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import Document from '../document/Document';
 import styles from './DocumentFrame.module.css';
-import { setCursorLastRow } from '../document/stores/documentSlice';
+import { setCursorLastRow } from '../stores/documentSlice';
 
 export default function DocumentFrame() {
   const dispatch = useDispatch();

@@ -1,7 +1,7 @@
 import React from 'react';
 import * as ReactRedux from 'react-redux';
 import { shallow } from 'enzyme';
-import * as Actions from '../document/stores/documentSlice';
+import * as Actions from '../stores/documentSlice';
 import BlockHandler from './BlockHandler';
 
 describe('<BlockHandler />', () => {

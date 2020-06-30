@@ -3,8 +3,8 @@ import * as ReactRedux from 'react-redux';
 import { shallow } from 'enzyme';
 import CheckboxBlock from './CheckboxBlock';
 import Block from './Block';
-import { CheckboxBlockState } from '../document/stores/documentState';
-import * as Actions from '../document/stores/documentSlice';
+import { CheckboxBlockState } from '../stores/documentState';
+import * as Actions from '../stores/documentSlice';
 import Text from '../text/Text';
 
 describe('<CheckboxBlock />', () => {

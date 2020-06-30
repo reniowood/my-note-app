@@ -2,8 +2,8 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import Text from '../text/Text';
 import Block from './Block';
-import { TextBlockState } from '../document/stores/documentState';
-import { mergeOrOutdent } from '../document/stores/documentSlice';
+import { TextBlockState } from '../stores/documentState';
+import { mergeOrOutdent } from '../stores/documentSlice';
 
 interface TextBlockProps {
   readonly index: number;

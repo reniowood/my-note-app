@@ -2,7 +2,7 @@ import React from 'react';
 import * as ReactRedux from 'react-redux';
 import { shallow } from 'enzyme';
 import Document from './Document';
-import { BlocksState } from './stores/documentState';
+import { BlocksState } from '../stores/documentState';
 import Component from '../component/Component';
 
 describe('<Document />', () => {

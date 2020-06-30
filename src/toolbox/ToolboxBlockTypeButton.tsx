@@ -1,9 +1,9 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectFocusedBlock } from '../document/stores/documentSelector';
+import { selectFocusedBlock } from '../stores/documentSelector';
 import styles from './ToolboxBlockTypeButton.module.css';
-import { BlockType } from '../document/stores/documentState';
-import { getConverter } from '../document/stores/documentSlice';
+import { BlockType } from '../stores/documentState';
+import { getConverter } from '../stores/documentSlice';
 
 interface ToolboxBlockTypeButtonProps {
   readonly blockType: BlockType;

@@ -3,8 +3,8 @@ import * as ReactRedux from 'react-redux';
 import { shallow } from 'enzyme';
 import TextBlock from './TextBlock';
 import Block from './Block';
-import { TextBlockState } from '../document/stores/documentState';
-import * as Actions from '../document/stores/documentSlice';
+import { TextBlockState } from '../stores/documentState';
+import * as Actions from '../stores/documentSlice';
 import Text from '../text/Text';
 
 describe('<TextBlock />', () => {

@@ -2,8 +2,8 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import Text from '../text/Text';
 import Block from './Block';
-import { CheckboxBlockState } from '../document/stores/documentState';
-import { checkCheckboxBlock, uncheckCheckboxBlock, convertBlockToTextBlock } from '../document/stores/documentSlice';
+import { CheckboxBlockState } from '../stores/documentState';
+import { checkCheckboxBlock, uncheckCheckboxBlock, convertBlockToTextBlock } from '../stores/documentSlice';
 
 interface CheckboxBlockProps {
   readonly index: number;

@@ -2,8 +2,8 @@ import React from 'react';
 import * as ReactRedux from 'react-redux';
 import { shallow } from 'enzyme';
 import ToolboxBlockTypeButton from './ToolboxBlockTypeButton';
-import * as Actions from '../document/stores/documentSlice';
-import { CheckboxBlockState, TextBlockState } from '../document/stores/documentState';
+import * as Actions from '../stores/documentSlice';
+import { CheckboxBlockState, TextBlockState } from '../stores/documentState';
 import styles from './ToolboxBlockTypeButton.module.css';
 
 describe('<ToolboxBlockTypeButton />', () => {

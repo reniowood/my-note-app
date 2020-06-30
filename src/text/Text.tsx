@@ -9,8 +9,8 @@ import {
   indent,
   outdent,
   setCursorColumn,
-} from '../document/stores/documentSlice';
-import { selectCursor } from '../document/stores/documentSelector';
+} from '../stores/documentSlice';
+import { selectCursor } from '../stores/documentSelector';
 import styles from './Text.module.css';
 import { setCursorPosition, getCursorPosition } from './TextService';
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { BlockState } from '../document/stores/documentState';
+import { BlockState } from '../stores/documentState';
 import TextBlock from '../block/TextBlock';
-import { selectBlocks } from '../document/stores/documentSelector';
+import { selectBlocks } from '../stores/documentSelector';
 import CheckboxBlock from '../block/CheckboxBlock';
 import styles from './Component.module.css';
 import UnorderedListBlock from '../block/UnorderedListBlock';

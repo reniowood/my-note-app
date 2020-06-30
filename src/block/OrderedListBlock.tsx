@@ -5,11 +5,11 @@ import {
   BlocksState,
   BlockState,
   BlockId,
-} from '../document/stores/documentState';
-import { convertBlockToTextBlock } from '../document/stores/documentSlice';
+} from '../stores/documentState';
+import { convertBlockToTextBlock } from '../stores/documentSlice';
 import Text from '../text/Text';
 import Block from './Block';
-import { selectBlocks } from '../document/stores/documentSelector';
+import { selectBlocks } from '../stores/documentSelector';
 import styles from './OrderedListBlock.module.css';
 
 interface OrderedListBlockProps {

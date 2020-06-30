@@ -8,7 +8,7 @@ import {
   UnorderedListBlockState,
   BlocksState,
   OrderedListBlockState,
-} from '../document/stores/documentState';
+} from '../stores/documentState';
 import TextBlock from '../block/TextBlock';
 import CheckboxBlock from '../block/CheckboxBlock';
 import UnorderedListBlock from '../block/UnorderedListBlock';

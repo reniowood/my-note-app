@@ -3,8 +3,8 @@ import * as ReactRedux from 'react-redux';
 import { shallow } from 'enzyme';
 import UnorderedListBlock from './UnorderedListBlock';
 import Block from './Block';
-import { UnorderedListBlockState } from '../document/stores/documentState';
-import * as Actions from '../document/stores/documentSlice';
+import { UnorderedListBlockState } from '../stores/documentState';
+import * as Actions from '../stores/documentSlice';
 import Text from '../text/Text';
 
 describe('<UnorderedListBlock />', () => {

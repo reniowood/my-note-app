@@ -2,7 +2,7 @@ import React from 'react';
 import * as ReactRedux from 'react-redux';
 import { shallow } from 'enzyme';
 import Text from './Text';
-import * as Actions from '../document/stores/documentSlice';
+import * as Actions from '../stores/documentSlice';
 import * as TextService from './TextService';
 
 describe('<Text />', () => {
