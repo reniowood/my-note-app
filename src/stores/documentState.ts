@@ -5,9 +5,12 @@ export type BlockById = { [id: string]: BlockState };
 export type BlocksState = { byId: BlockById, all: BlockId[] };
 
 export interface DocumentState {
+  readonly version: Version;
   readonly blocks: BlocksState;
   readonly cursor: CursorState;
 }
+
+export type Version = 1;
 
 export type BlockType = BlockState['type'];
 
@@ -60,6 +63,7 @@ function createInitialState(): DocumentState {
   };
 
   return {
+    version: 1,
     blocks: {
       byId: {
         [initialBlock.id]: initialBlock,

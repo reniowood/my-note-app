@@ -6,6 +6,7 @@ describe('indent', () => {
   it('should indent the given block', () => {
     // given
     const currentState: DocumentState = {
+      version: 1,
       blocks: {
         byId: {
           0: {
@@ -75,6 +76,7 @@ describe('indent', () => {
   it('should not indent the given block when it is the first children', () => {
     // given
     const currentState: DocumentState = {
+      version: 1,
       blocks: {
         byId: {
           0: {
@@ -144,6 +146,7 @@ describe('indent', () => {
   it('should not indent the given block when it is the first root block', () => {
     // given
     const currentState: DocumentState = {
+      version: 1,
       blocks: {
         byId: {
           0: {
@@ -185,6 +188,7 @@ describe('indent', () => {
   it('should indent the given block when it has children', () => {
     // given
     const currentState: DocumentState = {
+      version: 1,
       blocks: {
         byId: {
           0: {

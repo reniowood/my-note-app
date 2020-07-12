@@ -5,6 +5,7 @@ describe('outdent', () => {
   it('should outdent the given block', () => {
     // given
     const currentState: DocumentState = {
+      version: 1,
       blocks: {
         byId: {
           0: {
@@ -74,6 +75,7 @@ describe('outdent', () => {
   it('should not outdent the given block when it has no parent', () => {
     // given
     const currentState: DocumentState = {
+      version: 1,
       blocks: {
         byId: {
           0: {
@@ -143,6 +145,7 @@ describe('outdent', () => {
   it('should outdent the given block when it has children', () => {
     // given
     const currentState: DocumentState = {
+      version: 1,
       blocks: {
         byId: {
           0: {
@@ -240,6 +243,7 @@ describe('outdent', () => {
   it('should outdent the given block when it is in the middle of its siblings', () => {
     // given
     const currentState: DocumentState = {
+      version: 1,
       blocks: {
         byId: {
           0: {
@@ -355,6 +359,7 @@ describe('outdent', () => {
   it('should outdent the given block when it is on the second level', () => {
     // given
     const currentState: DocumentState = {
+      version: 1,
       blocks: {
         byId: {
           0: {

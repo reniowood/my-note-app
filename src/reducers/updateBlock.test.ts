@@ -5,6 +5,7 @@ describe('updateBlock', () => {
   it('should update the block at the given index with the given content', () => {
     // given
     const currentState: DocumentState = {
+      version: 1,
       blocks: {
         byId: {
           0: {

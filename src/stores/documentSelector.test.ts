@@ -5,6 +5,7 @@ describe('selectPreviousBlock', () => {
   it('should return a function select the previous block of the block at the given index', () => {
     // given
     const state: RootState = {
+      version: 1,
       blocks: {
         byId: {
           1: {
@@ -46,6 +47,7 @@ describe('selectPreviousBlock', () => {
   it('should return a function returns null when the given index is invalid', () => {
     // given
     const state: RootState = {
+      version: 1,
       blocks: {
         byId: {
           1: {
@@ -85,6 +87,7 @@ describe('selectFocusedBlock', () => {
   it('should select the focused block', () => {
     // given
     const state: RootState = {
+      version: 1,
       blocks: {
         byId: {
           1: {

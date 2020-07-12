@@ -5,6 +5,7 @@ describe('moveCursorDown', () => {
   it('should move down the cursor', () => {
     // given
     const currentState: DocumentState = {
+      version: 1,
       blocks: {
         byId: {
           0: {
@@ -51,6 +52,7 @@ describe('moveCursorDown', () => {
   it('should not move down the cursor when the cursor is on the bottom', () => {
     // given
     const currentState: DocumentState = {
+      version: 1,
       blocks: {
         byId: {
           0: {
@@ -97,6 +99,7 @@ describe('moveCursorDown', () => {
   it('should set the column to the last position when the length of the next block is smaller than the column', () => {
     // given
     const currentState: DocumentState = {
+      version: 1,
       blocks: {
         byId: {
           0: {

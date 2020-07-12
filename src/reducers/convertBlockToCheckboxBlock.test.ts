@@ -5,6 +5,7 @@ describe('convertBlockToCheckboxBlock', () => {
   it('should convert a given block into a checkbox block', () => {
     // given
     const currentState: DocumentState = {
+      version: 1,
       blocks: {
         byId: {
           0: {
@@ -45,6 +46,7 @@ describe('convertBlockToCheckboxBlock', () => {
   it('should not change its isChecked value of a given block when it is already a checkbox block', () => {
     // given
     const currentState: DocumentState = {
+      version: 1,
       blocks: {
         byId: {
           0: {

@@ -5,6 +5,7 @@ describe('convertBlockToUnorderedListBlockReducer', () => {
   it('should convert a given block into an unordered list block', () => {
     // given
     const currentState: DocumentState = {
+      version: 1,
       blocks: {
         byId: {
           0: {
@@ -46,6 +47,7 @@ describe('convertBlockToUnorderedListBlockReducer', () => {
   it('should not change any value of a given block when it is already a text block', () => {
     // given
     const currentState: DocumentState = {
+      version: 1,
       blocks: {
         byId: {
           0: {

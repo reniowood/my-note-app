@@ -5,6 +5,7 @@ describe('setCursorRow', () => {
   it('should set the row of the cursor to the given row', () => {
     // given
     const currentState: DocumentState = {
+      version: 1,
       blocks: {
         byId: {
           0: {
@@ -51,6 +52,7 @@ describe('setCursorRow', () => {
   it('should not update the row of the cursor when the given row is invalid', () => {
     // given
     const currentState: DocumentState = {
+      version: 1,
       blocks: {
         byId: {
           0: {

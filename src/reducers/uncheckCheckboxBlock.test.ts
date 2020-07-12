@@ -5,6 +5,7 @@ describe('uncheckCheckboxBlock', () => {
   it('should set isChecked of the given checkbox block state to true', () => {
     // given
     const currentState: DocumentState = {
+      version: 1,
       blocks: {
         byId: {
           0: {
@@ -46,6 +47,7 @@ describe('uncheckCheckboxBlock', () => {
   it('should not update the given checkbox block state when it is not a checkbox block', () => {
     // given
     const currentState: DocumentState = {
+      version: 1,
       blocks: {
         byId: {
           0: {

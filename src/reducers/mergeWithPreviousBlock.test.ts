@@ -5,6 +5,7 @@ describe('mrege', () => {
   it('should merge the given block with its previous block', () => {
     // given
     const currentState: DocumentState = {
+      version: 1,
       blocks: {
         byId: {
           0: {
@@ -108,6 +109,7 @@ describe('mrege', () => {
   it('should not merge the given block with any block when the block is at the first', () => {
     // given
     const currentState: DocumentState = {
+      version: 1,
       blocks: {
         byId: {
           0: {
@@ -150,6 +152,7 @@ describe('mrege', () => {
   it('should not change the current state when the block is not exist', () => {
     // given
     const currentState: DocumentState = {
+      version: 1,
       blocks: {
         byId: {
           0: {

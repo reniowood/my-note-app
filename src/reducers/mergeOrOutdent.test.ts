@@ -5,6 +5,7 @@ describe('mergeOrOutdent', () => {
   it('should merge a given block with its previous block when they have the same parent', () => {
     // given
     const currentState: DocumentState = {
+      version: 1,
       blocks: {
         byId: {
           0: {
@@ -108,6 +109,7 @@ describe('mergeOrOutdent', () => {
   it("should outdent a given block when it doesn't have the same parent as its previous block", () => {
     // given
     const currentState: DocumentState = {
+      version: 1,
       blocks: {
         byId: {
           0: {

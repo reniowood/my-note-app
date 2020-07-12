@@ -5,6 +5,7 @@ describe('setCursorLastRow', () => {
   it('should set the row of the cursor to the last row', () => {
     // given
     const currentState: DocumentState = {
+      version: 1,
       blocks: {
         byId: {
           0: {

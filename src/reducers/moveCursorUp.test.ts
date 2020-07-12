@@ -5,6 +5,7 @@ describe('moveCursorUp', () => {
   it('should move up the cursor', () => {
     // given
     const currentState: DocumentState = {
+      version: 1,
       blocks: {
         byId: {
           0: {
@@ -51,6 +52,7 @@ describe('moveCursorUp', () => {
   it('should not move up the cursor when the cursor is on the top', () => {
     // given
     const currentState: DocumentState = {
+      version: 1,
       blocks: {
         byId: {
           0: {
@@ -97,6 +99,7 @@ describe('moveCursorUp', () => {
   it('should set the column to the last position when the length of the previous block is smaller than the column', () => {
     // given
     const currentState: DocumentState = {
+      version: 1,
       blocks: {
         byId: {
           0: {

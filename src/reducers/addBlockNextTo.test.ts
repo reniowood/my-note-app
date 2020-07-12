@@ -9,6 +9,7 @@ describe('addBlockNextTo', () => {
   it('should add a new block after the given block', () => {
     // given
     const currentState: DocumentState = {
+      version: 1,
       blocks: {
         byId: {
           0: {
@@ -61,6 +62,7 @@ describe('addBlockNextTo', () => {
   it('should add a new block whose type is the same as the type of the given block', () => {
     // given
     const currentState: DocumentState = {
+      version: 1,
       blocks: {
         byId: {
           0: {
@@ -116,6 +118,7 @@ describe('addBlockNextTo', () => {
   it('should add a new block after the given block, which is a child of another block', () => {
     // given
     const currentState: DocumentState = {
+      version: 1,
       blocks: {
         byId: {
           0: {
@@ -181,6 +184,7 @@ describe('addBlockNextTo', () => {
   it('should add a new block after the given block when there is a sibling next to it', () => {
     // given
     const currentState: DocumentState = {
+      version: 1,
       blocks: {
         byId: {
           0: {
@@ -261,6 +265,7 @@ describe('addBlockNextTo', () => {
   it('should add a new block after the given block as its first child when the next block is its first child', () => {
     // given
     const currentState: DocumentState = {
+      version: 1,
       blocks: {
         byId: {
           0: {

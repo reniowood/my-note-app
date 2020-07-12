@@ -5,6 +5,7 @@ describe('convertBlockToTextBlockReducer', () => {
   it('should convert a given block into a text block', () => {
     // given
     const currentState: DocumentState = {
+      version: 1,
       blocks: {
         byId: {
           0: {
@@ -45,6 +46,7 @@ describe('convertBlockToTextBlockReducer', () => {
   it('should not change any value of a given block when it is already a text block', () => {
     // given
     const currentState: DocumentState = {
+      version: 1,
       blocks: {
         byId: {
           0: {

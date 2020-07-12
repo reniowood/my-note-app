@@ -5,6 +5,7 @@ describe('setCursorColumn', () => {
   it('should set the column of the cursor to the given column', () => {
     // given
     const currentState: DocumentState = {
+      version: 1,
       blocks: {
         byId: {
           0: {
@@ -51,6 +52,7 @@ describe('setCursorColumn', () => {
   it('should not update the column of the cursor when the given column is invalid', () => {
     // given
     const currentState: DocumentState = {
+      version: 1,
       blocks: {
         byId: {
           0: {
