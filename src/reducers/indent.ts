@@ -34,6 +34,7 @@ export default function indentReducer(state: DocumentState, payload: IndentPaylo
               ...blocks.byId[previousSiblingId].children,
               id,
             ],
+            showChildren: block.type === 'toggleList' || undefined,
           },
         },
       },

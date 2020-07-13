@@ -21,6 +21,10 @@ export default function Toolbox() {
         blockType="checkbox"
         materialIconName="check_box"
       />
+      <ToolboxBlockTypeButton
+        blockType="toggleList"
+        materialIconName="arrow_drop_down"
+      />
     </div>
   );
 }

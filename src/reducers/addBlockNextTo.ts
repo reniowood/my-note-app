@@ -125,6 +125,15 @@ function createNewBlock(
       isChecked: false,
       content,
     };
+  } else if (block.type === 'toggleList') {
+    newBlock = {
+      id: newId,
+      type: 'toggleList',
+      parent: parentId,
+      children: [],
+      showChildren: true,
+      content,
+    };
   } else {
     newBlock = {
       id: newId,

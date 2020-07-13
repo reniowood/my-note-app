@@ -18,7 +18,8 @@ export type BlockState =
   TextBlockState |
   CheckboxBlockState |
   UnorderedListBlockState |
-  OrderedListBlockState;
+  OrderedListBlockState |
+  ToggleListBlockState;
 
 export interface BaseBlockState {
   readonly type: string;
@@ -45,6 +46,12 @@ export interface UnorderedListBlockState extends BaseBlockState {
 
 export interface OrderedListBlockState extends BaseBlockState {
   readonly type: 'orderedList';
+  readonly content: string;
+}
+
+export interface ToggleListBlockState extends BaseBlockState {
+  readonly type: 'toggleList';
+  readonly showChildren: boolean;
   readonly content: string;
 }
 

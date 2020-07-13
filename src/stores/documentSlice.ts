@@ -17,6 +17,9 @@ import mergeOrOutdentReducer from '../reducers/mergeOrOutdent';
 import convertBlockToUnorderedListBlockReducer from '../reducers/convertBlockToUnorderedListBlock';
 import setCursorLastRowReducer from '../reducers/setCursorLastRow';
 import convertBlockToOrderedListBlockReducer from '../reducers/convertBlockToOrderedListBlock';
+import convertBlockToToggleListBlockReducer from '../reducers/convertBlockToToggleListBlock';
+import turnOnToggleListBlockReducer from '../reducers/turnOnToggleListBlock';
+import turnOffToggleListBlockReducer from '../reducers/turnOffToggleListBlock';
 
 type Reducer<T> = (state: DocumentState, payload: T) => DocumentState;
 type ReducerWithAction<T> = (state: DocumentState, action: PayloadAction<T>) => DocumentState;
@@ -42,10 +45,13 @@ const documentSlice = createSlice({
     mergeOrOutdent: convert(mergeOrOutdentReducer),
     checkCheckboxBlock: convert(checkCheckboxBlockReducer),
     uncheckCheckboxBlock: convert(uncheckCheckboxBlockReducer),
+    turnOnToggleListBlock: convert(turnOnToggleListBlockReducer),
+    turnOffToggleListBlock: convert(turnOffToggleListBlockReducer),
     convertBlockToCheckboxBlock: convert(convertBlockToCheckboxBlockReducer),
     convertBlockToTextBlock: convert(convertBlockToTextBlockReducer),
     convertBlockToUnorderedListBlock: convert(convertBlockToUnorderedListBlockReducer),
     convertBlockToOrderedListBlock: convert(convertBlockToOrderedListBlockReducer),
+    convertBlockToToggleListBlock: convert(convertBlockToToggleListBlockReducer),
   },
 });
 
@@ -63,10 +69,13 @@ export const {
   mergeOrOutdent,
   checkCheckboxBlock,
   uncheckCheckboxBlock,
+  turnOnToggleListBlock,
+  turnOffToggleListBlock,
   convertBlockToCheckboxBlock,
   convertBlockToTextBlock,
   convertBlockToUnorderedListBlock,
   convertBlockToOrderedListBlock,
+  convertBlockToToggleListBlock,
 } = documentSlice.actions;
 
 export function getConverter(type: BlockType) {
@@ -75,6 +84,7 @@ export function getConverter(type: BlockType) {
     case 'checkbox': return convertBlockToCheckboxBlock;
     case 'unorderedList': return convertBlockToUnorderedListBlock;
     case 'orderedList': return convertBlockToOrderedListBlock;
+    case 'toggleList': return convertBlockToToggleListBlock;
     default: return convertBlockToTextBlock;
   }
 }

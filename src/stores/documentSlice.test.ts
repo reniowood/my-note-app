@@ -4,7 +4,8 @@ import {
   convertBlockToTextBlock,
   convertBlockToCheckboxBlock,
   convertBlockToUnorderedListBlock,
-  convertBlockToOrderedListBlock
+  convertBlockToOrderedListBlock,
+  convertBlockToToggleListBlock,
 } from './documentSlice';
 
 describe('getConverter', () => {
@@ -19,7 +20,7 @@ describe('getConverter', () => {
     expect(converter).toBe(convertBlockToTextBlock);
   });
 
-  it('should give convertBlockToCheckboxBlock when the type is text', () => {
+  it('should give convertBlockToCheckboxBlock when the type is checkbox', () => {
     // given
     const type: BlockType = 'checkbox';
 
@@ -30,7 +31,7 @@ describe('getConverter', () => {
     expect(converter).toBe(convertBlockToCheckboxBlock);
   });
 
-  it('should give convertBlockToUnorderedListBlock when the type is text', () => {
+  it('should give convertBlockToUnorderedListBlock when the type is unorderedList', () => {
     // given
     const type: BlockType = 'unorderedList';
 
@@ -41,7 +42,7 @@ describe('getConverter', () => {
     expect(converter).toBe(convertBlockToUnorderedListBlock);
   });
 
-  it('should give convertBlockToOrderedListBlock when the type is text', () => {
+  it('should give convertBlockToOrderedListBlock when the type is orderedList', () => {
     // given
     const type: BlockType = 'orderedList';
 
@@ -50,5 +51,16 @@ describe('getConverter', () => {
 
     // then
     expect(converter).toBe(convertBlockToOrderedListBlock);
+  });
+
+  it('should give convertBlockToToggleListBlock when the type is toggleList', () => {
+    // given
+    const type: BlockType = 'toggleList';
+
+    // when
+    const converter = getConverter(type);
+
+    // then
+    expect(converter).toBe(convertBlockToToggleListBlock);
   });
 });

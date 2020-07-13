@@ -35,4 +35,12 @@ describe('<Toolbox />', () => {
 
     expect(wrapper.find(ToolboxBlockTypeButton).find({ blockType: 'checkbox' })).toHaveLength(1);
   });
+
+  it('should render <ToolboxBlockTypeButton /> for "toggleList" block type inside', () => {
+    const wrapper = shallow(
+      <Toolbox />,
+    );
+
+    expect(wrapper.find(ToolboxBlockTypeButton).find({ blockType: 'toggleList' })).toHaveLength(1);
+  });
 });

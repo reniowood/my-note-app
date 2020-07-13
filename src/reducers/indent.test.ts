@@ -1,7 +1,6 @@
 import { DocumentState } from '../stores/documentState';
 import indentReducer from './indent';
 
-
 describe('indent', () => {
   it('should indent the given block', () => {
     // given
@@ -274,6 +273,68 @@ describe('indent', () => {
           },
         },
         all: ['0', '1', '2', '3', '4'],
+      },
+    });
+  });
+
+  it('should make the block show children when the block is ToggleListBlock and its showChildren is false', () => {
+    // given
+    const currentState: DocumentState = {
+      version: 1,
+      blocks: {
+        byId: {
+          0: {
+            id: '0',
+            type: 'toggleList',
+            content: 'LINE',
+            parent: null,
+            children: [],
+            showChildren: false,
+          },
+          1: {
+            id: '1',
+            type: 'toggleList',
+            content: 'LINE',
+            parent: null,
+            children: [],
+            showChildren: true,
+          },
+        },
+        all: ['0', '1'],
+      },
+      cursor: {
+        row: 0,
+        column: 0,
+      },
+    };
+
+    // when
+    const nextState = indentReducer(currentState, {
+      id: '1',
+    });
+
+    // then
+    expect(nextState).toMatchObject({
+      blocks: {
+        byId: {
+          0: {
+            id: '0',
+            type: 'toggleList',
+            content: 'LINE',
+            parent: null,
+            children: ['1'],
+            showChildren: true,
+          },
+          1: {
+            id: '1',
+            type: 'toggleList',
+            content: 'LINE',
+            parent: '0',
+            children: [],
+            showChildren: true,
+          },
+        },
+        all: ['0', '1'],
       },
     });
   });
