@@ -58,12 +58,13 @@ describe('<UnorderedListBlock />', () => {
         block={block}
       />,
     );
-    jest.spyOn(Actions, 'convertBlockToTextBlock');
+    jest.spyOn(Actions, 'convertBlock');
 
     wrapper.find(Text).simulate('backspaceKeyDown');
 
-    expect(Actions.convertBlockToTextBlock).toHaveBeenCalledWith({
+    expect(Actions.convertBlock).toHaveBeenCalledWith({
       id: '0',
+      type: 'text',
     });
   });
 });

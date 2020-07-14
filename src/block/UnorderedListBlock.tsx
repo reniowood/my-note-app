@@ -4,7 +4,7 @@ import Text from '../text/Text';
 import Block from './Block';
 import { UnorderedListBlockState } from '../stores/documentState';
 import styles from './UnorderedListBlock.module.css';
-import { convertBlockToTextBlock } from '../stores/documentSlice';
+import { convertBlock } from '../stores/documentSlice';
 
 interface UnorderedListBlockProps {
   readonly index: number;
@@ -17,8 +17,9 @@ export default function UnorderedListBlock(props: UnorderedListBlockProps) {
   const dispatch = useDispatch();
 
   const onBackspaceKeyDown = () => {
-    dispatch(convertBlockToTextBlock({
+    dispatch(convertBlock({
       id,
+      type: 'text',
     }));
   };
 

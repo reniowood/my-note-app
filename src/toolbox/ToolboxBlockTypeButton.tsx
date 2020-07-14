@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectFocusedBlock } from '../stores/documentSelector';
 import styles from './ToolboxBlockTypeButton.module.css';
 import { BlockType } from '../stores/documentState';
-import { getConverter } from '../stores/documentSlice';
+import { convertBlock } from '../stores/documentSlice';
 
 interface ToolboxBlockTypeButtonProps {
   readonly blockType: BlockType;
@@ -16,9 +16,9 @@ export default function ToolboxBlockTypeButton(props: ToolboxBlockTypeButtonProp
   const dispatch = useDispatch();
 
   const onClick = (value: BlockType) => () => {
-    const converter = getConverter(value);
-    dispatch(converter({
+    dispatch(convertBlock({
       id: block.id,
+      type: value,
     }));
   };
 

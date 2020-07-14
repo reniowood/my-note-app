@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { initialState, DocumentState, BlockType } from './documentState';
+import { initialState, DocumentState } from './documentState';
 import addBlockNextToReducer from '../reducers/addBlockNextTo';
 import updateBlockReducer from '../reducers/updateBlock';
 import moveCursorUpReducer from '../reducers/moveCursorUp';
@@ -11,15 +11,11 @@ import outdentReducer from '../reducers/outdent';
 import mergeWithPreviousBlockReducer from '../reducers/mergeWithPreviousBlock';
 import checkCheckboxBlockReducer from '../reducers/checkCheckboxBlock';
 import uncheckCheckboxBlockReducer from '../reducers/uncheckCheckboxBlock';
-import convertBlockToCheckboxBlockReducer from '../reducers/convertBlockToCheckboxBlock';
-import convertBlockToTextBlockReducer from '../reducers/convertBlockToTextBlock';
 import mergeOrOutdentReducer from '../reducers/mergeOrOutdent';
-import convertBlockToUnorderedListBlockReducer from '../reducers/convertBlockToUnorderedListBlock';
 import setCursorLastRowReducer from '../reducers/setCursorLastRow';
-import convertBlockToOrderedListBlockReducer from '../reducers/convertBlockToOrderedListBlock';
-import convertBlockToToggleListBlockReducer from '../reducers/convertBlockToToggleListBlock';
 import turnOnToggleListBlockReducer from '../reducers/turnOnToggleListBlock';
 import turnOffToggleListBlockReducer from '../reducers/turnOffToggleListBlock';
+import convertBlockReducer from '../reducers/convertBlock';
 
 type Reducer<T> = (state: DocumentState, payload: T) => DocumentState;
 type ReducerWithAction<T> = (state: DocumentState, action: PayloadAction<T>) => DocumentState;
@@ -47,11 +43,7 @@ const documentSlice = createSlice({
     uncheckCheckboxBlock: convert(uncheckCheckboxBlockReducer),
     turnOnToggleListBlock: convert(turnOnToggleListBlockReducer),
     turnOffToggleListBlock: convert(turnOffToggleListBlockReducer),
-    convertBlockToCheckboxBlock: convert(convertBlockToCheckboxBlockReducer),
-    convertBlockToTextBlock: convert(convertBlockToTextBlockReducer),
-    convertBlockToUnorderedListBlock: convert(convertBlockToUnorderedListBlockReducer),
-    convertBlockToOrderedListBlock: convert(convertBlockToOrderedListBlockReducer),
-    convertBlockToToggleListBlock: convert(convertBlockToToggleListBlockReducer),
+    convertBlock: convert(convertBlockReducer),
   },
 });
 
@@ -71,22 +63,7 @@ export const {
   uncheckCheckboxBlock,
   turnOnToggleListBlock,
   turnOffToggleListBlock,
-  convertBlockToCheckboxBlock,
-  convertBlockToTextBlock,
-  convertBlockToUnorderedListBlock,
-  convertBlockToOrderedListBlock,
-  convertBlockToToggleListBlock,
+  convertBlock,
 } = documentSlice.actions;
-
-export function getConverter(type: BlockType) {
-  switch (type) {
-    case 'text': return convertBlockToTextBlock;
-    case 'checkbox': return convertBlockToCheckboxBlock;
-    case 'unorderedList': return convertBlockToUnorderedListBlock;
-    case 'orderedList': return convertBlockToOrderedListBlock;
-    case 'toggleList': return convertBlockToToggleListBlock;
-    default: return convertBlockToTextBlock;
-  }
-}
 
 export default documentSlice.reducer;

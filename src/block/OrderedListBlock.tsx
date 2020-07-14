@@ -6,11 +6,11 @@ import {
   BlockState,
   BlockId,
 } from '../stores/documentState';
-import { convertBlockToTextBlock } from '../stores/documentSlice';
 import Text from '../text/Text';
 import Block from './Block';
 import { selectBlocks } from '../stores/documentSelector';
 import styles from './OrderedListBlock.module.css';
+import { convertBlock } from '../stores/documentSlice';
 
 interface OrderedListBlockProps {
   readonly index: number;
@@ -53,8 +53,9 @@ export default function OrderedListBlock(props: OrderedListBlockProps) {
   const blocks = useSelector(selectBlocks);
 
   const onBackspaceKeyDown = () => {
-    dispatch(convertBlockToTextBlock({
+    dispatch(convertBlock({
       id,
+      type: 'text',
     }));
   };
 

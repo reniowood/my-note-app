@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import Text from '../text/Text';
 import Block from './Block';
 import { CheckboxBlockState } from '../stores/documentState';
-import { checkCheckboxBlock, uncheckCheckboxBlock, convertBlockToTextBlock } from '../stores/documentSlice';
+import { checkCheckboxBlock, uncheckCheckboxBlock, convertBlock } from '../stores/documentSlice';
 
 interface CheckboxBlockProps {
   readonly index: number;
@@ -26,8 +26,9 @@ export default function CheckboxBlock(props: CheckboxBlockProps) {
   };
 
   const onBackspaceKeyDown = () => {
-    dispatch(convertBlockToTextBlock({
+    dispatch(convertBlock({
       id,
+      type: 'text',
     }));
   };
 

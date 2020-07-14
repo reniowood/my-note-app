@@ -38,7 +38,7 @@ describe('<ToolboxBlockTypeButton />', () => {
       content: 'CONTENT',
     };
     jest.spyOn(ReactRedux, 'useSelector').mockReturnValue(block);
-    jest.spyOn(Actions, 'convertBlockToCheckboxBlock');
+    jest.spyOn(Actions, 'convertBlock');
     const wrapper = shallow(
       <ToolboxBlockTypeButton
         blockType="checkbox"
@@ -48,8 +48,9 @@ describe('<ToolboxBlockTypeButton />', () => {
 
     wrapper.find('button').simulate('click');
 
-    expect(Actions.convertBlockToCheckboxBlock).toHaveBeenCalledWith({
+    expect(Actions.convertBlock).toHaveBeenCalledWith({
       id: '0',
+      type: 'checkbox',
     });
   });
 

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { ToggleListBlockState } from '../stores/documentState';
 import Block from './Block';
 import Text from '../text/Text';
-import { turnOffToggleListBlock, turnOnToggleListBlock, convertBlockToTextBlock } from '../stores/documentSlice';
+import { turnOffToggleListBlock, turnOnToggleListBlock, convertBlock } from '../stores/documentSlice';
 import styles from './ToggleListBlock.module.css';
 
 export interface ToggleListBlockProps {
@@ -29,8 +29,9 @@ export default function ToggleListBlock(props: ToggleListBlockProps) {
   };
 
   const onBackspaceKeyDown = () => {
-    dispatch(convertBlockToTextBlock({
+    dispatch(convertBlock({
       id,
+      type: 'text',
     }));
   };
 

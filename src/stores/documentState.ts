@@ -22,37 +22,32 @@ export type BlockState =
   ToggleListBlockState;
 
 export interface BaseBlockState {
-  readonly type: string;
   readonly id: BlockId;
   readonly parent: BlockId | null;
   readonly children: BlockId[];
+  readonly content: string;
 }
 
 export interface TextBlockState extends BaseBlockState {
   readonly type: 'text';
-  readonly content: string;
 }
 
 export interface CheckboxBlockState extends BaseBlockState {
   readonly type: 'checkbox';
-  readonly content: string;
   readonly isChecked: boolean;
 }
 
 export interface UnorderedListBlockState extends BaseBlockState {
   readonly type: 'unorderedList';
-  readonly content: string;
 }
 
 export interface OrderedListBlockState extends BaseBlockState {
   readonly type: 'orderedList';
-  readonly content: string;
 }
 
 export interface ToggleListBlockState extends BaseBlockState {
   readonly type: 'toggleList';
   readonly showChildren: boolean;
-  readonly content: string;
 }
 
 export interface CursorState {
