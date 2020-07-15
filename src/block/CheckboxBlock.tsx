@@ -4,6 +4,7 @@ import Text from '../text/Text';
 import Block from './Block';
 import { CheckboxBlockState } from '../stores/documentState';
 import { checkCheckboxBlock, uncheckCheckboxBlock, convertBlock } from '../stores/documentSlice';
+import styles from './CheckboxBlock.module.css';
 
 interface CheckboxBlockProps {
   readonly index: number;
@@ -34,11 +35,12 @@ export default function CheckboxBlock(props: CheckboxBlockProps) {
 
   return (
     <Block id={block.id} index={index}>
-      <input type="checkbox" checked={block.isChecked} onChange={(e) => handleOnChange(e)} />
+      <input type="checkbox" className={styles.checkbox} checked={block.isChecked} onChange={(e) => handleOnChange(e)} />
       <Text
         id={block.id}
         index={index}
         content={block.content}
+        className={block.isChecked && styles.text}
         onBackspaceKeyDown={onBackspaceKeyDown}
       />
     </Block>
