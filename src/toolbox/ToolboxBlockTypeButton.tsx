@@ -15,11 +15,18 @@ export default function ToolboxBlockTypeButton(props: ToolboxBlockTypeButtonProp
   const block = useSelector(selectFocusedBlock);
   const dispatch = useDispatch();
 
-  const onClick = (value: BlockType) => () => {
-    dispatch(convertBlock({
-      id: block.id,
-      type: value,
-    }));
+  const onClick = () => {
+    if (block.type === blockType) {
+      dispatch(convertBlock({
+        id: block.id,
+        type: 'text',
+      }));
+    } else {
+      dispatch(convertBlock({
+        id: block.id,
+        type: blockType,
+      }));
+    }
   };
 
   const isSelected = (value: BlockType) => {
@@ -34,7 +41,7 @@ export default function ToolboxBlockTypeButton(props: ToolboxBlockTypeButtonProp
     <button
       type="button"
       className={`${styles.button} material-icons ${isSelected(blockType)}`}
-      onClick={onClick(blockType)}
+      onClick={onClick}
     >
       {materialIconName}
     </button>

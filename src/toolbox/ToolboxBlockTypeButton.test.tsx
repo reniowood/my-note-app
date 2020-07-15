@@ -3,7 +3,7 @@ import * as ReactRedux from 'react-redux';
 import { shallow } from 'enzyme';
 import ToolboxBlockTypeButton from './ToolboxBlockTypeButton';
 import * as Actions from '../stores/documentSlice';
-import { CheckboxBlockState, TextBlockState } from '../stores/documentState';
+import { CheckboxBlockState, TextBlockState, ToggleListBlockState } from '../stores/documentState';
 import styles from './ToolboxBlockTypeButton.module.css';
 
 describe('<ToolboxBlockTypeButton />', () => {
@@ -91,5 +91,32 @@ describe('<ToolboxBlockTypeButton />', () => {
     );
 
     expect(wrapper.find('button').prop('className')).not.toContain(styles.selectedButton);
+  });
+
+  it('should convert a given block to a text block when the user clicks the activated button', () => {
+    const block: ToggleListBlockState = {
+      id: '0',
+      type: 'toggleList',
+      parent: null,
+      children: [],
+      content: 'CONTENT',
+      showChildren: true,
+    };
+    jest.spyOn(ReactRedux, 'useSelector').mockReturnValue(block);
+    const wrapper = shallow(
+      <ToolboxBlockTypeButton
+        blockType="toggleList"
+        materialIconName="MATERIAL_ICON_NAME"
+      />,
+    );
+    expect(wrapper.find('button').prop('className')).toContain(styles.selectedButton);
+    jest.spyOn(Actions, 'convertBlock');
+
+    wrapper.find('button').simulate('click');
+
+    expect(Actions.convertBlock).toHaveBeenCalledWith({
+      id: block.id,
+      type: 'text',
+    });
   });
 });
