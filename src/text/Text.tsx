@@ -67,14 +67,15 @@ const Text = (props: TextProps) => {
     if (e.key === 'Enter') {
       const cursorPosition = getCursorPosition();
       if (cursorPosition !== undefined) {
-        updateBlockContent(element, cursorPosition);
+        const [start, end] = cursorPosition;
+        updateBlockContent(element, start);
         dispatch(updateBlock({
           id,
-          content: element.innerText?.substring(0, cursorPosition),
+          content: element.innerText?.substring(0, start),
         }));
         dispatch(addBlockNextTo({
           id,
-          content: element.innerText?.substring(cursorPosition),
+          content: element.innerText?.substring(end),
         }));
         dispatch(setCursorRow({
           row: index + 1,
@@ -88,7 +89,8 @@ const Text = (props: TextProps) => {
     } else if (e.key === 'ArrowUp') {
       const cursorPosition = getCursorPosition();
       if (cursorPosition !== undefined) {
-        updateBlockContent(element, cursorPosition);
+        const [start] = cursorPosition;
+        updateBlockContent(element, start);
       }
       dispatch(moveCursorUp());
 
@@ -96,7 +98,8 @@ const Text = (props: TextProps) => {
     } else if (e.key === 'ArrowDown') {
       const cursorPosition = getCursorPosition();
       if (cursorPosition !== undefined) {
-        updateBlockContent(element, cursorPosition);
+        const [start] = cursorPosition;
+        updateBlockContent(element, start);
       }
       dispatch(moveCursorDown());
 
@@ -104,7 +107,8 @@ const Text = (props: TextProps) => {
     } else if (e.shiftKey && e.key === 'Tab') {
       const cursorPosition = getCursorPosition();
       if (cursorPosition !== undefined) {
-        updateBlockContent(element, cursorPosition);
+        const [start] = cursorPosition;
+        updateBlockContent(element, start);
       }
       dispatch(outdent({
         id,
@@ -114,7 +118,8 @@ const Text = (props: TextProps) => {
     } else if (e.key === 'Tab') {
       const cursorPosition = getCursorPosition();
       if (cursorPosition !== undefined) {
-        updateBlockContent(element, cursorPosition);
+        const [start] = cursorPosition;
+        updateBlockContent(element, start);
       }
       dispatch(indent({
         id,
@@ -123,10 +128,13 @@ const Text = (props: TextProps) => {
       e.preventDefault();
     } else if (e.key === 'Backspace') {
       const cursorPosition = getCursorPosition();
-      if (cursorPosition === 0) {
-        updateBlockContent(element, cursorPosition);
-        onBackspaceKeyDown(e, element, cursorPosition);
-        e.preventDefault();
+      if (cursorPosition !== undefined) {
+        const [start, end] = cursorPosition;
+        if (start === 0 && end === 0) {
+          updateBlockContent(element, start);
+          onBackspaceKeyDown(e, element, start);
+          e.preventDefault();
+        }
       }
     }
   };
@@ -139,8 +147,9 @@ const Text = (props: TextProps) => {
 
       const cursorPosition = getCursorPosition();
       if (cursorPosition !== undefined) {
+        const [start] = cursorPosition;
         dispatch(setCursorColumn({
-          column: cursorPosition,
+          column: start,
         }));
       }
     }

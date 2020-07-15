@@ -1,7 +1,7 @@
-export function getCursorPosition(): number | undefined {
+export function getCursorPosition(): [number, number] | undefined {
   const selection = document.getSelection();
   const range = selection?.getRangeAt(0);
-  return range?.startOffset;
+  return range && [range.startOffset, range.endOffset];
 }
 
 export function setCursorPosition(element: HTMLElement, position: number) {

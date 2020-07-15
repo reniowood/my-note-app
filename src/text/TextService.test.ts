@@ -9,14 +9,16 @@ describe('getCursorPosition', () => {
     // given
     const mockSelection = jest.fn() as unknown as Selection;
     jest.spyOn(document, 'getSelection').mockReturnValue(mockSelection);
-    const mockFirstRange = jest.fn() as unknown as Range;
-    mockSelection.getRangeAt = jest.fn().mockReturnValue(mockFirstRange);
+    mockSelection.getRangeAt = jest.fn().mockReturnValue({
+      startOffset: 0,
+      endOffset: 10,
+    });
 
     // when
     const cursorPosition = getCursorPosition();
 
     // then
-    expect(cursorPosition).toBe(mockFirstRange.startOffset);
+    expect(cursorPosition).toStrictEqual([0, 10]);
   });
 });
 

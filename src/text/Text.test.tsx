@@ -41,7 +41,8 @@ describe('<Text />', () => {
         onBackspaceKeyDown={onBackspaceKeyDown}
       />,
     );
-    jest.spyOn(TextService, 'getCursorPosition').mockReturnValue(3);
+    const cursorPosition: [number, number] = [3, 3];
+    jest.spyOn(TextService, 'getCursorPosition').mockReturnValue(cursorPosition);
     jest.spyOn(Actions, 'updateBlock');
     jest.spyOn(Actions, 'addBlockNextTo');
     jest.spyOn(Actions, 'setCursorRow');
@@ -74,6 +75,50 @@ describe('<Text />', () => {
     });
   });
 
+  it('should dispatch actions to split a given block into two blocks when Enter key is pressed and some of text are selected', () => {
+    const onBackspaceKeyDown = jest.fn();
+    const wrapper = shallow(
+      <Text
+        id="0"
+        index={0}
+        content="CONTENT"
+        onBackspaceKeyDown={onBackspaceKeyDown}
+      />,
+    );
+    const cursorPosition: [number, number] = [3, 5];
+    jest.spyOn(TextService, 'getCursorPosition').mockReturnValue(cursorPosition);
+    jest.spyOn(Actions, 'updateBlock');
+    jest.spyOn(Actions, 'addBlockNextTo');
+    jest.spyOn(Actions, 'setCursorRow');
+    jest.spyOn(Actions, 'setCursorColumn');
+
+    wrapper.find('div').simulate(
+      'keyDown',
+      {
+        key: 'Enter',
+        currentTarget: {
+          innerText: 'CONTENT',
+        },
+        preventDefault: jest.fn(),
+      },
+    );
+
+    expect(Actions.updateBlock).toHaveBeenCalledWith({
+      id: '0',
+      content: 'CON',
+    });
+    expect(Actions.addBlockNextTo).toHaveBeenCalledWith({
+      id: '0',
+      content: 'NT',
+    });
+    expect(Actions.setCursorRow).toHaveBeenCalledWith({
+      row: 1,
+    });
+    expect(Actions.setCursorColumn).toHaveBeenCalledWith({
+      column: 0,
+    });
+  });
+
   it('should dispatch "moveCursorUp" action when ArrowUp key is pressed', () => {
     const onBackspaceKeyDown = jest.fn();
     const wrapper = shallow(
@@ -84,7 +129,8 @@ describe('<Text />', () => {
         onBackspaceKeyDown={onBackspaceKeyDown}
       />,
     );
-    jest.spyOn(TextService, 'getCursorPosition').mockReturnValue(0);
+    const cursorPosition: [number, number] = [0, 0];
+    jest.spyOn(TextService, 'getCursorPosition').mockReturnValue(cursorPosition);
     jest.spyOn(Actions, 'moveCursorUp');
 
     wrapper.find('div').simulate(
@@ -111,7 +157,8 @@ describe('<Text />', () => {
         onBackspaceKeyDown={onBackspaceKeyDown}
       />,
     );
-    jest.spyOn(TextService, 'getCursorPosition').mockReturnValue(0);
+    const cursorPosition: [number, number] = [0, 0];
+    jest.spyOn(TextService, 'getCursorPosition').mockReturnValue(cursorPosition);
     jest.spyOn(Actions, 'moveCursorDown');
 
     wrapper.find('div').simulate(
@@ -138,7 +185,8 @@ describe('<Text />', () => {
         onBackspaceKeyDown={onBackspaceKeyDown}
       />,
     );
-    jest.spyOn(TextService, 'getCursorPosition').mockReturnValue(0);
+    const cursorPosition: [number, number] = [0, 0];
+    jest.spyOn(TextService, 'getCursorPosition').mockReturnValue(cursorPosition);
     jest.spyOn(Actions, 'outdent');
 
     wrapper.find('div').simulate(
@@ -168,7 +216,8 @@ describe('<Text />', () => {
         onBackspaceKeyDown={onBackspaceKeyDown}
       />,
     );
-    jest.spyOn(TextService, 'getCursorPosition').mockReturnValue(0);
+    const cursorPosition: [number, number] = [0, 0];
+    jest.spyOn(TextService, 'getCursorPosition').mockReturnValue(cursorPosition);
     jest.spyOn(Actions, 'indent');
 
     wrapper.find('div').simulate(
@@ -198,7 +247,7 @@ describe('<Text />', () => {
         onBackspaceKeyDown={onBackspaceKeyDown}
       />,
     );
-    const cursorPosition = 0;
+    const cursorPosition: [number, number] = [0, 0];
     jest.spyOn(TextService, 'getCursorPosition').mockReturnValue(cursorPosition);
     const element = {
       innerText: 'CONTENT',
@@ -214,7 +263,7 @@ describe('<Text />', () => {
       event,
     );
 
-    expect(onBackspaceKeyDown).toHaveBeenCalledWith(event, element, cursorPosition);
+    expect(onBackspaceKeyDown).toHaveBeenCalledWith(event, element, cursorPosition[0]);
   });
 
   it('should call both setCursorRow and setCursorColumn action when it gets focused but the cursor was not on', () => {
@@ -231,7 +280,7 @@ describe('<Text />', () => {
       row: 1,
       column: 0,
     });
-    const cursorPosition = 0;
+    const cursorPosition: [number, number] = [0, 0];
     jest.spyOn(TextService, 'getCursorPosition').mockReturnValue(cursorPosition);
     jest.spyOn(Actions, 'setCursorRow');
     jest.spyOn(Actions, 'setCursorColumn');
@@ -242,7 +291,7 @@ describe('<Text />', () => {
       row: 0,
     });
     expect(Actions.setCursorColumn).toHaveBeenCalledWith({
-      column: cursorPosition,
+      column: cursorPosition[0],
     });
   });
 

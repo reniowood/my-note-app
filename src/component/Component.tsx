@@ -8,7 +8,7 @@ import styles from './Component.module.css';
 import UnorderedListBlock from '../block/UnorderedListBlock';
 import OrderedListBlock from '../block/OrderedListBlock';
 import ToggleListBlock from '../block/ToggleListBlock';
-import { HeadingBlock } from '../block/HeadingBlock';
+import HeadingBlock from '../block/HeadingBlock';
 
 interface ComponentProps {
   readonly index: number;
