@@ -43,4 +43,28 @@ describe('<Toolbox />', () => {
 
     expect(wrapper.find(ToolboxBlockTypeButton).find({ blockType: 'toggleList' })).toHaveLength(1);
   });
+
+  it('should render <ToolboxBlockTypeButton /> for "heading1" block type inside', () => {
+    const wrapper = shallow(
+      <Toolbox />,
+    );
+
+    expect(wrapper.find(ToolboxBlockTypeButton).find({ blockType: 'heading1' })).toHaveLength(1);
+  });
+
+  it('should render <ToolboxBlockTypeButton /> for "heading2" block type inside', () => {
+    const wrapper = shallow(
+      <Toolbox />,
+    );
+
+    expect(wrapper.find(ToolboxBlockTypeButton).find({ blockType: 'heading2' })).toHaveLength(1);
+  });
+
+  it('should render <ToolboxBlockTypeButton /> for "heading3" block type inside', () => {
+    const wrapper = shallow(
+      <Toolbox />,
+    );
+
+    expect(wrapper.find(ToolboxBlockTypeButton).find({ blockType: 'heading3' })).toHaveLength(1);
+  });
 });

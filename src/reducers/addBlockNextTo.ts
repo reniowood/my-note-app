@@ -134,10 +134,18 @@ function createNewBlock(
       showChildren: true,
       content,
     };
-  } else {
+  } else if (block.type === 'text') {
     newBlock = {
       id: newId,
       type: 'text',
+      parent: parentId,
+      children: [],
+      content,
+    };
+  } else {
+    newBlock = {
+      id: newId,
+      type: block.type,
       parent: parentId,
       children: [],
       content,

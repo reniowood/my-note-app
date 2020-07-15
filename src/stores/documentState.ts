@@ -15,11 +15,12 @@ export type Version = 1;
 export type BlockType = BlockState['type'];
 
 export type BlockState =
-  TextBlockState |
-  CheckboxBlockState |
-  UnorderedListBlockState |
-  OrderedListBlockState |
-  ToggleListBlockState;
+  | TextBlockState
+  | CheckboxBlockState
+  | UnorderedListBlockState
+  | OrderedListBlockState
+  | ToggleListBlockState
+  | HeadingBlockState;
 
 export interface BaseBlockState {
   readonly id: BlockId;
@@ -48,6 +49,10 @@ export interface OrderedListBlockState extends BaseBlockState {
 export interface ToggleListBlockState extends BaseBlockState {
   readonly type: 'toggleList';
   readonly showChildren: boolean;
+}
+
+export interface HeadingBlockState extends BaseBlockState {
+  readonly type: 'heading1' | 'heading2' | 'heading3';
 }
 
 export interface CursorState {

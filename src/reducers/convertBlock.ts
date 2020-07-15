@@ -34,6 +34,18 @@ function getBlock(type: BlockType, block: BlockState): BlockState {
       type: 'toggleList',
       showChildren: true,
     };
+    case 'heading1': return {
+      ...block,
+      type: 'heading1',
+    };
+    case 'heading2': return {
+      ...block,
+      type: 'heading2',
+    };
+    case 'heading3': return {
+      ...block,
+      type: 'heading3',
+    };
     default: throw new Error(`Wrong block type: ${type}`);
   }
 }

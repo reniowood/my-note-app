@@ -153,4 +153,85 @@ describe('convertBlock', () => {
       showChildren: true,
     });
   });
+
+  it('should convert a given block to an heading 1 block', () => {
+    // given
+    const currentState = getState({
+      id: '0',
+      type: 'checkbox',
+      parent: null,
+      children: [],
+      content: 'CONTENT',
+      isChecked: true,
+    });
+
+    // when
+    const nextState = convertBlockReducer(currentState, {
+      id: '0',
+      type: 'heading1',
+    });
+
+    // then
+    expect(nextState.blocks.byId[0]).toMatchObject({
+      id: '0',
+      type: 'heading1',
+      parent: null,
+      children: [],
+      content: 'CONTENT',
+    });
+  });
+
+  it('should convert a given block to an heading 2 block', () => {
+    // given
+    const currentState = getState({
+      id: '0',
+      type: 'checkbox',
+      parent: null,
+      children: [],
+      content: 'CONTENT',
+      isChecked: true,
+    });
+
+    // when
+    const nextState = convertBlockReducer(currentState, {
+      id: '0',
+      type: 'heading2',
+    });
+
+    // then
+    expect(nextState.blocks.byId[0]).toMatchObject({
+      id: '0',
+      type: 'heading2',
+      parent: null,
+      children: [],
+      content: 'CONTENT',
+    });
+  });
+
+  it('should convert a given block to an heading 3 block', () => {
+    // given
+    const currentState = getState({
+      id: '0',
+      type: 'checkbox',
+      parent: null,
+      children: [],
+      content: 'CONTENT',
+      isChecked: true,
+    });
+
+    // when
+    const nextState = convertBlockReducer(currentState, {
+      id: '0',
+      type: 'heading3',
+    });
+
+    // then
+    expect(nextState.blocks.byId[0]).toMatchObject({
+      id: '0',
+      type: 'heading3',
+      parent: null,
+      children: [],
+      content: 'CONTENT',
+    });
+  });
 });

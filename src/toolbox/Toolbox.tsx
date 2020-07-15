@@ -10,6 +10,18 @@ export default function Toolbox() {
         materialIconName="format_align_justify"
       />
       <ToolboxBlockTypeButton
+        blockType="heading1"
+        materialIconName="looks_one"
+      />
+      <ToolboxBlockTypeButton
+        blockType="heading2"
+        materialIconName="looks_two"
+      />
+      <ToolboxBlockTypeButton
+        blockType="heading3"
+        materialIconName="looks_3"
+      />
+      <ToolboxBlockTypeButton
         blockType="unorderedList"
         materialIconName="format_list_bulleted"
       />

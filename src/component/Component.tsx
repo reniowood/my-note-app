@@ -8,6 +8,7 @@ import styles from './Component.module.css';
 import UnorderedListBlock from '../block/UnorderedListBlock';
 import OrderedListBlock from '../block/OrderedListBlock';
 import ToggleListBlock from '../block/ToggleListBlock';
+import { HeadingBlock } from '../block/HeadingBlock';
 
 interface ComponentProps {
   readonly index: number;
@@ -55,13 +56,27 @@ function getBlock(index: number, block: BlockState) {
     );
   }
 
-  return (
-    <TextBlock
-      key={block.id}
-      index={index}
-      block={block}
-    />
-  );
+  if (block.type === 'heading1' || block.type === 'heading2' || block.type === 'heading3') {
+    return (
+      <HeadingBlock
+        key={block.id}
+        index={index}
+        block={block}
+      />
+    );
+  }
+
+  if (block.type === 'text') {
+    return (
+      <TextBlock
+        key={block.id}
+        index={index}
+        block={block}
+      />
+    );
+  }
+
+  return null;
 }
 
 function showChildren(block: BlockState) {
