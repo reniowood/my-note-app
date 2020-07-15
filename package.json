@@ -23,7 +23,7 @@
     "watch": "webpack --watch",
     "start": "webpack-dev-server --open",
     "test": "jest --coverage",
-    "test:watch": "npm run test -- --watch",
+    "test:watch": "npm run test -- --watchAll",
     "lint": "eslint --ext .ts,.tsx ./",
     "lint:fix": "eslint --fix --ext .ts,.tsx ./"
   },
