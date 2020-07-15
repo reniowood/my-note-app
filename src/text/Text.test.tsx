@@ -272,4 +272,19 @@ describe('<Text />', () => {
       content: 'CONTENT',
     });
   });
+
+  it('should put a given className into its className of div element', () => {
+    const onBackspaceKeyDown = jest.fn();
+    const wrapper = shallow(
+      <Text
+        id="0"
+        index={0}
+        content="CONTENT"
+        className="CLASS_NAME"
+        onBackspaceKeyDown={onBackspaceKeyDown}
+      />,
+    );
+
+    expect(wrapper.find('div').prop('className')).toContain('CLASS_NAME');
+  });
 });

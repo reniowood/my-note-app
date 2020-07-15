@@ -24,6 +24,7 @@ interface TextProps {
   readonly id: string;
   readonly index: number;
   readonly content: string;
+  readonly className?: string;
   readonly onBackspaceKeyDown: OnKeyDownHandler;
 }
 
@@ -32,6 +33,7 @@ const Text = (props: TextProps) => {
     id,
     index,
     content,
+    className,
     onBackspaceKeyDown,
   } = props;
   const cursor = useSelector(selectCursor);
@@ -158,7 +160,7 @@ const Text = (props: TextProps) => {
       ref={ref}
       contentEditable="true"
       suppressContentEditableWarning
-      className={styles.text}
+      className={className ? `${className} ${styles.text}` : styles.text}
       tabIndex={index}
       onKeyDown={onKeyDown}
       onFocus={onFocus}
@@ -172,7 +174,8 @@ const Text = (props: TextProps) => {
 function arePropsEqual(prevProps: TextProps, nextProps: TextProps) {
   return prevProps.id === nextProps.id
     && prevProps.index === nextProps.index
-    && prevProps.content === nextProps.content;
+    && prevProps.content === nextProps.content
+    && prevProps.className === nextProps.className;
 }
 
 export default React.memo(Text, arePropsEqual);
